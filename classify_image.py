@@ -34,7 +34,7 @@ import pandas as pd
 from keras.models import load_model
 
 model = load_model('/home/atif/image_classification_c++/multi_filter_cpp/traffic_2_filter_no_pad_gray_ep_100_for_cpp.h5')
-
+#model = load_model('/home/atif/traffic_model_11_dec_1_filter.h5')
 layer_list =[]
 # f = open('/home/atif/path_for_storing_all_layer_info.txt', 'w') #uncomment it if you want to store all layer info at a time.
 for layer in model.layers:
@@ -72,37 +72,34 @@ for layer in model.layers:
         
 conv_kernel=layer_list[0][0]
 conv_kernel=conv_kernel.transpose()
-print("conv_kernel: \n",conv_kernel,"\n\n")
-print("conv_kernel shape:\t",conv_kernel.shape,"\n\n")
-print("conv kernel dimension:\t",conv_kernel.ndim,"\n\n")
-print("type_conv_kernel:",type(conv_kernel),"\n")
-
-#conv_kernel_reshape=conv_kernel.reshape(conv_kernel[3],conv_kernel[2],conv_kernel[1],conv_kernel[0])
-#print("re:  ",conv_kernel_reshape.shape)
+#print("conv_kernel: \n",conv_kernel,"\n\n")
+#print("conv_kernel shape:\t",conv_kernel.shape,"\n\n")
+#print("conv kernel dimension:\t",conv_kernel.ndim,"\n\n")
+#print("type_conv_kernel:",type(conv_kernel),"\n")
 
 
 
 conv_bias=layer_list[0][1]
-print("conv_bias_value: ",conv_bias)
-print("conv_bias ndim: ",conv_bias.ndim,"\n\n")
+#print("conv_bias_value: ",conv_bias)
+#print("conv_bias ndim: ",conv_bias.ndim,"\n\n")
 
 
 
 dense_kernel=layer_list[2][0]
-print("dense_kernel: \n",dense_kernel,"\n\n")
-print("dense_kernel shape:\t",dense_kernel.shape,"\n\n")
-print("dense_kernel dimension:\t",dense_kernel.ndim,"\n\n")
-print("type_dense_kernel:",type(dense_kernel),"\n")
-print("dense_kernel size: ",dense_kernel.size,"\n")
+#print("dense_kernel: \n",dense_kernel,"\n\n")
+#print("dense_kernel shape:\t",dense_kernel.shape,"\n\n")
+#print("dense_kernel dimension:\t",dense_kernel.ndim,"\n\n")
+#print("type_dense_kernel:",type(dense_kernel),"\n")
+#print("dense_kernel size: ",dense_kernel.size,"\n")
 # dense_1_transpose=dense__1.transpose()
 # print("dense_1_transpose: ",dense_1_transpose,"\n\n")
 
 
 dense_bias=layer_list[2][1]
-print("dense_bias: ",dense_bias)
-print("dense_bias_shape: ",dense_bias.shape)
+#print("dense_bias: ",dense_bias)
+#print("dense_bias_shape: ",dense_bias.shape)
 dense_bias=dense_bias.reshape(1,9) # here chenge 5 to the number of your used class
-print("dense_bias_shape: ",dense_bias.shape)
+#print("dense_bias_shape: ",dense_bias.shape)
 
 
 #########################################################################
@@ -128,7 +125,7 @@ i_list_array=np.array(i_list)
 for p in i_list_array:
 #     for a in p:
 #         print(a)
-    print(p)
+#    print(p)
     ww=str(p)
     ww=ww.replace('[','')
     ww=ww.replace(']','')
@@ -199,21 +196,21 @@ dense_bias_array=np.array(dense_bias_list)
 ######### Reshaping convolution kernel for further process###########
 #####################################################################
 
-print("conv_kernel:\n",conv_kernel,"\n")
-print("conv_kernel_shape:",conv_kernel.shape,"\tconv_kernel ndim:",conv_kernel.ndim,"\n")
-print("length of conv_kernel:",len(conv_kernel),"\n")
+#print("conv_kernel:\n",conv_kernel,"\n")
+#print("conv_kernel_shape:",conv_kernel.shape,"\tconv_kernel ndim:",conv_kernel.ndim,"\n")
+#print("length of conv_kernel:",len(conv_kernel),"\n")
 
 conv_kernel_reshape=conv_kernel.reshape(2,3,3) # 2 for 2 filter. change it according to your filter number
-print("conv_kernel_reshape:\n",conv_kernel_reshape,"\n")
-print("conv_kernel_reshape shape:",conv_kernel_reshape.shape,"\tconv_kernel_reshape ndim:",conv_kernel_reshape.ndim,"\n")
-print("length of conv_kernel_reshape:",len(conv_kernel_reshape[0]),"\n")
+#print("conv_kernel_reshape:\n",conv_kernel_reshape,"\n")
+#print("conv_kernel_reshape shape:",conv_kernel_reshape.shape,"\tconv_kernel_reshape ndim:",conv_kernel_reshape.ndim,"\n")
+#print("length of conv_kernel_reshape:",len(conv_kernel_reshape[0]),"\n")
 
 convolution_kernel_filter=[]
 convolution_kernel_filter=np.zeros((2,3,3)) # 2 for 2 filter. change it according to your filter number
 convolution_kernel_filter[:,:,:]=np.array(conv_kernel_reshape)
-print("convolution_kernel_filter: \n",convolution_kernel_filter,"\n")
-print("convolution_kernel_filter shape:",convolution_kernel_filter.shape,"\tconvolution_kernel_filter ndim:",convolution_kernel_filter.ndim,"\n")
-print("length of convolution_kernel_filter:",len(convolution_kernel_filter),"\n")
+#print("convolution_kernel_filter: \n",convolution_kernel_filter,"\n")
+#print("convolution_kernel_filter shape:",convolution_kernel_filter.shape,"\tconvolution_kernel_filter ndim:",convolution_kernel_filter.ndim,"\n")
+#print("length of convolution_kernel_filter:",len(convolution_kernel_filter),"\n")
 
 
 
@@ -224,6 +221,7 @@ print("length of convolution_kernel_filter:",len(convolution_kernel_filter),"\n"
 
 
 def preprocess_img(img):
+#     uncomment following 5 lines for rgb testing and comment out the rgb2gray line
 #     Histogram normalization in y
 #     hsv = color.rgb2hsv(img)
 #     hsv[:,:,2] = exposure.equalize_hist(hsv[:,:,2])
@@ -235,7 +233,7 @@ def preprocess_img(img):
     img = img[centre[0]-min_side//2:centre[0]+min_side//2,
               centre[1]-min_side//2:centre[1]+min_side//2,
               :]
-    img = rgb2gray(img)
+    img = rgb2gray(img) #rgb to gray conversion
 
     # rescale to standard size
     img = transform.resize(img, (IMG_SIZE, IMG_SIZE))
@@ -283,7 +281,7 @@ def conv_(img, conv_filter):
 
 
 def conv(img, conv_filter):
-#     print("conv_filter:: ", conv_filter.shape[0])
+    print("\nconv function start to work")
     
     if len(img.shape) > 2 or len(conv_filter.shape) > 3: # Check if number of image channels matches the filter depth.
         if img.shape[-1] != conv_filter.shape[-1]:
@@ -306,20 +304,18 @@ def conv(img, conv_filter):
         print("Filter ", filter_num + 1)
         curr_filter = conv_filter[filter_num, :] # getting a filter from the bank.
 #         print(curr_filter)
-        print("curr_fiter_shape: ",curr_filter.shape)
+        #print("curr_fiter_shape: ",curr_filter.shape)
 #         print("length of curr_fiter_shape: ",len(curr_filter.shape))
 
 
         if len(curr_filter.shape) > 2:
-            print("CONV function has worked")
             conv_map = conv_(img[:, :, 0], curr_filter[:, :, 0]) # Array holding the sum of all feature maps.
             for ch_num in range(1, curr_filter.shape[-1]): # Convolving each channel with the image and summing the results.
                 conv_map = conv_map + conv_(img[:, :, ch_num], 
                                   curr_filter[:, :, ch_num])
         else: # There is just a single channel in the filter.
-            print("go to conv_ function ")
+            print("\nGo to conv_ function ")
             conv_map = conv_(img, curr_filter)
-            print(conv_map)
             
         feature_maps[:, :, filter_num] = conv_map # Holding feature map with the current filter.
 #         print("feature_maps from conv_map: ",feature_maps)
@@ -335,63 +331,58 @@ def relu(feature_map):
                 relu_out[r, c, map_num] = np.max([feature_map[r, c, map_num], 0])
     return relu_out
 
-# def softmax_fn(input_array):
-#     e_x=np.exp(input_array-np.max(input_array))
-#     return e_x/e_x.sum(axis=len(e_x.shape)-1)
 
-
-# X_test = X_test.reshape(1,IMG_SIZE,IMG_SIZE)
 
 path = r'/home/atif/image_classification_c++/multi_filter_cpp/test_image/'
 
 img_path = glob.glob(path+ '/*.ppm')
 for image in img_path:
-    print("hey i am image: ",image)
+    print("\nhey i am the loaded image: ",image)
     X_test=[]
     X_test.append(preprocess_img(io.imread(image)))
     X_test = np.array(X_test)
 #     plt.imshow(X_test)
     X_test = X_test.reshape(IMG_SIZE,IMG_SIZE)
     
-    feature=conv(img=X_test,conv_filter=convolution_kernel_filter)
-    relu_out=relu(feature)
+    feature=conv(img=X_test,conv_filter=convolution_kernel_filter) #conv function calling
+    relu_out=relu(feature) # relu function calling
     
     # output of feature map / conv function
 
-    print(feature.shape)
+    print("\nfeature shape: \n",feature.shape)
 
     # x_feature_map=np.flipud(feature[0])
     transpose_feature_map=feature.transpose()
-    print("transpose_feature_map shape: ",transpose_feature_map.shape)
+    print("\ntranspose_feature_map shape: ",transpose_feature_map.shape)
 #     plt.imshow(transpose_feature_map[0])
-    print("transpose_feature_map: \n",transpose_feature_map)
+    print("\ntranspose_feature_map: \n",transpose_feature_map)
     
-    print("relu_out shape: ",relu_out.shape)
+    print("\nrelu_out shape: ",relu_out.shape)
     relu_out_transpose=relu_out.transpose()
-    print("relu_out_transpose shape: ",relu_out_transpose.shape)
+    print("\nrelu_out_transpose shape: ",relu_out_transpose.shape)
 #     plt.imshow(relu_out_transpose[0])
-    print("relu_out_transpose:\n",relu_out_transpose)
+    print("\nrelu_out_transpose:\n",relu_out_transpose)
     
     
     
     # matrix multiplication with dense kernel and relu o/p
 
     flatten_relu_out_transpose=relu_out_transpose.reshape(1,2*46*46)  #if you don't do padd on input image please make it 46*46. how 46 came? 
-                                                                                    #the formula of output size.
-    print("flatten_relu_out_transpose shape: ",flatten_relu_out_transpose.shape)
+                                                                                    #the formula of output size. and 2 for 2 filter
+    print("\nflatten_relu_out_transpose shape: \n",flatten_relu_out_transpose.shape)
 
-    print("dense_kernel shape: ",dense_kernel.shape,"\n")
+    print("\ndense_kernel shape: \n",dense_kernel.shape,"\n")
 
     matmul_flatt_rel_dense_kernel=np.matmul(flatten_relu_out_transpose,dense_kernel)
-    print("matmul_soft_dense_kernel shape",matmul_flatt_rel_dense_kernel.shape,"\n")
-    print("matmul_soft_dense_kernel: ",matmul_flatt_rel_dense_kernel,"\n")
+    print("\nmatmul_soft_dense_kernel shape: \n",matmul_flatt_rel_dense_kernel.shape,"\n")
+    print("\nmatmul_soft_dense_kernel: \n",matmul_flatt_rel_dense_kernel,"\n")
 
     dense_bias_array=np.array(dense_bias)
     dense_bias_array=dense_bias_array.reshape(1,9) # 9 for 9 class
-    print("dense_bias_array: ",dense_bias_array,"\n")
+    print("\ndense_bias_array: \n",dense_bias_array,"\n")
 
     add_matmul_flatt_rel_dense_kernel_and_dense_bias_array=matmul_flatt_rel_dense_kernel+dense_bias_array
-    print("value add_matmul_flatt_rel_dense_kernel_and_dense2_array:\n",add_matmul_flatt_rel_dense_kernel_and_dense_bias_array)
+    print("\nvalue add_matmul_flatt_rel_dense_kernel_and_dense2_array: \n",add_matmul_flatt_rel_dense_kernel_and_dense_bias_array)
     
     def softmax_fn(input_array):
         e_x=np.exp(input_array-np.max(input_array))
@@ -399,9 +390,10 @@ for image in img_path:
 
     op= softmax_fn(add_matmul_flatt_rel_dense_kernel_and_dense_bias_array)
     print("output of FC layer: ",op,"\n")
-    ########################
-    # Folowing code for finding class##
-    ########################
+    
+    ######################################
+    #### Folowing code for finding class##
+    ######################################
     m=0
     k=0
     # op=[[0.17095664, 0.24349895, 0.172376,   0.19243606, 0.62073235]]
