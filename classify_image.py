@@ -11,6 +11,7 @@ Created on Fri Jan 11 21:50:57 2019
 #############################
 
 import numpy as np
+import sys
 from skimage import io, color, exposure, transform
 from skimage.color import rgb2gray
 #from sklearn.cross_validation import train_test_split
@@ -220,3 +221,204 @@ print("length of convolution_kernel_filter:",len(convolution_kernel_filter),"\n"
 #########################################################################################
 ################# Code for different steps for classification############################
 #########################################################################################
+
+
+def preprocess_img(img):
+#     Histogram normalization in y
+#     hsv = color.rgb2hsv(img)
+#     hsv[:,:,2] = exposure.equalize_hist(hsv[:,:,2])
+#     img = color.hsv2rgb(hsv)
+
+    # central scrop
+    min_side = min(img.shape[:-1])
+    centre = img.shape[0]//2, img.shape[1]//2
+    img = img[centre[0]-min_side//2:centre[0]+min_side//2,
+              centre[1]-min_side//2:centre[1]+min_side//2,
+              :]
+    img = rgb2gray(img)
+
+    # rescale to standard size
+    img = transform.resize(img, (IMG_SIZE, IMG_SIZE))
+
+    # roll color axis to axis 0
+    img = np.rollaxis(img,-1)
+
+    return img
+
+def conv_(img, conv_filter):
+    print("\nconv_ function start to work\n")
+    filter_size = conv_filter.shape[1] #output is 3
+    print("filter_size: ",filter_size)
+    print("img shape: ",img.shape)
+    result = np.zeros((img.shape))
+    #Looping through the image to apply the convolution operation.
+    
+    for x in conv_bias_array:  # to get the value of convolution bias
+        print("i am the conv_bias: ",x)
+        
+        for r in np.uint16(np.arange(filter_size/2.0,img.shape[0]-filter_size/2.0+1)):
+        
+            for c in np.uint16(np.arange(filter_size/2.0,img.shape[1]-filter_size/2.0+1)):
+            
+                curr_region = img[r-np.uint16(np.floor(filter_size/2.0)):r+np.uint16(np.ceil(filter_size/2.0)), c-np.uint16(np.floor(filter_size/2.0)):c+np.uint16(np.ceil(filter_size/2.0))]
+        
+                #Element-wise multipliplication between the current region and the filter.
+            
+                curr_result = curr_region * conv_filter
+#             print("curr_result: ",curr_result)
+                curr_result= curr_result+x
+                
+#             print("conv_bias: ",conv_bias_new)
+#                 print("new curr res: ",curr_result)
+                conv_sum = np.sum(curr_result) #Summing the result of multiplication.
+                result[r, c] = conv_sum#Saving the summation in the convolution layer feature map.
+#             print("conv_sum_shape: ",conv_sum.shape)
+        print("now x is: ",x)
+        #print(curr_region)
+    #Clipping the outliers of the result matrix.
+    final_result = result[np.uint16(filter_size/2.0):result.shape[0]-np.uint16(filter_size/2.0),np.uint16(filter_size/2.0):result.shape[1]-np.uint16(filter_size/2.0)]
+    print("\nconv_ function finish\n")
+    return final_result
+
+
+
+def conv(img, conv_filter):
+#     print("conv_filter:: ", conv_filter.shape[0])
+    
+    if len(img.shape) > 2 or len(conv_filter.shape) > 3: # Check if number of image channels matches the filter depth.
+        if img.shape[-1] != conv_filter.shape[-1]:
+            print("Error: Number of channels in both image and filter must match.")
+            sys.exit()
+    if conv_filter.shape[1] != conv_filter.shape[2]: # Check if filter dimensions are equal.
+        print('Error: Filter must be a square matrix. I.e. number of rows and columns must match.')
+        sys.exit()
+    if conv_filter.shape[1]%2==0: # Check if filter diemnsions are odd.
+        print('Error: Filter must have an odd size. I.e. number of rows and columns must be odd.')
+        sys.exit()
+
+    # An empty feature map to hold the output of convolving the filter(s) with the image.
+    feature_maps = np.zeros((img.shape[0]-conv_filter.shape[1]+1, img.shape[1]-conv_filter.shape[1]+1, conv_filter.shape[0]))
+
+    # Convolving the image by the filter(s).
+    
+    for filter_num in range(conv_filter.shape[0]):
+#         print("filter num: ",filter_num)
+        print("Filter ", filter_num + 1)
+        curr_filter = conv_filter[filter_num, :] # getting a filter from the bank.
+#         print(curr_filter)
+        print("curr_fiter_shape: ",curr_filter.shape)
+#         print("length of curr_fiter_shape: ",len(curr_filter.shape))
+
+
+        if len(curr_filter.shape) > 2:
+            print("CONV function has worked")
+            conv_map = conv_(img[:, :, 0], curr_filter[:, :, 0]) # Array holding the sum of all feature maps.
+            for ch_num in range(1, curr_filter.shape[-1]): # Convolving each channel with the image and summing the results.
+                conv_map = conv_map + conv_(img[:, :, ch_num], 
+                                  curr_filter[:, :, ch_num])
+        else: # There is just a single channel in the filter.
+            print("go to conv_ function ")
+            conv_map = conv_(img, curr_filter)
+            print(conv_map)
+            
+        feature_maps[:, :, filter_num] = conv_map # Holding feature map with the current filter.
+#         print("feature_maps from conv_map: ",feature_maps)
+    return feature_maps # Returning all feature maps.
+
+
+def relu(feature_map):
+    #Preparing the output of the ReLU activation function.
+    relu_out = np.zeros(feature_map.shape)
+    for map_num in range(feature_map.shape[-1]):
+        for r in np.arange(0,feature_map.shape[0]):
+            for c in np.arange(0, feature_map.shape[1]):
+                relu_out[r, c, map_num] = np.max([feature_map[r, c, map_num], 0])
+    return relu_out
+
+# def softmax_fn(input_array):
+#     e_x=np.exp(input_array-np.max(input_array))
+#     return e_x/e_x.sum(axis=len(e_x.shape)-1)
+
+
+# X_test = X_test.reshape(1,IMG_SIZE,IMG_SIZE)
+
+path = r'/home/atif/image_classification_c++/multi_filter_cpp/test_image/'
+
+img_path = glob.glob(path+ '/*.ppm')
+for image in img_path:
+    print("hey i am image: ",image)
+    X_test=[]
+    X_test.append(preprocess_img(io.imread(image)))
+    X_test = np.array(X_test)
+#     plt.imshow(X_test)
+    X_test = X_test.reshape(IMG_SIZE,IMG_SIZE)
+    
+    feature=conv(img=X_test,conv_filter=convolution_kernel_filter)
+    relu_out=relu(feature)
+    
+    # output of feature map / conv function
+
+    print(feature.shape)
+
+    # x_feature_map=np.flipud(feature[0])
+    transpose_feature_map=feature.transpose()
+    print("transpose_feature_map shape: ",transpose_feature_map.shape)
+#     plt.imshow(transpose_feature_map[0])
+    print("transpose_feature_map: \n",transpose_feature_map)
+    
+    print("relu_out shape: ",relu_out.shape)
+    relu_out_transpose=relu_out.transpose()
+    print("relu_out_transpose shape: ",relu_out_transpose.shape)
+#     plt.imshow(relu_out_transpose[0])
+    print("relu_out_transpose:\n",relu_out_transpose)
+    
+    
+    
+    # matrix multiplication with dense kernel and relu o/p
+
+    flatten_relu_out_transpose=relu_out_transpose.reshape(1,2*46*46)  #if you don't do padd on input image please make it 46*46. how 46 came? 
+                                                                                    #the formula of output size.
+    print("flatten_relu_out_transpose shape: ",flatten_relu_out_transpose.shape)
+
+    print("dense_kernel shape: ",dense_kernel.shape,"\n")
+
+    matmul_flatt_rel_dense_kernel=np.matmul(flatten_relu_out_transpose,dense_kernel)
+    print("matmul_soft_dense_kernel shape",matmul_flatt_rel_dense_kernel.shape,"\n")
+    print("matmul_soft_dense_kernel: ",matmul_flatt_rel_dense_kernel,"\n")
+
+    dense_bias_array=np.array(dense_bias)
+    dense_bias_array=dense_bias_array.reshape(1,9) # 9 for 9 class
+    print("dense_bias_array: ",dense_bias_array,"\n")
+
+    add_matmul_flatt_rel_dense_kernel_and_dense_bias_array=matmul_flatt_rel_dense_kernel+dense_bias_array
+    print("value add_matmul_flatt_rel_dense_kernel_and_dense2_array:\n",add_matmul_flatt_rel_dense_kernel_and_dense_bias_array)
+    
+    def softmax_fn(input_array):
+        e_x=np.exp(input_array-np.max(input_array))
+        return e_x/e_x.sum(axis=len(e_x.shape)-1)
+
+    op= softmax_fn(add_matmul_flatt_rel_dense_kernel_and_dense_bias_array)
+    print("output of FC layer: ",op,"\n")
+    ########################
+    # Folowing code for finding class##
+    ########################
+    m=0
+    k=0
+    # op=[[0.17095664, 0.24349895, 0.172376,   0.19243606, 0.62073235]]
+    # op=np.array(op)
+    # print(op.shape)
+    # print(type(op))
+
+    for h in op:
+    
+        for index,j in enumerate(h):
+    
+            o=j
+            #print(o)
+            if o>m:
+                m=o
+                print(m)
+                k=index
+            else:
+                pass
+    print('class:',k)
