@@ -38,7 +38,7 @@ from matplotlib import pyplot as plt
 
 #import keras
 
-NUM_CLASSES = 5
+NUM_CLASSES = 9
 IMG_SIZE = 48
 
 
@@ -78,12 +78,12 @@ def get_class(img_path):
     
 imgs = []
 labels = []
-root_dir = '/home/atif/training_by_several_learning_process/flower_photos/flower_train_images/'
+root_dir = '/home/atif/training_by_several_learning_process/GTSRB/test_for_VHDL_with_minimum_layer/train_image_minimized/'
 #path='/home/atif/training_by_several_learning_process/flower_photos/00000/'
 
 #all_img_paths = glob.glob(path+ '5547758_eea9edfd54_n_000.jpg')
 
-all_img_paths = glob.glob(os.path.join(root_dir, '*/*.jpg')) #I have done the training with .ppm format image. If another type of image will come 
+all_img_paths = glob.glob(os.path.join(root_dir, '*/*.ppm')) #I have done the training with .ppm format image. If another type of image will come 
                                                                                     #them .ppm will be changed by that extension
 np.random.shuffle(all_img_paths)
 for img_path in all_img_paths:
@@ -101,3 +101,76 @@ for img_path in all_img_paths:
 
 X = np.array(imgs, dtype='float32') #Keeping the image as an array
 Y = np.eye(NUM_CLASSES, dtype='uint8')[labels] #labels of the image
+
+
+##################################################################
+########### Reshaping ############################################
+##################################################################
+
+X = np.array(imgs, dtype='float32')
+print(X.shape)
+# plt.imshow(X[0])
+# plt.imshow(X[0],cmap="gray")
+plt.imshow(X[0]) #if you use this command here you will see something coloured image. No problem, it is gray image. 
+                        #To see full Black and white image uncomment the previous line.
+X = X.reshape(len(imgs),1,IMG_SIZE,IMG_SIZE) # write (IMG_SIZE,IMG_SIZE,1 if you want channel last; 1= grayscale;3=RGB)
+# plt.imshow(X[0],cmap="gray")
+print(X.shape)
+print(X.ndim)
+print(X[0].shape)
+
+print(X.shape)
+print(Y.shape)
+
+################################################################
+################## Declare the Model ###########################
+################################################################
+
+# This model is for understanding the inner calculation of CNN that's why I have started witha minimal layer as well as model.
+# Increase the filter number and layer if you want a good result
+#Conv2D(1, (3, 3) >> here 1 = number of filter. (3,3) = kernel height and width
+# you can just add padding just beside Conv2D. (model.add(Conv2D(1,(3,3)),padding='same',....))
+# I haven't added here for remove complexity in c++(I have tried to implement this whole model in testing phase in cpp)
+def cnn_model():
+#      padding='same'
+    model = Sequential()
+
+    model.add(Conv2D(1, (3, 3),
+                     input_shape=(1,IMG_SIZE, IMG_SIZE),
+                     activation='relu'))
+    model.add(Flatten())
+    model.add(Dense(NUM_CLASSES, activation='softmax'))
+    
+    return model
+
+model = cnn_model()
+
+lr = 0.01
+sgd = SGD(lr=lr, decay=1e-6, momentum=0.9, nesterov=True)
+model.compile(loss='categorical_crossentropy',
+          optimizer=sgd,
+          metrics=['accuracy'])
+
+
+#################################################################
+########### Display model summary, not necessary ################
+#################################################################
+
+model.summary()
+
+
+################################################################
+############### Training phase #################################
+################################################################
+
+def lr_schedule(epoch):
+    return lr * (0.1 ** int(epoch / 10))
+
+batch_size = 32
+epochs = 5
+model.fit(X, Y,
+          batch_size=batch_size,
+          epochs=epochs,
+          validation_split=0.2,
+          #np.resize(img, (-1, <image shape>)
+          callbacks=[LearningRateScheduler(lr_schedule),ModelCheckpoint('/home/atif/traffic_model_11_dec_1_filter.h5', save_best_only=True)])
