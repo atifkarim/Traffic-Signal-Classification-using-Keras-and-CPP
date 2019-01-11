@@ -153,3 +153,41 @@ np.savetxt('/home/atif/conv_b_spy.txt', conv_bias_array, fmt='%1.8e',delimiter='
 
 for x in conv_bias_array:
     print(x)
+    
+    
+
+
+#####################################################################
+#####Storing dense kernel weight#####################################
+#####################################################################
+    
+dense_kernel=layer_list[2][0]
+i_list=[] #declare a list to store the weight of dense kernel
+for i in dense_kernel:
+#     print(i)
+    i_list.append(i) #appended it in the declared list
+#     for k in i:
+# #         print(k)
+#         i_list.append(k)
+# print(i_list)
+i_list_array=[] #declared an array
+i_list_array=np.array(i_list) # store the value of list in the array
+print(i_list_array)
+np.savetxt('/home/atif/dense_k_spy.txt', i_list_array, fmt='%1.8e',delimiter=' ') #writing on a text file from array
+# %.8f
+# fmt='%1.8e' #add this above line after i_list_aray
+
+
+#####################################################################
+########Storing dense bias###########################################
+#####################################################################
+
+dense_bias=layer_list[2][1]
+dense_bias_list=[]
+for i in dense_bias:
+    dense_bias_list.append(i)
+
+dense_bias_array=[]
+dense_bias_array=np.array(dense_bias_list)
+print(dense_bias_array)
+np.savetxt('/home/atif/dense_b_spy.txt', dense_bias_array, fmt='%1.8e',delimiter=' ')
