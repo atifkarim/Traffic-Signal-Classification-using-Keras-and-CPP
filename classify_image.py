@@ -191,3 +191,32 @@ dense_bias_array=[]
 dense_bias_array=np.array(dense_bias_list)
 #print(dense_bias_array)
 #np.savetxt('/home/atif/dense_b_spy.txt', dense_bias_array, fmt='%1.8e',delimiter=' ')
+
+
+
+#####################################################################
+######### Reshaping convolution kernel for further process###########
+#####################################################################
+
+print("conv_kernel:\n",conv_kernel,"\n")
+print("conv_kernel_shape:",conv_kernel.shape,"\tconv_kernel ndim:",conv_kernel.ndim,"\n")
+print("length of conv_kernel:",len(conv_kernel),"\n")
+
+conv_kernel_reshape=conv_kernel.reshape(2,3,3) # 2 for 2 filter. change it according to your filter number
+print("conv_kernel_reshape:\n",conv_kernel_reshape,"\n")
+print("conv_kernel_reshape shape:",conv_kernel_reshape.shape,"\tconv_kernel_reshape ndim:",conv_kernel_reshape.ndim,"\n")
+print("length of conv_kernel_reshape:",len(conv_kernel_reshape[0]),"\n")
+
+convolution_kernel_filter=[]
+convolution_kernel_filter=np.zeros((2,3,3)) # 2 for 2 filter. change it according to your filter number
+convolution_kernel_filter[:,:,:]=np.array(conv_kernel_reshape)
+print("convolution_kernel_filter: \n",convolution_kernel_filter,"\n")
+print("convolution_kernel_filter shape:",convolution_kernel_filter.shape,"\tconvolution_kernel_filter ndim:",convolution_kernel_filter.ndim,"\n")
+print("length of convolution_kernel_filter:",len(convolution_kernel_filter),"\n")
+
+
+
+
+#########################################################################################
+################# Code for different steps for classification############################
+#########################################################################################
