@@ -131,7 +131,7 @@ for p in i_list_array:
     ww=str(p)
     ww=ww.replace('[','')
     ww=ww.replace(']','')
-    #f=open('/home/atif/conv_k_spy.txt','a') #uncomment here from here till f.close() if you want to save text file
+    #f=open('/home/atif/conv_k_spy.txt','a') #uncomment from here till f.close() if you want to save text file
     #f.write(ww)
     #f.write("\n")
 #f.close()
