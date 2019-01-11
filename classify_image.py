@@ -102,11 +102,10 @@ print("dense_bias: ",dense_bias)
 print("dense_bias_shape: ",dense_bias.shape)
 dense_bias=dense_bias.reshape(1,9) # here chenge 5 to the number of your used class
 print("dense_bias_shape: ",dense_bias.shape)
-# print(dense_2[0])
 
 
 #########################################################################
-#####Storing convolution kernel##########################################
+#####Storing convolution kernel, needed for cpp testing##################
 #########################################################################
 
 conv_kernel=layer_list[0][0]
@@ -132,13 +131,13 @@ for p in i_list_array:
     ww=str(p)
     ww=ww.replace('[','')
     ww=ww.replace(']','')
-    f=open('/home/atif/conv_k_spy.txt','a')
-    f.write(ww)
-    f.write("\n")
-f.close()
+    #f=open('/home/atif/conv_k_spy.txt','a') #uncomment here from here till f.close() if you want to save text file
+    #f.write(ww)
+    #f.write("\n")
+#f.close()
 
 #####################################################################
-######Storing convolution bias#######################################
+######Storing convolution bias, needed for cpp testing ##############
 #####################################################################
 
 conv_bias=layer_list[0][1]
@@ -148,17 +147,17 @@ for i in conv_bias:
 
 conv_bias_array=[]
 conv_bias_array=np.array(conv_bias_list)
-print(conv_bias_array)
-np.savetxt('/home/atif/conv_b_spy.txt', conv_bias_array, fmt='%1.8e',delimiter=' ')
+#print(conv_bias_array)
+#np.savetxt('/home/atif/conv_b_spy.txt', conv_bias_array, fmt='%1.8e',delimiter=' ')
 
-for x in conv_bias_array:
-    print(x)
+#for x in conv_bias_array:
+    #print(x)
     
     
 
 
 #####################################################################
-#####Storing dense kernel weight#####################################
+#####Storing dense kernel weight, needed for cpp testing ############
 #####################################################################
     
 dense_kernel=layer_list[2][0]
@@ -172,14 +171,15 @@ for i in dense_kernel:
 # print(i_list)
 i_list_array=[] #declared an array
 i_list_array=np.array(i_list) # store the value of list in the array
-print(i_list_array)
-np.savetxt('/home/atif/dense_k_spy.txt', i_list_array, fmt='%1.8e',delimiter=' ') #writing on a text file from array
-# %.8f
+#print(i_list_array)
+#np.savetxt('/home/atif/dense_k_spy.txt', i_list_array, fmt='%1.8e',delimiter=' ') #writing on a text file from array
+
+# %.8f #you can use it to get float value
 # fmt='%1.8e' #add this above line after i_list_aray
 
 
 #####################################################################
-########Storing dense bias###########################################
+########Storing dense bias, needed for cpp testing ##################
 #####################################################################
 
 dense_bias=layer_list[2][1]
@@ -189,5 +189,5 @@ for i in dense_bias:
 
 dense_bias_array=[]
 dense_bias_array=np.array(dense_bias_list)
-print(dense_bias_array)
-np.savetxt('/home/atif/dense_b_spy.txt', dense_bias_array, fmt='%1.8e',delimiter=' ')
+#print(dense_bias_array)
+#np.savetxt('/home/atif/dense_b_spy.txt', dense_bias_array, fmt='%1.8e',delimiter=' ')
