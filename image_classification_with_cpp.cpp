@@ -33,15 +33,18 @@ Image loadImage(const string &filename)
     cout<<"\n\n-----------------------Load Image Function has started to work-----------------------"<<endl;
 
     int image_depth;
+    image_depth=1; // 1 for grayscale, 3 for RGB
 //    cout<<"\nGive the depth of image: "<<endl;
-    cin>>image_depth;
+//    cin>>image_depth;
 
     Mat I = imread(filename, 1);
+    cout<<"\nImage: "<<filename<<endl;
     cout<<"\nLoaded Image Size: "<<I.size()<<endl;
 
     Mat E;
     cv::cvtColor(I, E, CV_RGB2GRAY);
     cout<<"\nGrayscaled Image Size: "<<E.size()<<endl;
+
 //    Mat Norm_img;
     E.convertTo(E, CV_64F, 1.0 / 255, 0);
 //
@@ -105,7 +108,36 @@ Image loadImage(const string &filename)
 
     return processed_image;
 
+}
 
+
+// Funciion for opening text file
+
+bool getFileContent(std::string fileName, std::vector<std::string> & vecOfStrs)
+
+{
+
+	// Open the File
+	std::ifstream in(fileName.c_str());
+
+	// Check if object is valid
+	if(!in)
+	{
+		std::cerr << "Cannot open the File : "<<fileName<<std::endl;
+		return false;
+	}
+
+	std::string str;
+	// Read the next line from File untill it reaches the end.
+	while (std::getline(in, str))
+	{
+		// Line contains string of length > 0 then save it in vector
+		if(str.size() > 0)
+			vecOfStrs.push_back(str); //Here all of the contents of a text file will store as a string
+	}
+	//Close The File
+	in.close();
+	return true;
 }
 
 
@@ -130,7 +162,7 @@ int main()
     vector<cv::String> fn;
     vector<cv::Mat> data;
     cv::glob(path,fn,true); // recurse
-    cout<<"\n Loaded number of image: "<<fn.size()<<endl;
+    cout<<"\n Number of Image in the dierctory is: "<<fn.size()<<endl;
     for (size_t k=0; k<fn.size(); ++k)
     {
      cv::Mat im = cv::imread(fn[k]);
