@@ -9,3 +9,8 @@ Python code for training and testing(using keras API & scratch Numpy) is working
 
 Check for training -- train_image_keras.py
 Check for testing -- classify_image.py
+
+
+Update 12 January, 2019
+
+Work for converting "classify_image.py" to cpp has started. FIle name --- image_classification_with_cpp.cpp
