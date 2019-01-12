@@ -4,6 +4,9 @@
 Created on Thu Dec 27 16:09:47 2018
 
 @author: atif
+
+This file will use for train Image using Keras
+
 """
 
 #####################
