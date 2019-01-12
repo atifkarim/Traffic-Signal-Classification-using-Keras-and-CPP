@@ -30,10 +30,12 @@ int newwidth;
 
 Image loadImage(const string &filename)
 {
-    int image_depth;
-    cout<<"\nGive the depth of image: "<<endl;
-    cin>>image_depth;
     cout<<"\n\n-----------------------Load Image Function has started to work-----------------------"<<endl;
+
+    int image_depth;
+//    cout<<"\nGive the depth of image: "<<endl;
+    cin>>image_depth;
+
     Mat I = imread(filename, 1);
     cout<<"\nLoaded Image Size: "<<I.size()<<endl;
 
@@ -53,53 +55,55 @@ Image loadImage(const string &filename)
     // don't let the execution continue, else imshow() will crash.
     }
 
-    Mat new_mat, conv;
-    resize( E,new_mat, Size(kNewWidth, kNewHeight));
-    new_mat.convertTo(new_mat,CV_64F);
+    Mat mat_image;
+    resize( E,mat_image, Size(kNewWidth, kNewHeight));
+    mat_image.convertTo(mat_image,CV_64F);
 
     cout<<endl;
-    cout<<"\nResized normalized image's size: "<<new_mat.size()<<endl;
-//    cout<<"\nResized nomalized image's matrix: \n"<<new_mat<<endl; //48*48
+    cout<<"\nResized normalized image's size: "<<mat_image.size()<<endl;
+//    cout<<"\nResized nomalized image's matrix: \n"<<mat_image<<endl; //48*48
 
-    Image image_1(Image(image_depth,Matrix(kNewHeight,Array())));
+    Image processed_image(Image(image_depth,Matrix(kNewHeight,Array())));
 
-//    image_1.resize(kNewHeight*kNewWidth);
-//    image_1.resize(kNewHeight);
-//    image_1[0].resize(kNewWidth);
+//    processed_image.resize(kNewHeight*kNewWidth);
+//    processed_image.resize(kNewHeight);
+//    processed_image[0].resize(kNewWidth);
     cout<<"\n OOOKKK"<<endl;
-    double *ptrDst[new_mat.rows];
+    double *ptrDst[mat_image.rows];
     //Array val;
-for(int k=0;k<image_depth;k++)
-{
 
-    for(int i = 0; i < new_mat.rows; ++i)
+    for(int k=0;k<image_depth;k++)
     {
 
+        for(int i = 0; i < mat_image.rows; ++i)
+        {
 
-        ptrDst[i] = new_mat.ptr<double>(i);
+
+            ptrDst[i] = mat_image.ptr<double>(i);
        // cout<<ptrDst[i];
-       for(int j = 0; j < new_mat.cols; ++j)
-       {
+            for(int j = 0; j < mat_image.cols; ++j)
+            {
 
-        double value = ptrDst[i][j];
-        image_1[k][i].push_back(value);
-//        cout<<"OK"<<endl;
-//        image_1[i][j]=value;
+                double value = ptrDst[i][j];
+                processed_image[k][i].push_back(value);
+//              cout<<"OK"<<endl;
+//              processed_image[i][j]=value;
+
+            }
 
         }
-        //cout<<"first row";
+//    cout<<processed_image[k][0].size()<<endl;
     }
-//    cout<<image_1[k][0].size()<<endl;
-    }
+
     cout<<"\nNow the image is ready to be CONVOLVED!!!!!"<<endl;
-    cout<<"\nProcessed Image Depth: "<<image_1.size()<<endl;
-    cout<<"\nProcessed Image Row: "<<image_1[0].size()<<endl;
-    cout<<"\nProcessed Image Column: "<<image_1[0][0].size()<<endl;
+    cout<<"\nProcessed Image Depth: "<<processed_image.size()<<endl;
+    cout<<"\nProcessed Image Row: "<<processed_image[0].size()<<endl;
+    cout<<"\nProcessed Image Column: "<<processed_image[0][0].size()<<endl;
 
     cout<<endl;
 
 
-    return image_1;
+    return processed_image;
 
 
 }
