@@ -33,9 +33,9 @@ Image loadImage(const string &filename)
     cout<<"\n\n-----------------------Load Image Function has started to work-----------------------"<<endl;
 
     int image_depth;
-    image_depth=1; // 1 for grayscale, 3 for RGB
-//    cout<<"\nGive the depth of image: "<<endl;
-//    cin>>image_depth;
+//    image_depth=1; // 1 for grayscale, 3 for RGB
+    cout<<"\nGive the depth of image: "<<endl;
+    cin>>image_depth;
 
     Mat I = imread(filename, 1);
     cout<<"\nImage: "<<filename<<endl;
@@ -138,13 +138,13 @@ bool getFileContent(std::string fileName, std::vector<std::string> & vecOfStrs)
 
 
 
-Image convolution_kernal (){
+Image convolution_kernal ()
 
-cout<<"\n\n-------------Convolution kernel make function has started to work----------------"<<endl;
+{
 
-std::vector<std::string> vecOfStr;
+    cout<<"\n\n-------------Convolution kernel make function has started to work----------------"<<endl;
 
-
+    std::vector<std::string> vecOfStr;
 
     string temp;
 
@@ -153,24 +153,26 @@ std::vector<std::string> vecOfStr;
     int num_ber=0;
     long double found;
     int filter_length;
-    cout<<"\nPlease mention the filter length you have used: \nThe filter length is: "; //this info you have to give here must.
-    cin>>filter_length;
 
+    cout<<"\nPlease mention the filter length you have used: \nThe filter length is: "; //this info you have to give here must.
+
+    cin>>filter_length;
     int filter_number;
+
     if(vecOfStr.size()%filter_length!=0)
     {
-      cout<<"\nRemainder after dividing line number with filter length is: "<<vecOfStr.size()%filter_length<<endl;
+        cout<<"\nRemainder after dividing line number with filter length is: "<<vecOfStr.size()%filter_length<<endl;
         cout<<"\nRemainder must be zero. Program terminate.\nChoose, suitable Filter length to make remainder ZERO"<<endl;
         abort();
     }
 //
 
-    filter_number=vecOfStr.size()/filter_length;
-    cout<<"\nNumber of line: "<<vecOfStr.size()<<endl;
+    filter_number=vecOfStr.size()/filter_length; // if you divide total line stored in text file of convolution kernel weight with filter length you will find number of filter
+    cout<<"\nNumber of line in convolution kernel weight's text file is: "<<vecOfStr.size()<<endl;
     cout<<"\nNumber of filter will be: "<<filter_number<<endl;
 
 
-    Image conv_kernal_1(Image(filter_number,Matrix(filter_length,Array())));
+    Image convolution_kernel_weight(Image(filter_number,Matrix(filter_length,Array())));
 	//std::vector<std::vector<long double> > numbers;
     int v=0;
 	if(result)
@@ -185,83 +187,77 @@ std::vector<std::string> vecOfStr;
 
            { std::string line;
             line= vecOfStr[i];
-//            cout<<line<<endl;
-			//std::cout<<line<<std::endl;
+
             stringstream ss;
 			ss<<line;
-//            cout<<ss<<endl;
 
-            //cout<<vecOfStr.size();
             while(!ss.eof())
             {
+                ss>>temp;
+                if(stringstream(temp)>>found)
+                {
+
+                    long double f;
+                    f=found;
+                    cout<<"f: "<<f<<endl;
+
+                    convolution_kernel_weight[v][num_ber].push_back(f);
 
 
+                    //cout<<"\nROWW: "<<convolution_kernel_weight.size()<<" and COLLL: "<<convolution_kernel_weight[0].size()<<endl;
+                    //std::cout<<f<<std::endl;
+                }
 
-            ss>>temp;
-            if(stringstream(temp)>>found)
-            {
-
-                long double f;
-                f=found;
-                cout<<"f: "<<f<<endl;
-
-                conv_kernal_1[v][num_ber].push_back(f);
+            }
 
 
-		//cout<<"\nROWW: "<<conv_kernal_1.size()<<" and COLLL: "<<conv_kernal_1[0].size()<<endl;
-                //std::cout<<f<<std::endl;
-			}
-
-
-			}
-
-
-        cout<<"number: "<<num_ber<<endl;
-		num_ber++;
-//		cout<<"number: "<<num_ber<<endl;
-		cout<<"num i: "<<i<<endl;
-		}
+            cout<<"number: "<<num_ber<<endl;
+            num_ber++;
+//		    cout<<"number: "<<num_ber<<endl;
+            cout<<"num i: "<<i<<endl;
+            }
 //i=i;
-        cout<<"now i: "<<i<<endl;
-		if(num_ber==filter_length && 1<filter_number){
+            cout<<"now i: "<<i<<endl;
+            if(num_ber==filter_length && 1<filter_number)
+            {
 //
-        cout<<"EXECUTED & getting new filter value"<<endl;
+                cout<<"EXECUTED & getting new filter value"<<endl;
+                num_ber=0;
+                filter_number=filter_number-1;
+                v++;
+                cout<<"\nRemaining filter number is: "<<filter_number<<endl;
+            }
 
-		num_ber=0;
-		filter_number=filter_number-1;
-		v++;
-		cout<<"\nRemaining filter number is: "<<filter_number<<endl;
-		}
-
-		}
+        }
 	}
 
 //	cout<<"\n\nStored convolution kernel value:\n";
-//	cout<<endl<<"\n\nNumber of filter in Convolution kernal is: "<<conv_kernal_1.size()<<"\n\nRow of convolution kernal is: "<<conv_kernal_1[0].size()<<endl;
-//    cout<<"\n\nColumn of Convolution kernal is: "<<conv_kernal_1[0][0].size()<<endl;
+//	cout<<endl<<"\n\nNumber of filter in Convolution kernal is: "<<convolution_kernel_weight.size()<<"\n\nRow of convolution kernal is: "<<convolution_kernel_weight[0].size()<<endl;
+//    cout<<"\n\nColumn of Convolution kernal is: "<<convolution_kernel_weight[0][0].size()<<endl;
 
     cout<<endl;
 
 
-for(int a=0;a<conv_kernal_1.size();a++)
+for(int a=0;a<convolution_kernel_weight.size();a++)
 
-{	for(int b= 0; b<conv_kernal_1[0].size();b++)
+{
+    for(int b= 0; b<convolution_kernel_weight[0].size();b++)
 	{
-        for(int c= 0; c<conv_kernal_1[0][0].size();c++)
+        for(int c= 0; c<convolution_kernel_weight[0][0].size();c++)
         {
 
-           cout<<conv_kernal_1[a][b][c]<<" "; //uncomment it if you want to see the vector output where the convolution kernel weights are stored
+           cout<<convolution_kernel_weight[a][b][c]<<" "; //uncomment it if you want to see the vector output where the convolution kernel weights are stored
 
         }
        //cout<<endl; //uncomment it if uncomment previous line
 	}
 }
     cout<<endl;
-    cout<<endl<<"\n\nNumber of filter in Convolution kernal is: "<<conv_kernal_1.size()<<"\n\nRow of convolution kernal is: "<<conv_kernal_1[0].size()<<endl;
-    cout<<"\n\nColumn of Convolution kernal is: "<<conv_kernal_1[0][0].size()<<endl;
+    cout<<endl<<"\n\nNumber of filter in Convolution kernal is: "<<convolution_kernel_weight.size()<<"\n\nRow of convolution kernal is: "<<convolution_kernel_weight[0].size()<<endl;
+    cout<<"\n\nColumn of Convolution kernal is: "<<convolution_kernel_weight[0][0].size()<<endl;
     cout<<endl;
 
-    return conv_kernal_1;
+    return convolution_kernel_weight;
 
 }
 
