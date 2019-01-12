@@ -199,7 +199,7 @@ Image convolution_kernal ()
 
                     long double f;
                     f=found;
-                    cout<<"f: "<<f<<endl;
+//                    cout<<"f: "<<f<<endl;
 
                     convolution_kernel_weight[v][num_ber].push_back(f);
 
@@ -211,21 +211,21 @@ Image convolution_kernal ()
             }
 
 
-            cout<<"number: "<<num_ber<<endl;
+//            cout<<"number: "<<num_ber<<endl;
             num_ber++;
 //		    cout<<"number: "<<num_ber<<endl;
-            cout<<"num i: "<<i<<endl;
+//            cout<<"num i: "<<i<<endl;
             }
 //i=i;
-            cout<<"now i: "<<i<<endl;
+//            cout<<"now i: "<<i<<endl;
             if(num_ber==filter_length && 1<filter_number)
             {
 //
-                cout<<"EXECUTED & getting new filter value"<<endl;
+//                cout<<"EXECUTED & getting new filter value"<<endl;
                 num_ber=0;
                 filter_number=filter_number-1;
                 v++;
-                cout<<"\nRemaining filter number is: "<<filter_number<<endl;
+//                cout<<"\nRemaining filter number is: "<<filter_number<<endl;
             }
 
         }
@@ -258,6 +258,63 @@ for(int a=0;a<convolution_kernel_weight.size();a++)
     cout<<endl;
 
     return convolution_kernel_weight;
+
+}
+
+
+Matrix convolution_kernel_bias()
+
+{
+
+    cout<<"\n\n------------- CONV bias value make function has started to work-------------"<<endl;
+    std::vector<std::string> vecOfStr;
+    string temp;
+
+    long double found;
+
+    bool result = getFileContent("/home/atif/image_classification_c++/multi_filter_cpp/conv_bias_update.txt", vecOfStr);
+
+
+    Matrix convolution_kernel_bias_value(Matrix(vecOfStr.size(),Array()));
+	//std::vector<std::vector<long double> > numbers;
+
+	if(result)
+	{
+		for(int i=0;i<vecOfStr.size();i++)
+		{
+            std::string line;
+            line= vecOfStr[i];
+			stringstream ss;
+			ss<<line;
+
+			while(!ss.eof())
+            {
+                ss>>temp;
+                if(stringstream(temp)>>found)
+                {
+
+                    long double f;
+                    f=found;
+                    convolution_kernel_bias_value[i].push_back(f);
+                }
+            }
+		}
+    }
+
+
+	for(int i= 0; i<convolution_kernel_bias_value.size();i++)
+	{
+        for(int j= 0; j<convolution_kernel_bias_value[0].size();j++)
+        {
+
+           //cout<<numbers[i][j]<<" "; //uncomment it if you want to see the vector output where the dense kernel weights are stored
+
+        }
+       //cout<<endl; //uncomment it if uncomment previous line
+	}
+    cout<<endl<<"\n\nRow of convolution bias value: "<<convolution_kernel_bias_value.size()<<"\n\nColumn of convolution bias value:"<<convolution_kernel_bias_value[0].size()<<endl<<endl;
+
+    return convolution_kernel_bias_value;
 
 }
 
@@ -295,6 +352,8 @@ int main()
      Image preprocessed_image = loadImage(fn[k]);
 
      Image convolution_filter_1 = convolution_kernal();
+
+     Matrix conv_bias= convolution_kernel_bias();
 
 
 
