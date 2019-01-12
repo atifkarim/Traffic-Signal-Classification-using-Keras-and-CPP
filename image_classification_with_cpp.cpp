@@ -77,16 +77,12 @@ Image loadImage(const string &filename)
 
     for(int k=0;k<image_depth;k++)
     {
-
         for(int i = 0; i < mat_image.rows; ++i)
         {
-
-
             ptrDst[i] = mat_image.ptr<double>(i);
-       // cout<<ptrDst[i];
+            // cout<<ptrDst[i];
             for(int j = 0; j < mat_image.cols; ++j)
             {
-
                 double value = ptrDst[i][j];
                 processed_image[k][i].push_back(value);
 //              cout<<"OK"<<endl;
@@ -142,6 +138,136 @@ bool getFileContent(std::string fileName, std::vector<std::string> & vecOfStrs)
 
 
 
+Image convolution_kernal (){
+
+cout<<"\n\n-------------Convolution kernel make function has started to work----------------"<<endl;
+
+std::vector<std::string> vecOfStr;
+
+
+
+    string temp;
+
+    bool result = getFileContent("/home/atif/image_classification_c++/multi_filter_cpp/conv_kernel_traffic_2_filter_no_pad_gray_ep_100_for_cpp.txt", vecOfStr);
+
+    int num_ber=0;
+    long double found;
+    int filter_length;
+    cout<<"\nPlease mention the filter length you have used: \nThe filter length is: "; //this info you have to give here must.
+    cin>>filter_length;
+
+    int filter_number;
+    if(vecOfStr.size()%filter_length!=0)
+    {
+      cout<<"\nRemainder after dividing line number with filter length is: "<<vecOfStr.size()%filter_length<<endl;
+        cout<<"\nRemainder must be zero. Program terminate.\nChoose, suitable Filter length to make remainder ZERO"<<endl;
+        abort();
+    }
+//
+
+    filter_number=vecOfStr.size()/filter_length;
+    cout<<"\nNumber of line: "<<vecOfStr.size()<<endl;
+    cout<<"\nNumber of filter will be: "<<filter_number<<endl;
+
+
+    Image conv_kernal_1(Image(filter_number,Matrix(filter_length,Array())));
+	//std::vector<std::vector<long double> > numbers;
+    int v=0;
+	if(result)
+	{
+		// Print the vector contents
+
+    for(int i=0;i<vecOfStr.size();i++)
+
+		{
+
+        if(num_ber<filter_length)
+
+           { std::string line;
+            line= vecOfStr[i];
+//            cout<<line<<endl;
+			//std::cout<<line<<std::endl;
+            stringstream ss;
+			ss<<line;
+//            cout<<ss<<endl;
+
+            //cout<<vecOfStr.size();
+            while(!ss.eof())
+            {
+
+
+
+            ss>>temp;
+            if(stringstream(temp)>>found)
+            {
+
+                long double f;
+                f=found;
+                cout<<"f: "<<f<<endl;
+
+                conv_kernal_1[v][num_ber].push_back(f);
+
+
+		//cout<<"\nROWW: "<<conv_kernal_1.size()<<" and COLLL: "<<conv_kernal_1[0].size()<<endl;
+                //std::cout<<f<<std::endl;
+			}
+
+
+			}
+
+
+        cout<<"number: "<<num_ber<<endl;
+		num_ber++;
+//		cout<<"number: "<<num_ber<<endl;
+		cout<<"num i: "<<i<<endl;
+		}
+//i=i;
+        cout<<"now i: "<<i<<endl;
+		if(num_ber==filter_length && 1<filter_number){
+//
+        cout<<"EXECUTED & getting new filter value"<<endl;
+
+		num_ber=0;
+		filter_number=filter_number-1;
+		v++;
+		cout<<"\nRemaining filter number is: "<<filter_number<<endl;
+		}
+
+		}
+	}
+
+//	cout<<"\n\nStored convolution kernel value:\n";
+//	cout<<endl<<"\n\nNumber of filter in Convolution kernal is: "<<conv_kernal_1.size()<<"\n\nRow of convolution kernal is: "<<conv_kernal_1[0].size()<<endl;
+//    cout<<"\n\nColumn of Convolution kernal is: "<<conv_kernal_1[0][0].size()<<endl;
+
+    cout<<endl;
+
+
+for(int a=0;a<conv_kernal_1.size();a++)
+
+{	for(int b= 0; b<conv_kernal_1[0].size();b++)
+	{
+        for(int c= 0; c<conv_kernal_1[0][0].size();c++)
+        {
+
+           cout<<conv_kernal_1[a][b][c]<<" "; //uncomment it if you want to see the vector output where the convolution kernel weights are stored
+
+        }
+       //cout<<endl; //uncomment it if uncomment previous line
+	}
+}
+    cout<<endl;
+    cout<<endl<<"\n\nNumber of filter in Convolution kernal is: "<<conv_kernal_1.size()<<"\n\nRow of convolution kernal is: "<<conv_kernal_1[0].size()<<endl;
+    cout<<"\n\nColumn of Convolution kernal is: "<<conv_kernal_1[0][0].size()<<endl;
+    cout<<endl;
+
+    return conv_kernal_1;
+
+}
+
+
+
+
 
 
 
@@ -171,6 +297,8 @@ int main()
 
 
      Image preprocessed_image = loadImage(fn[k]);
+
+     Image convolution_filter_1 = convolution_kernal();
 
 
 
