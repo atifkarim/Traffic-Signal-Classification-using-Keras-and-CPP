@@ -848,11 +848,11 @@ int main()
 {
 
 
-    cv::String path("/home/atif/image_classification_c++/multi_filter_cpp/test_image/*.ppm"); //select only ppm. change the extension with respect to your saved image extension
+    cv::String path("/home/atif/image_classification_c++/multi_filter_cpp/test_image/*.ppm"); //select only jpg
     vector<cv::String> fn;
     vector<cv::Mat> data;
     cv::glob(path,fn,true); // recurse
-    cout<<"\n Number of Image in the dierctory is: "<<fn.size()<<endl;
+    cout<<"\n Loaded number of image: "<<fn.size()<<endl;
     for (size_t k=0; k<fn.size(); ++k)
     {
      cv::Mat im = cv::imread(fn[k]);
@@ -883,10 +883,10 @@ int main()
 
 
 
-     return 0;
+
 
     }
-
+return 0;
 }
 
 //cv::String path("/home/atif/image_classification_c++/multi_filter_cpp/test_image/*.ppm"); //select only jpg
