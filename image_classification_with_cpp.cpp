@@ -319,6 +319,66 @@ Matrix convolution_kernel_bias()
 }
 
 
+Matrix dense_kernel_weight ()
+{
+
+    cout<<"\n\n-------------Dense Kernal make function has started to work-------------"<<endl;
+    std::vector<std::string> vecOfStr;
+    string temp;
+    long double found;
+
+    bool result = getFileContent("/home/atif/image_classification_c++/multi_filter_cpp/dense_kernel_traffic_2_filter_no_pad_gray_ep_100_for_cpp.txt", vecOfStr);
+
+
+    Matrix numbers(Matrix(vecOfStr.size(),Array()));
+	//std::vector<std::vector<long double> > numbers;
+
+	if(result)
+        {
+            // Print the vector contents
+            for(int i=0;i<vecOfStr.size();i++)
+            {
+                std::string line;
+                line= vecOfStr[i];
+                //std::cout<<line<<std::endl;
+                stringstream ss;
+                ss<<line;
+
+                //cout<<vecOfStr.size();
+                while(!ss.eof())
+                {
+                    ss>>temp;
+                    if(stringstream(temp)>>found)
+                    {
+
+                        long double f;
+                        f=found;
+                        numbers[i].push_back(f);
+                        //std::cout<<f<<std::endl;
+                    }
+
+
+                }
+            }
+        }
+
+
+	for(int i= 0; i<numbers.size();i++)
+	{
+        for(int j= 0; j<numbers[0].size();j++)
+        {
+
+           //cout<<numbers[i][j]<<" "; //uncomment it if you want to see the vector output where the dense kernel weights are stored
+
+        }
+       //cout<<endl; //uncomment it if uncomment previous line
+	}
+    cout<<endl<<"\n\nRow of dense kernel: "<<numbers.size()<<"\n\nColumn of dense kernel:"<<numbers[0].size()<<endl<<endl;
+
+    return numbers;
+
+}
+
 
 
 
@@ -354,6 +414,8 @@ int main()
      Image convolution_filter_1 = convolution_kernal();
 
      Matrix conv_bias= convolution_kernel_bias();
+
+     Matrix dense_kernel = dense_kernel_weight();
 
 
 
