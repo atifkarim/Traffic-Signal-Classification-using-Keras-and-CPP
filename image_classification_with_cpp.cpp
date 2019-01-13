@@ -520,20 +520,6 @@ Image applyFilter(Image &image, Image &filter, Matrix &conv_bias_weight)
         cout<<"\n\n !!!!myyyyyyyy conv bias:   ["<<row_c<<"][0]: "<<conv_bias_weight[row_c][0]<<endl;
         for(k=0;k<feature_map;k++)
             {
-//        switch(k){
-//
-//        case 0:
-//        d=2.01443624;
-//        break;
-//
-//
-//        case 1:
-//        d=1.3674825;
-//        break;
-//
-//        default:
-//        break;
-//        }
             for (i=0 ; i<newImageHeight ; i++)
                 {
                 for (j=0 ; j<newImageWidth ; j++)
@@ -558,15 +544,10 @@ Image applyFilter(Image &image, Image &filter, Matrix &conv_bias_weight)
 
                         }
                         //cout<<"new_image\n\n"<<newImage[i][j];
-
-
+                    }
+                }
             }
-
-        }
-
-
-
-        }}
+    }
 
         cout<<"\n !!!--------------Convolution Finished-------------------- !!!\n";
         cout<<"\nConvolved image Depth: "<<newImage.size()<<endl;
@@ -574,18 +555,18 @@ Image applyFilter(Image &image, Image &filter, Matrix &conv_bias_weight)
         cout<<"\nConvolved image Column: "<<newImage[0][0].size()<<endl;
 
 //        cout<<"\nDisplaying Convolved image's matrix"<<endl;
-for(int k=0;k<newImage.size();k++){
-        for(int x=0;x<newImage[0].size();x++)
-        {   for(int y=0;y<newImage[0][0].size();y++)
+for(int k=0;k<newImage.size();k++)
+    {
+    for(int x=0;x<newImage[0].size();x++)
+        {
+        for(int y=0;y<newImage[0][0].size();y++)
+            {
+            cout<<newImage[k][x][y]<<" ";
 
-                {
-                cout<<newImage[k][x][y]<<" ";
-
-                }
-                cout<<endl;
-
-
-        }}
+            }
+            cout<<endl;
+        }
+    }
 
     cout<<newImage.size();
     cout<<endl;
