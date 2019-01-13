@@ -633,6 +633,98 @@ Matrix resized_conv_relu_image(Image &new_im)
 }
 
 
+Matrix matmul_dense_resized_conv_relu(Matrix &resized_relu, Matrix &dense_kernel_weight, Matrix &dense_bias_weight)
+
+{
+    cout<<"\n\n---------------Matrix Multiplication between resized conv_relued & Dense kernal function has started to work-------------"<<endl;
+
+    Matrix multiply_dense_relu;
+    multiply_dense_relu.resize(1); //resized for 1 ROW
+//  multiply_dense_relu[0].resize(5); //resized for 5 COLUMN
+
+    multiply_dense_relu[0].resize(9); // class 9 so I need 9 column
+    int i, j, k;
+
+	// Initializing elements of matrix mult to 0.
+	for(i = 0; i < resized_relu.size(); ++i)
+        {
+		for(j = 0; j < dense_kernel_weight[0].size(); ++j)
+            {
+            multiply_dense_relu[i][j] = 0;
+            }
+        }
+
+	// Multiplying matrix firstMatrix and secondMatrix and storing in array mult.
+	int matmul_at=0;
+	for(i = 0; i < resized_relu.size() ; ++i)
+        {
+        for(j = 0; j < dense_kernel_weight[0].size(); ++j)
+            {
+            for(k=0; k<resized_relu[0].size(); ++k)
+                {
+				multiply_dense_relu[i][j] += resized_relu[i][k] * dense_kernel_weight[k][j];
+//				cout<<matmul_at<<"matmul"<<endl;
+				matmul_at++;
+                }
+            }
+        }
+
+    int a,b;
+
+	cout << "\n\nOutput Matrix:" << endl;
+	for(a = 0; a < resized_relu.size(); ++a)
+        {
+		for(b = 0; b < dense_kernel_weight[0].size(); ++b)
+            {
+			cout << multiply_dense_relu[a][b] << " ";
+			if(b == dense_kernel_weight[0].size() - 1)
+				cout << endl << endl;
+//				cout<<"hey man"<<endl;
+            }
+        }
+
+
+
+	//Matrix dense_bias(1, Array(5));
+	/*Matrix dense_bias(Matrix(1,Array(5))); //create matrix to store dense_kernel_bias value
+	dense_bias[0][0]=-0.10792767;
+	dense_bias[0][1]= 0.18778336;
+	dense_bias[0][2]= -0.09822812;
+	dense_bias[0][3] = -0.0668834;
+	dense_bias[0][4] = 0.08525585;*/
+
+//	Matrix dense_bias(Matrix(1,Array(9))); //class 9 ; so 9
+//	dense_bias[0][0]= -1.3402408;
+//	dense_bias[0][1]= -0.57729775;
+//	dense_bias[0][2]= -0.3844931;
+//	dense_bias[0][3] = 1.2625753;
+//	dense_bias[0][4] = 1.2135713;
+//
+//	dense_bias[0][5]=1.3687891;
+//	dense_bias[0][6]=-0.5227518;
+//	dense_bias[0][7]=-0.9303516;
+//	dense_bias[0][8]=-0.08981144;
+
+    cout << "\n\nResultant matrix after adding dense_bias with matrix multiplied resized relu and dense_kernel matrix" << endl;
+	for(int x=0;x<multiply_dense_relu.size();x++)
+        {
+        for(int y=0;y<multiply_dense_relu[0].size();y++)
+            {
+//          int temp=dense_bias[x][y] + multiply_dense_relu[x][y];
+            multiply_dense_relu[x][y]= dense_bias_weight[y][x] + multiply_dense_relu[x][y];
+           // multiply_dense_relu[x][y]=temp;
+            cout<<multiply_dense_relu[x][y]<<" ";
+            cout<<"d_val: ["<<y<<"]["<<x<<"] :"<<dense_bias_weight[y][x]<<endl;
+
+//            cout<<dense_bias[0][0]<<endl;
+            }
+        }
+    cout<<endl;
+
+    return multiply_dense_relu;
+}
+
+
 
 
 
@@ -673,13 +765,11 @@ int main()
 
      Matrix resized_conv_relu_image_value = resized_conv_relu_image(convImage);
 
-
-
-
-
      Matrix dense_kernel = dense_kernel_weight();
 
      Matrix dense_bias = dense_bias_value();
+
+     Matrix matmul_dense_resized_relu = matmul_dense_resized_conv_relu(resized_conv_relu_image_value,dense_kernel,dense_bias);
 
 
 
