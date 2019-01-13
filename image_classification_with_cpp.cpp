@@ -575,6 +575,65 @@ for(int k=0;k<newImage.size();k++)
 }
 
 
+Matrix resized_conv_relu_image(Image &new_im)
+
+{
+
+    cout<<"\n---------Resizing of Convolved_Relued Image has started-------"<<endl;
+
+    Matrix sized_image(Matrix(1,Array(new_im.size()*new_im[0].size()*new_im[0][0].size())));
+//sized_image=new_im;
+
+//sized_image.resize(1);  // It means we have resized it for one row only //i can do also in this way
+//sized_image[0].resize(newheight*newwidth); //It means we have made 46*46 column.
+//Why we have made it?? for the matrix multiplication with dense kernel weight
+
+//cout<<"\n\nrow of container for resized_conv_relu image: "<<sized_image.size();
+//cout<<"\n\ncolumn of container for resized_conv_relu image: "<<sized_image[0].size();
+
+    int i=0;
+    int j=0;
+//i=sized_image.size();
+
+    for(int m=0;m<new_im.size();m++)
+        {
+        for (int k=0 ; k<new_im[0].size() ; k++)
+            {
+            for(int l=0; l<new_im[0][0].size();l++)
+                {
+                int value = new_im[m][k][l];
+                sized_image[i][j]=value;
+                j++;
+
+//              cout<<"hii"<<sized_image[i][j]<<endl;
+
+                }
+            }
+
+        }
+
+    for (int i=0 ; i<sized_image.size() ; i++)
+        {
+        for(int j=0; j<sized_image[0].size();j++)
+            {
+//          cout<<sized_image[i][j];
+
+            }
+    //cout<<"I ran only once:"<<endl;
+    cout<<"\n\nrow of resized_conv_relu image: "<<sized_image.size();
+    cout<<"\n\ncolumn of resized_conv_relu image: "<<sized_image[0].size();
+
+    cout<<"\n\nHere you can see that COLUMN of resized_conv_relu Matrix and ROW of dense_kernel Matrix is same\nSo, we can do here Matrix Multiplication.";
+    cout<<"\nMatrix multiplication will be held in this way >>> \nresized_conv_relu X dense kernel\nHere, 'X' sign used for indicating multiplication.";
+
+                //cout<<endl;
+        }
+
+    return sized_image;
+}
+
+
+
 
 
 
@@ -611,6 +670,8 @@ int main()
      Matrix conv_bias= convolution_kernel_bias();
 
      Image convImage = applyFilter(preprocessed_image, convolution_filter_1, conv_bias);
+
+     Matrix resized_conv_relu_image_value = resized_conv_relu_image(convImage);
 
 
 
