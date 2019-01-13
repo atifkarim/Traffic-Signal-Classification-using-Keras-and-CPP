@@ -5,10 +5,9 @@ Created on Fri Jan 11 21:50:57 2019
 
 @author: atif
 """
-
-#############################
-##Importing Library##########
-#############################
+# =============================================================================
+# Importing Library
+# =============================================================================
 
 import numpy as np
 import sys
@@ -26,9 +25,9 @@ from matplotlib import pyplot as plt
 NUM_CLASSES = 9 #Used class for the training
 IMG_SIZE = 48 #required size. This size has also maintained during training. User defined value
 
-########################################################################
-#############Extracting weight from the trained model file##############
-########################################################################
+# =============================================================================
+# Extracting weight from the trained model file
+# =============================================================================
 
 import pandas as pd
 from keras.models import load_model
@@ -101,10 +100,9 @@ dense_bias=layer_list[2][1]
 dense_bias=dense_bias.reshape(1,9) # here chenge 5 to the number of your used class
 #print("dense_bias_shape: ",dense_bias.shape)
 
-
-#########################################################################
-#####Storing convolution kernel, needed for cpp testing##################
-#########################################################################
+# =============================================================================
+# Storing convolution kernel, needed for cpp testing
+# =============================================================================
 
 conv_kernel=layer_list[0][0]
 conv_kernel=conv_kernel.transpose() # This has made to print it like a Matrix form. 
@@ -134,9 +132,9 @@ for p in i_list_array:
     #f.write("\n")
 #f.close()
 
-#####################################################################
-######Storing convolution bias, needed for cpp testing ##############
-#####################################################################
+# =============================================================================
+# Storing convolution bias, needed for cpp testing
+# =============================================================================
 
 conv_bias=layer_list[0][1]
 conv_bias_list=[]
@@ -153,11 +151,10 @@ conv_bias_array=np.array(conv_bias_list)
     
     
 
-
-#####################################################################
-#####Storing dense kernel weight, needed for cpp testing ############
-#####################################################################
-    
+# =============================================================================
+# Storing dense kernel weight, needed for cpp testing
+# =============================================================================
+ 
 dense_kernel=layer_list[2][0]
 i_list=[] #declare a list to store the weight of dense kernel
 for i in dense_kernel:
@@ -175,10 +172,9 @@ i_list_array=np.array(i_list) # store the value of list in the array
 # %.8f #you can use it to get float value
 # fmt='%1.8e' #add this above line after i_list_aray
 
-
-#####################################################################
-########Storing dense bias, needed for cpp testing ##################
-#####################################################################
+# =============================================================================
+# Storing dense bias, needed for cpp testing
+# =============================================================================
 
 dense_bias=layer_list[2][1]
 dense_bias_list=[]
@@ -191,10 +187,9 @@ dense_bias_array=np.array(dense_bias_list)
 #np.savetxt('/home/atif/dense_b_spy.txt', dense_bias_array, fmt='%1.8e',delimiter=' ')
 
 
-
-#####################################################################
-######### Reshaping convolution kernel for further process###########
-#####################################################################
+# =============================================================================
+# Reshaping convolution kernel for further process
+# =============================================================================
 
 #print("conv_kernel:\n",conv_kernel,"\n")
 #print("conv_kernel_shape:",conv_kernel.shape,"\tconv_kernel ndim:",conv_kernel.ndim,"\n")
@@ -214,11 +209,9 @@ convolution_kernel_filter[:,:,:]=np.array(conv_kernel_reshape)
 
 
 
-
-#########################################################################################
-################# Code for different steps for classification############################
-#########################################################################################
-
+# =============================================================================
+# Code for different steps for classification
+# =============================================================================
 
 def preprocess_img(img):
 #     uncomment following 5 lines for rgb testing and comment out the rgb2gray line
@@ -244,15 +237,15 @@ def preprocess_img(img):
     return img
 
 def conv_(img, conv_filter):
-    print("\nconv_ function start to work\n")
+#    print("\nconv_ function start to work\n")
     filter_size = conv_filter.shape[1] #output is 3
-    print("filter_size: ",filter_size)
-    print("img shape: ",img.shape)
+#    print("filter_size: ",filter_size)
+#    print("img shape: ",img.shape)
     result = np.zeros((img.shape))
-    #Looping through the image to apply the convolution operation.
+#    Looping through the image to apply the convolution operation.
     
     for x in conv_bias_array:  # to get the value of convolution bias
-        print("i am the conv_bias: ",x)
+#        print("i am the conv_bias: ",x)
         
         for r in np.uint16(np.arange(filter_size/2.0,img.shape[0]-filter_size/2.0+1)):
         
@@ -271,17 +264,17 @@ def conv_(img, conv_filter):
                 conv_sum = np.sum(curr_result) #Summing the result of multiplication.
                 result[r, c] = conv_sum#Saving the summation in the convolution layer feature map.
 #             print("conv_sum_shape: ",conv_sum.shape)
-        print("now x is: ",x)
+#        print("now x is: ",x)
         #print(curr_region)
     #Clipping the outliers of the result matrix.
     final_result = result[np.uint16(filter_size/2.0):result.shape[0]-np.uint16(filter_size/2.0),np.uint16(filter_size/2.0):result.shape[1]-np.uint16(filter_size/2.0)]
-    print("\nconv_ function finish\n")
+#    print("\nconv_ function finish\n")
     return final_result
 
 
 
 def conv(img, conv_filter):
-    print("\nconv function start to work")
+#    print("\nconv function start to work")
     
     if len(img.shape) > 2 or len(conv_filter.shape) > 3: # Check if number of image channels matches the filter depth.
         if img.shape[-1] != conv_filter.shape[-1]:
@@ -304,7 +297,7 @@ def conv(img, conv_filter):
         print("Filter ", filter_num + 1)
         curr_filter = conv_filter[filter_num, :] # getting a filter from the bank.
 #         print(curr_filter)
-        #print("curr_fiter_shape: ",curr_filter.shape)
+#        print("curr_fiter_shape: ",curr_filter.shape)
 #         print("length of curr_fiter_shape: ",len(curr_filter.shape))
 
 
@@ -314,7 +307,7 @@ def conv(img, conv_filter):
                 conv_map = conv_map + conv_(img[:, :, ch_num], 
                                   curr_filter[:, :, ch_num])
         else: # There is just a single channel in the filter.
-            print("\nGo to conv_ function ")
+#            print("\nGo to conv_ function ")
             conv_map = conv_(img, curr_filter)
             
         feature_maps[:, :, filter_num] = conv_map # Holding feature map with the current filter.
@@ -337,7 +330,7 @@ path = r'/home/atif/image_classification_c++/multi_filter_cpp/test_image/'
 
 img_path = glob.glob(path+ '/*.ppm')
 for image in img_path:
-    print("\nhey i am the loaded image: ",image)
+    print("\nName of loaded image: ",image)
     X_test=[]
     X_test.append(preprocess_img(io.imread(image)))
     X_test = np.array(X_test)
@@ -349,51 +342,54 @@ for image in img_path:
     
     # output of feature map / conv function
 
-    print("\nfeature shape: \n",feature.shape)
+#    print("\nfeature shape: \n",feature.shape)
 
-    # x_feature_map=np.flipud(feature[0])
+#     x_feature_map=np.flipud(feature[0])
     transpose_feature_map=feature.transpose()
-    print("\ntranspose_feature_map shape: ",transpose_feature_map.shape)
+#    print("\ntranspose_feature_map shape: ",transpose_feature_map.shape)
 #     plt.imshow(transpose_feature_map[0])
-    print("\ntranspose_feature_map: \n",transpose_feature_map)
+#    print("\ntranspose_feature_map: \n",transpose_feature_map)
     
-    print("\nrelu_out shape: ",relu_out.shape)
+#    print("\nrelu_out shape: ",relu_out.shape)
     relu_out_transpose=relu_out.transpose()
-    print("\nrelu_out_transpose shape: ",relu_out_transpose.shape)
+#    print("\nrelu_out_transpose shape: ",relu_out_transpose.shape)
 #     plt.imshow(relu_out_transpose[0])
-    print("\nrelu_out_transpose:\n",relu_out_transpose)
+#    print("\nrelu_out_transpose:\n",relu_out_transpose)
     
     
     
-    # matrix multiplication with dense kernel and relu o/p
+# =============================================================================
+#      matrix multiplication with dense kernel and relu o/p
+# =============================================================================
 
     flatten_relu_out_transpose=relu_out_transpose.reshape(1,2*46*46)  #if you don't do padd on input image please make it 46*46. how 46 came? 
                                                                                     #the formula of output size. and 2 for 2 filter
-    print("\nflatten_relu_out_transpose shape: \n",flatten_relu_out_transpose.shape)
+#    print("\nflatten_relu_out_transpose shape: \n",flatten_relu_out_transpose.shape)
 
-    print("\ndense_kernel shape: \n",dense_kernel.shape,"\n")
+#    print("\ndense_kernel shape: \n",dense_kernel.shape,"\n")
 
     matmul_flatt_rel_dense_kernel=np.matmul(flatten_relu_out_transpose,dense_kernel)
-    print("\nmatmul_soft_dense_kernel shape: \n",matmul_flatt_rel_dense_kernel.shape,"\n")
-    print("\nmatmul_soft_dense_kernel: \n",matmul_flatt_rel_dense_kernel,"\n")
+#    print("\nmatmul_soft_dense_kernel shape: \n",matmul_flatt_rel_dense_kernel.shape,"\n")
+#    print("\nmatmul_soft_dense_kernel: \n",matmul_flatt_rel_dense_kernel,"\n")
 
     dense_bias_array=np.array(dense_bias)
     dense_bias_array=dense_bias_array.reshape(1,9) # 9 for 9 class
-    print("\ndense_bias_array: \n",dense_bias_array,"\n")
+#    print("\ndense_bias_array: \n",dense_bias_array,"\n")
 
     add_matmul_flatt_rel_dense_kernel_and_dense_bias_array=matmul_flatt_rel_dense_kernel+dense_bias_array
-    print("\nvalue add_matmul_flatt_rel_dense_kernel_and_dense2_array: \n",add_matmul_flatt_rel_dense_kernel_and_dense_bias_array)
+#    print("\nvalue add_matmul_flatt_rel_dense_kernel_and_dense2_array: \n",add_matmul_flatt_rel_dense_kernel_and_dense_bias_array)
     
     def softmax_fn(input_array):
         e_x=np.exp(input_array-np.max(input_array))
         return e_x/e_x.sum(axis=len(e_x.shape)-1)
 
     op= softmax_fn(add_matmul_flatt_rel_dense_kernel_and_dense_bias_array)
-    print("output of FC layer: ",op,"\n")
+#    print("output of FC layer: ",op,"\n")
     
-    ######################################
-    #### Folowing code for finding class##
-    ######################################
+# =============================================================================
+#     Following code for finding class
+# =============================================================================
+    
     m=0
     k=0
     # op=[[0.17095664, 0.24349895, 0.172376,   0.19243606, 0.62073235]]
@@ -414,3 +410,4 @@ for image in img_path:
             else:
                 pass
     print('class:',k)
+
