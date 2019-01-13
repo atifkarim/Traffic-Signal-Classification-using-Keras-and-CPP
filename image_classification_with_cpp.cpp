@@ -30,21 +30,16 @@ int newwidth;
 
 Image loadImage(const string &filename)
 {
-    cout<<"\n\n-----------------------Load Image Function has started to work-----------------------"<<endl;
-
     int image_depth;
-//    image_depth=1; // 1 for grayscale, 3 for RGB
     cout<<"\nGive the depth of image: "<<endl;
     cin>>image_depth;
-
+    cout<<"\n\n-----------------------Load Image Function has started to work-----------------------"<<endl;
     Mat I = imread(filename, 1);
-    cout<<"\nImage: "<<filename<<endl;
     cout<<"\nLoaded Image Size: "<<I.size()<<endl;
 
     Mat E;
     cv::cvtColor(I, E, CV_RGB2GRAY);
     cout<<"\nGrayscaled Image Size: "<<E.size()<<endl;
-
 //    Mat Norm_img;
     E.convertTo(E, CV_64F, 1.0 / 255, 0);
 //
@@ -58,53 +53,57 @@ Image loadImage(const string &filename)
     // don't let the execution continue, else imshow() will crash.
     }
 
-    Mat mat_image;
-    resize( E,mat_image, Size(kNewWidth, kNewHeight));
-    mat_image.convertTo(mat_image,CV_64F);
+    Mat new_mat, conv,A;
+    resize( E,new_mat, Size(kNewWidth, kNewHeight));
+    new_mat.convertTo(new_mat,CV_64F);
 
     cout<<endl;
-    cout<<"\nResized normalized image's size: "<<mat_image.size()<<endl;
-//    cout<<"\nResized nomalized image's matrix: \n"<<mat_image<<endl; //48*48
+    cout<<"\nResized normalized image's size: "<<new_mat.size()<<endl;
+//    cout<<"\nResized nomalized image's matrix: \n"<<new_mat<<endl; //48*48
 
-    Image processed_image(Image(image_depth,Matrix(kNewHeight,Array())));
+    Image image_1(Image(image_depth,Matrix(kNewHeight,Array())));
 
-//    processed_image.resize(kNewHeight*kNewWidth);
-//    processed_image.resize(kNewHeight);
-//    processed_image[0].resize(kNewWidth);
+//    image_1.resize(kNewHeight*kNewWidth);
+//    image_1.resize(kNewHeight);
+//    image_1[0].resize(kNewWidth);
     cout<<"\n OOOKKK"<<endl;
-    double *ptrDst[mat_image.rows];
+    double *ptrDst[new_mat.rows];
     //Array val;
+for(int k=0;k<image_depth;k++)
+{
 
-    for(int k=0;k<image_depth;k++)
+    for(int i = 0; i < new_mat.rows; ++i)
     {
-        for(int i = 0; i < mat_image.rows; ++i)
-        {
-            ptrDst[i] = mat_image.ptr<double>(i);
-            // cout<<ptrDst[i];
-            for(int j = 0; j < mat_image.cols; ++j)
-            {
-                double value = ptrDst[i][j];
-                processed_image[k][i].push_back(value);
-//              cout<<"OK"<<endl;
-//              processed_image[i][j]=value;
 
-            }
+
+        ptrDst[i] = new_mat.ptr<double>(i);
+       // cout<<ptrDst[i];
+       for(int j = 0; j < new_mat.cols; ++j)
+       {
+
+        double value = ptrDst[i][j];
+        image_1[k][i].push_back(value);
+//        cout<<"OK"<<endl;
+//        image_1[i][j]=value;
 
         }
-//    cout<<processed_image[k][0].size()<<endl;
+        //cout<<"first row";
     }
-
+//    cout<<image_1[k][0].size()<<endl;
+    }
     cout<<"\nNow the image is ready to be CONVOLVED!!!!!"<<endl;
-    cout<<"\nProcessed Image Depth: "<<processed_image.size()<<endl;
-    cout<<"\nProcessed Image Row: "<<processed_image[0].size()<<endl;
-    cout<<"\nProcessed Image Column: "<<processed_image[0][0].size()<<endl;
+    cout<<"\nProcessed Image Depth: "<<image_1.size()<<endl;
+    cout<<"\nProcessed Image Row: "<<image_1[0].size()<<endl;
+    cout<<"\nProcessed Image Column: "<<image_1[0][0].size()<<endl;
 
     cout<<endl;
 
 
-    return processed_image;
+    return image_1;
+
 
 }
+
 
 
 // Funciion for opening text file
@@ -724,6 +723,112 @@ Matrix matmul_dense_resized_conv_relu(Matrix &resized_relu, Matrix &dense_kernel
     return multiply_dense_relu;
 }
 
+Matrix softmax(Matrix &softmax_value)
+
+{
+cout<<"\n-------Softmax function has started to work.Here you will also see the final result of Classification.------"<<endl;
+
+cout<<"\nROW of input array for softmax : "<<softmax_value.size();
+cout<<"\nCOLUMN of input array for softmax : "<<softmax_value[0].size()<<endl;
+
+
+Matrix softmax_output;
+softmax_output.resize(1);
+//softmax_output[0].resize(5);
+
+softmax_output[0].resize(9); //class 9; so 9
+
+//
+//cout<<"beginning ROW softmax output: "<<softmax_output.size()<<endl;
+//cout<<"beginning COL softmax output: "<<softmax_output[0].size()<<endl;
+
+//cout<<"exp_value: ";
+//for(int a=0;a<softmax_output.size();a++)
+//{for(int b=0;b<softmax_output[0].size();b++)
+//    {
+//    cout<<"\nb: "<<b;
+////    cout<<softmax_output[0][b]<<" ";
+//    }
+//
+//cout<<"\none time run"<<endl;
+//}
+
+//std::vector< double > exp_soft;
+
+double exp_value_softmax;
+double exp_value_sum=0.0000000;
+
+cout<<"\nArray after doing exponential operation on the input array of Softmax Function"<<endl;
+
+for ( int i = 0; i < softmax_value.size(); i++ )
+{
+  for ( int j = 0; j < softmax_value[0].size(); j++ )
+  {
+//      cout<<softmax_value[i][j]<<" ";
+      exp_value_softmax=softmax_value[i][j];
+      exp_value_softmax=exp(exp_value_softmax);
+//      cout<<"exp of: "<<softmax_value[i][j]<<" is: "<<exp_value_softmax<<"\n";
+//      softmax_output[0].push_back(exp_value_softmax);
+        softmax_output[i][j]=exp_value_softmax;
+        cout<<softmax_output[i][j]<<"  ";
+        exp_value_sum+=softmax_output[i][j];
+
+      //softmax_value[i][j]=exp_value_softmax;
+//      cout<<softmax_value[i][j]<<" ";
+
+  }
+  cout<<"\nOne time run"<<endl;
+    cout<<"Sum of all exp_value: "<<exp_value_sum<<endl;
+
+}
+//double x=0.00000;
+cout<<"\nOutput of Softmax algorithm"<<endl;
+for(int a=0;a<softmax_output.size();a++)
+{for(int b=0;b<softmax_output[0].size();b++)
+    {
+        softmax_output[a][b]= (softmax_output[a][b])/exp_value_sum;
+        cout<<softmax_output[a][b]<<" ";
+//        x+=softmax_output[a][b];
+
+    }
+
+cout<<"\nOne time run"<<endl;
+//cout<<"x: "<<x;
+//cout<<"exp_value_sum: "<<exp_value_sum<<endl;
+}
+double x,y,z;
+x=0.000000;
+y=0.000000;
+z=0.000000;
+
+cout<<"----------Ready to see the class of Input Image---------"<<endl;
+for(int s=0;s<softmax_output.size();s++)
+{
+    for(int t=0;t<softmax_output[0].size();t++)
+    {
+        x=softmax_output[s][t];
+        if(x>z){
+
+        cout<<"\npresent val: "<<x;
+        z=x;
+        y=t;
+        }
+        else{
+        }
+    }
+    cout<<"\nClass is: "<<y;
+}
+
+
+
+
+cout<<endl;
+
+//cout<<"AAAAAA: "<<sum<<endl;
+return softmax_output;
+}
+
+
 
 
 
@@ -771,6 +876,8 @@ int main()
 
      Matrix matmul_dense_resized_relu = matmul_dense_resized_conv_relu(resized_conv_relu_image_value,dense_kernel,dense_bias);
 
+     Matrix softmax_calculation = softmax(matmul_dense_resized_relu);
+
 
 
 
@@ -778,6 +885,43 @@ int main()
 
      return 0;
 
-}
+    }
 
 }
+
+//cv::String path("/home/atif/image_classification_c++/multi_filter_cpp/test_image/*.ppm"); //select only jpg
+//    vector<cv::String> fn;
+//    vector<cv::Mat> data;
+//    cv::glob(path,fn,true); // recurse
+//    cout<<"\n Loaded number of image: "<<fn.size()<<endl;
+//    for (size_t k=0; k<fn.size(); ++k)
+//    {
+//     cv::Mat im = cv::imread(fn[k]);
+////     const string c=fn[k];
+//     if (im.empty()) continue; //only proceed if sucsessful
+//
+//
+//     Image preprocessed_image = loadImage(fn[k]);
+//
+//
+//     Image convolution_filter_1 = convolution_kernal();
+//
+//     Matrix conv_bias= conv_bias_value();
+//
+//
+////    Matrix convImage = applyFilter(preprocessed_image, conv_kernal);
+//
+//    Image convImage = applyFilter(preprocessed_image, convolution_filter_1, conv_bias);
+//
+////    Matrix dense_kernel = dense_value();
+//
+//    Matrix resized_conv_relu_image_value = resized_conv_relu_image(convImage);
+//
+//    Matrix dense_kernel = dense_value();
+//
+//    Matrix dense_bias = dense_bias_value();
+//
+//    Matrix matmul_dense_resized_relu = matmul_dense_resized_conv_relu(resized_conv_relu_image_value,dense_kernel,dense_bias);
+//
+//    Matrix softmax_calculation = softmax(matmul_dense_resized_relu);
+
