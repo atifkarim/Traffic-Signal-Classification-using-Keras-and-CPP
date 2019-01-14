@@ -16,11 +16,11 @@
 //typedef vector<Matrix> Image;
 //typedef vector<Image> Container;
 
-const int kNewWidth =48;
-const int kNewHeight =48;
+//const int kNewWidth =48;
+//const int kNewHeight =48;
 
-int newheight;
-int newwidth;
+//int newheight;
+//int newwidth;
 
 using namespace std;
 
