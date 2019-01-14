@@ -18,6 +18,7 @@ from sklearn.model_selection import train_test_split  #it came from update sciki
 import os
 import glob
 import h5py
+import time
 
 from matplotlib import pyplot as plt
 #%matplotlib inline
@@ -337,6 +338,8 @@ for image in img_path:
 #     plt.imshow(X_test)
     X_test = X_test.reshape(IMG_SIZE,IMG_SIZE)
     
+    start = time.time()
+    
     feature=conv(img=X_test,conv_filter=convolution_kernel_filter) #conv function calling
     relu_out=relu(feature) # relu function calling
     
@@ -410,4 +413,7 @@ for image in img_path:
             else:
                 pass
     print('class:',k)
+    end = time.time()
+    #normally gives time in second. multiply or divide to change unit of time
+    print("\nElapsed Time: ",(end - start)*1000000)
 

@@ -75,6 +75,7 @@ int main()
 //    auto start = get_time::now();
 
     auto start = high_resolution_clock::now();
+
     Image convImage = obj3.applyFilter(preprocessed_image, convolution_filter_1, conv_bias);
 
     Matrix resized_conv_relu_image_value = obj3.resized_conv_relu_image(convImage);
@@ -86,6 +87,7 @@ int main()
     auto stop = high_resolution_clock::now();
 //    auto diff = end - start;
     auto duration = duration_cast<microseconds>(stop - start);
+//    auto duration = duration_cast<seconds>(stop - start);
 
 //    cout<<"Elapsed time is :  "<< chrono::duration_cast<ns>(diff).count()<<" ns "<<endl;
 
