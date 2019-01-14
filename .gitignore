@@ -5,3 +5,6 @@ gray_flower_ep_5_ch_1.h5
 CNN_testing_cpp
 test_atif.cpp
 .ipynb_checkpoints/
+keras_to_cpp_forward_pass/classify_image_with_cpp/classify_image_with_cpp.pro
+keras_to_cpp_forward_pass/classify_image_with_cpp/classify_image_with_cpp.pro.user
+keras_to_cpp_forward_pass/classify_image_with_cpp/main.cpp.autosave
