@@ -1,8 +1,8 @@
 #ifndef GET_IMAGE_H
 #define GET_IMAGE_H
 
-#include<cstring>
-#include<string>
+//#include<cstring>
+//#include<string>
 #include <vector>
 
 using namespace std;
