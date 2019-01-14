@@ -5,17 +5,21 @@
 
 #include<cstring>
 #include<string>
-
 #include <vector>
 #include <assert.h>
 #include <cmath>
 #include<sstream>
 #include <fstream>
+#include <chrono>
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include "opencv2/imgproc/imgproc_c.h"
 #include "opencv2/imgproc/imgproc.hpp"
+
+
+using  ns = chrono::nanoseconds;
+using get_time = chrono::steady_clock ;
 
 
 //typedef vector<double> Array;
@@ -43,9 +47,9 @@ int main()
       cv::glob(path,fn,true); // recurse
       cout<<"\n Loaded number of image: "<<fn.size()<<endl;
       for (size_t k=0; k<fn.size(); ++k)
-      {
+      {/*
         const int kNewWidth =48;
-        const int kNewHeight =48;
+        const int kNewHeight =48;*/
 
         int newheight;
         int newwidth;
@@ -66,6 +70,8 @@ int main()
 
      Matrix dense_bias = obj2.dense_bias_value();
 
+     auto start = get_time::now();
+
      Image convImage = obj3.applyFilter(preprocessed_image, convolution_filter_1, conv_bias);
 
      Matrix resized_conv_relu_image_value = obj3.resized_conv_relu_image(convImage);
@@ -73,6 +79,11 @@ int main()
      Matrix matmul_dense_resized_relu = obj3.matmul_dense_resized_conv_relu(resized_conv_relu_image_value,dense_kernel,dense_bias);
 
      Matrix softmax_calculation = obj3.softmax(matmul_dense_resized_relu);
+
+
+     auto end = get_time::now();
+     auto diff = end - start;
+     cout<<"Elapsed time is :  "<< chrono::duration_cast<ns>(diff).count()<<" ns "<<endl;
 
 
 }

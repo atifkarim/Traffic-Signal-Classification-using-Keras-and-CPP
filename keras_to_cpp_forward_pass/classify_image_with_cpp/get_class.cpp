@@ -6,8 +6,8 @@
 using namespace std;
 
 
-int newheight;
-int newwidth;
+//int newheight;
+//int newwidth;
 
 
 
