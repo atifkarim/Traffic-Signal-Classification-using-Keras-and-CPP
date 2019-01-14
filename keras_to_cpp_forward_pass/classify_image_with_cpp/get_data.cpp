@@ -107,7 +107,7 @@ Image Fetch_Data :: convolution_kernal()
     }
   }
 
-  cout<<endl;
+//  cout<<endl;
 
 
   for(int a=0;a<conv_kernal_weight.size();a++)
@@ -123,7 +123,7 @@ Image Fetch_Data :: convolution_kernal()
       //            cout<<endl; //uncomment it if uncomment previous line
     }
   }
-  cout<<endl;
+//  cout<<endl;
   //    cout<<endl<<"\n\nNumber of filter in Convolution kernal is: "<<conv_kernal_weight.size()<<"\n\nRow of convolution kernal is: "<<conv_kernal_weight[0].size()<<endl;
   //    cout<<"\n\nColumn of Convolution kernal is: "<<conv_kernal_weight[0][0].size()<<endl;
 

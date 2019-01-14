@@ -23,7 +23,7 @@ int main()
   vector<cv::String> fn;
   vector<cv::Mat> data;
   cv::glob(path,fn,true); // recurse
-  cout<<"\n Loaded number of image: "<<fn.size()<<endl;
+  cout<<"\nNumber of image in the directory is: "<<fn.size()<<endl;
   for (size_t k=0; k<fn.size(); ++k)
   {
 
@@ -57,7 +57,7 @@ int main()
 
     auto duration = duration_cast<microseconds>(stop - start);
 
-    cout <<"Time taken for classification: "<< duration.count() <<" microseconds"<< endl;
+    cout <<"\nTime taken for classification: "<< duration.count() <<" microseconds"<< endl<<endl;
 
 
   }

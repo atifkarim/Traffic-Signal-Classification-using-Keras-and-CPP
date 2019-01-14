@@ -219,44 +219,22 @@ Matrix do_calculation :: matmul_dense_resized_conv_relu(Matrix &resized_relu, Ma
     }
   }
 
-
-
-  //Matrix dense_bias(1, Array(5));
-  /*Matrix dense_bias(Matrix(1,Array(5))); //create matrix to store dense_kernel_bias value
-  dense_bias[0][0]=-0.10792767;
-  dense_bias[0][1]= 0.18778336;
-  dense_bias[0][2]= -0.09822812;
-  dense_bias[0][3] = -0.0668834;
-  dense_bias[0][4] = 0.08525585;*/
-
-  //	Matrix dense_bias(Matrix(1,Array(9))); //class 9 ; so 9
-  //	dense_bias[0][0]= -1.3402408;
-  //	dense_bias[0][1]= -0.57729775;
-  //	dense_bias[0][2]= -0.3844931;
-  //	dense_bias[0][3] = 1.2625753;
-  //	dense_bias[0][4] = 1.2135713;
-  //
-  //	dense_bias[0][5]=1.3687891;
-  //	dense_bias[0][6]=-0.5227518;
-  //	dense_bias[0][7]=-0.9303516;
-  //	dense_bias[0][8]=-0.08981144;
-
-  cout << "\n\nResultant matrix after adding dense_bias with matrix multiplied resized relu and dense_kernel matrix" << endl;
+//  cout << "\n\nResultant matrix after adding dense_bias with matrix multiplied resized relu and dense_kernel matrix" << endl;
   for(int x=0;x<multiply_dense_relu.size();x++)
-  { for(int y=0;y<multiply_dense_relu[0].size();y++)
-
-    {
+  {
+    for(int y=0;y<multiply_dense_relu[0].size();y++)
+{
       //int temp=dense_bias[x][y] + multiply_dense_relu[x][y];
       multiply_dense_relu[x][y]= dense_bias_weight[y][x] + multiply_dense_relu[x][y];
       // multiply_dense_relu[x][y]=temp;
-      cout<<multiply_dense_relu[x][y]<<" ";
-      cout<<"d_val: ["<<y<<"]["<<x<<"] :"<<dense_bias_weight[y][x]<<endl;
+//      cout<<multiply_dense_relu[x][y]<<" ";
+//      cout<<"d_val: ["<<y<<"]["<<x<<"] :"<<dense_bias_weight[y][x]<<endl;
 
       //            cout<<dense_bias[0][0]<<endl;
 
     }
   }
-  cout<<endl;
+//  cout<<endl;
 
   return multiply_dense_relu;
 
@@ -266,10 +244,10 @@ Matrix do_calculation :: softmax(Matrix &softmax_value)
 
 {
 
-  cout<<"\n-------Softmax function has started to work.Here you will also see the final result of Classification.------"<<endl;
+//  cout<<"\n-------Softmax function has started to work.Here you will also see the final result of Classification.------"<<endl;
 
-  cout<<"\nROW of input array for softmax : "<<softmax_value.size();
-  cout<<"\nCOLUMN of input array for softmax : "<<softmax_value[0].size()<<endl;
+//  cout<<"\nROW of input array for softmax : "<<softmax_value.size();
+//  cout<<"\nCOLUMN of input array for softmax : "<<softmax_value[0].size()<<endl;
 
 
   Matrix softmax_output;
@@ -287,7 +265,7 @@ Matrix do_calculation :: softmax(Matrix &softmax_value)
   //{for(int b=0;b<softmax_output[0].size();b++)
   //    {
   //    cout<<"\nb: "<<b;
-  ////    cout<<softmax_output[0][b]<<" ";
+  //    cout<<softmax_output[0][b]<<" ";
   //    }
   //
   //cout<<"\none time run"<<endl;
@@ -298,7 +276,7 @@ Matrix do_calculation :: softmax(Matrix &softmax_value)
   double exp_value_softmax;
   double exp_value_sum=0.0000000;
 
-  cout<<"\nArray after doing exponential operation on the input array of Softmax Function"<<endl;
+//  cout<<"\nArray after doing exponential operation on the input array of Softmax Function"<<endl;
 
   for ( int i = 0; i < softmax_value.size(); i++ )
   {
@@ -310,29 +288,30 @@ Matrix do_calculation :: softmax(Matrix &softmax_value)
       //      cout<<"exp of: "<<softmax_value[i][j]<<" is: "<<exp_value_softmax<<"\n";
       //      softmax_output[0].push_back(exp_value_softmax);
       softmax_output[i][j]=exp_value_softmax;
-      cout<<softmax_output[i][j]<<"  ";
+//      cout<<softmax_output[i][j]<<"  ";
       exp_value_sum+=softmax_output[i][j];
 
       //softmax_value[i][j]=exp_value_softmax;
       //      cout<<softmax_value[i][j]<<" ";
 
     }
-    cout<<"\nOne time run"<<endl;
-    cout<<"Sum of all exp_value: "<<exp_value_sum<<endl;
+//    cout<<"\nOne time run"<<endl;
+//    cout<<"Sum of all exp_value: "<<exp_value_sum<<endl;
 
   }
   //double x=0.00000;
-  cout<<"\nOutput of Softmax algorithm"<<endl;
+//  cout<<"\nOutput of Softmax algorithm"<<endl;
   for(int a=0;a<softmax_output.size();a++)
-  {for(int b=0;b<softmax_output[0].size();b++)
+  {
+    for(int b=0;b<softmax_output[0].size();b++)
     {
       softmax_output[a][b]= (softmax_output[a][b])/exp_value_sum;
-      cout<<softmax_output[a][b]<<" ";
+//      cout<<softmax_output[a][b]<<" ";
       //        x+=softmax_output[a][b];
 
     }
 
-    cout<<"\nOne time run"<<endl;
+//    cout<<"\nOne time run"<<endl;
     //cout<<"x: "<<x;
     //cout<<"exp_value_sum: "<<exp_value_sum<<endl;
   }
@@ -341,30 +320,26 @@ Matrix do_calculation :: softmax(Matrix &softmax_value)
   y=0.000000;
   z=0.000000;
 
-  cout<<"----------Ready to see the class of Input Image---------"<<endl;
+//  cout<<"----------Class of loaded Image---------"<<endl;
   for(int s=0;s<softmax_output.size();s++)
   {
     for(int t=0;t<softmax_output[0].size();t++)
     {
       x=softmax_output[s][t];
-      if(x>z){
-
+      if(x>z)
+      {
         cout<<"\npresent val: "<<x;
         z=x;
         y=t;
       }
-      else{
+      else
+      {
       }
     }
     cout<<"\nClass is: "<<y;
   }
+cout<<endl;
 
-
-
-
-  cout<<endl;
-
-  //cout<<"AAAAAA: "<<sum<<endl;
   return softmax_output;
 
 }

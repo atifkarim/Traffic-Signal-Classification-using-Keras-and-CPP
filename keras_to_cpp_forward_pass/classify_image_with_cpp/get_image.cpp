@@ -27,6 +27,7 @@ Image Get_Image :: loadImage(const string &filename)
   //  cout<<"\nGive the depth of image: "<<endl;
   //  cin>>image_depth;
   Mat I = imread(filename, 1);
+  cout<<"\nImage name: "<<filename;
   //  cout<<"\nLoaded Image Size: "<<I.size()<<endl;
 
   Mat E;
