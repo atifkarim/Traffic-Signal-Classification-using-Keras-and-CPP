@@ -4,7 +4,7 @@
 #include <vector>
 using namespace std;
 
-bool getFileContent(std::string fileName, std::vector<std::string> & vecOfStrs);
+bool getFileContent(std::string fileName, std::vector<std::string> & vecOfStrs); // function for opening text file and storing content as string
 
 typedef vector<double> Array;
 typedef vector<Array> Matrix;
@@ -20,9 +20,6 @@ public:
   Matrix dense_value ();
   Matrix dense_bias_value ();
 
-
 };
-
-
 
 #endif // GET_DATA_H
