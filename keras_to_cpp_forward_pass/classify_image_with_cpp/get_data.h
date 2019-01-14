@@ -3,6 +3,7 @@
 
 #include <vector>
 using namespace std;
+/
 
 bool getFileContent(std::string fileName, std::vector<std::string> & vecOfStrs);
 
