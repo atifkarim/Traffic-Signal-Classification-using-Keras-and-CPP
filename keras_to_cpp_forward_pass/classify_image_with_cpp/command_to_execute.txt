@@ -1,0 +1,6 @@
+g++ -std=c++14 -ggdb get_data.cpp get_image.cpp get_class.cpp main.cpp -o main `pkg-config --cflags --libs opencv`
+
+
+
+#If you add any new header file add "new_header.cpp" also inside of the above command but before main.cpp
+

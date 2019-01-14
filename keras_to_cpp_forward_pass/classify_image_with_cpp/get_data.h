@@ -15,10 +15,10 @@ class Fetch_Data
 
 public:
 
-    Image convolution_kernal ();
-    Matrix conv_bias_value ();
-    Matrix dense_value ();
-    Matrix dense_bias_value ();
+  Image convolution_kernal ();
+  Matrix conv_bias_value ();
+  Matrix dense_value ();
+  Matrix dense_bias_value ();
 
 
 };

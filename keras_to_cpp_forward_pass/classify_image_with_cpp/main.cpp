@@ -42,52 +42,50 @@ int main()
   do_calculation obj3;
 
   cv::String path("/home/atif/image_classification_c++/multi_filter_cpp/test_image/*.ppm"); //select only jpg
-      vector<cv::String> fn;
-      vector<cv::Mat> data;
-      cv::glob(path,fn,true); // recurse
-      cout<<"\n Loaded number of image: "<<fn.size()<<endl;
-      for (size_t k=0; k<fn.size(); ++k)
-      {/*
+  vector<cv::String> fn;
+  vector<cv::Mat> data;
+  cv::glob(path,fn,true); // recurse
+  cout<<"\n Loaded number of image: "<<fn.size()<<endl;
+  for (size_t k=0; k<fn.size(); ++k)
+  {/*
         const int kNewWidth =48;
         const int kNewHeight =48;*/
 
-        int newheight;
-        int newwidth;
+    int newheight;
+    int newwidth;
 
-       cv::Mat im = cv::imread(fn[k]);
-  //     const string c=fn[k];
-       if (im.empty()) continue; //only proceed if sucsessful
-
-
-
-     Image preprocessed_image = obj1.loadImage(fn[k]);
-
-     Image convolution_filter_1 = obj2.convolution_kernal();
-
-     Matrix conv_bias= obj2.conv_bias_value();
-
-     Matrix dense_kernel = obj2.dense_value();
-
-     Matrix dense_bias = obj2.dense_bias_value();
-
-     auto start = get_time::now();
-
-     Image convImage = obj3.applyFilter(preprocessed_image, convolution_filter_1, conv_bias);
-
-     Matrix resized_conv_relu_image_value = obj3.resized_conv_relu_image(convImage);
-
-     Matrix matmul_dense_resized_relu = obj3.matmul_dense_resized_conv_relu(resized_conv_relu_image_value,dense_kernel,dense_bias);
-
-     Matrix softmax_calculation = obj3.softmax(matmul_dense_resized_relu);
+    cv::Mat im = cv::imread(fn[k]);
+    //     const string c=fn[k];
+    if (im.empty()) continue; //only proceed if sucsessful
 
 
-     auto end = get_time::now();
-     auto diff = end - start;
-     cout<<"Elapsed time is :  "<< chrono::duration_cast<ns>(diff).count()<<" ns "<<endl;
+
+    Image preprocessed_image = obj1.loadImage(fn[k]);
+
+    Image convolution_filter_1 = obj2.convolution_kernal();
+
+    Matrix conv_bias= obj2.conv_bias_value();
+
+    Matrix dense_kernel = obj2.dense_value();
+
+    Matrix dense_bias = obj2.dense_bias_value();
+
+    auto start = get_time::now();
+
+    Image convImage = obj3.applyFilter(preprocessed_image, convolution_filter_1, conv_bias);
+
+    Matrix resized_conv_relu_image_value = obj3.resized_conv_relu_image(convImage);
+
+    Matrix matmul_dense_resized_relu = obj3.matmul_dense_resized_conv_relu(resized_conv_relu_image_value,dense_kernel,dense_bias);
+    Matrix softmax_calculation = obj3.softmax(matmul_dense_resized_relu);
+
+    auto end = get_time::now();
+    auto diff = end - start;
+    cout<<"Elapsed time is :  "<< chrono::duration_cast<ns>(diff).count()<<" ns "<<endl;
 
 
-}
-     return 0;
+  }
+  return 0;
 
 
 

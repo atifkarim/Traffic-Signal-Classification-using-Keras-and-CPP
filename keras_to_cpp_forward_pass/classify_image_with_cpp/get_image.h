@@ -16,7 +16,7 @@ class Get_Image
 {
 public:
 
-    Image loadImage(const string &filename);
+  Image loadImage(const string &filename);
 };
 
 #endif // GET_IMAGE_H
