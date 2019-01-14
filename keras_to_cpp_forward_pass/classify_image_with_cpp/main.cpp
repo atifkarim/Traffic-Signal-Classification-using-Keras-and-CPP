@@ -17,10 +17,10 @@
 #include "opencv2/imgproc/imgproc.hpp"
 
 
-typedef vector<double> Array;
-typedef vector<Array> Matrix;
-typedef vector<Matrix> Image;
-typedef vector<Image> Container;
+//typedef vector<double> Array;
+//typedef vector<Array> Matrix;
+//typedef vector<Matrix> Image;
+//typedef vector<Image> Container;
 
 using namespace std;
 using namespace cv;
@@ -45,7 +45,7 @@ int main()
 
 
 
-       Image preprocessed_image = obj1.loadImage(fn[k]);
+     Image preprocessed_image = obj1.loadImage(fn[k]);
 
      Image convolution_filter_1 = obj2.convolution_kernal();
 

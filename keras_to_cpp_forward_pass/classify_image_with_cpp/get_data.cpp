@@ -1,4 +1,6 @@
 #include<iostream>
+#include "get_data.h"
+
 #include<cstring>
 #include<string>
 #include <vector>
@@ -7,20 +9,6 @@
 #include<sstream>
 #include <fstream>
 #include <stdlib.h>
-
-#include "get_data.h"
-
-
-//typedef vector<double> Array;
-//typedef vector<Array> Matrix;
-//typedef vector<Matrix> Image;
-//typedef vector<Image> Container;
-
-//const int kNewWidth =48;
-//const int kNewHeight =48;
-
-//int newheight;
-//int newwidth;
 
 using namespace std;
 

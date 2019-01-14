@@ -5,7 +5,6 @@
 #include<string>
 #include <vector>
 
-using std::vector;
 using namespace std;
 
 typedef vector<double> Array;

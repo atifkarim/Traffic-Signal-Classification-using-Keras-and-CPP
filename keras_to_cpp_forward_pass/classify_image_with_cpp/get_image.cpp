@@ -18,10 +18,10 @@
 
 
 
-typedef vector<double> Array;
-typedef vector<Array> Matrix;
-typedef vector<Matrix> Image;
-typedef vector<Image> Container;
+//typedef vector<double> Array;
+//typedef vector<Array> Matrix;
+//typedef vector<Matrix> Image;
+//typedef vector<Image> Container;
 
 
 using namespace std;
