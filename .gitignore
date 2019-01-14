@@ -8,3 +8,4 @@ test_atif.cpp
 keras_to_cpp_forward_pass/classify_image_with_cpp/classify_image_with_cpp.pro
 keras_to_cpp_forward_pass/classify_image_with_cpp/classify_image_with_cpp.pro.user
 keras_to_cpp_forward_pass/classify_image_with_cpp/main.cpp.autosave
+keras_to_cpp_forward_pass/classify_image_with_cpp/main
