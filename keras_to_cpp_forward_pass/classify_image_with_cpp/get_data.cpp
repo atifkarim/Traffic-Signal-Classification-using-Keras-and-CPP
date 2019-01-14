@@ -60,8 +60,8 @@ Image Fetch_Data :: convolution_kernal()
                                        has the correct relation to get alid filter number*/
 
   {
-//    cout<<"\nRemainder after dividing line number with filter length is: "<<vecOfStr.size()%filter_length<<endl;
-//    cout<<"\nRemainder must be zero. Program terminate.\nChoose, suitable Filter length to make remainder ZERO"<<endl;
+    //    cout<<"\nRemainder after dividing line number with filter length is: "<<vecOfStr.size()%filter_length<<endl;
+    //    cout<<"\nRemainder must be zero. Program terminate.\nChoose, suitable Filter length to make remainder ZERO"<<endl;
     abort();
   }
 
@@ -107,7 +107,7 @@ Image Fetch_Data :: convolution_kernal()
     }
   }
 
-//  cout<<endl;
+  //  cout<<endl;
 
 
   for(int a=0;a<conv_kernal_weight.size();a++)
@@ -123,7 +123,7 @@ Image Fetch_Data :: convolution_kernal()
       //            cout<<endl; //uncomment it if uncomment previous line
     }
   }
-//  cout<<endl;
+  //  cout<<endl;
   //    cout<<endl<<"\n\nNumber of filter in Convolution kernal is: "<<conv_kernal_weight.size()<<"\n\nRow of convolution kernal is: "<<conv_kernal_weight[0].size()<<endl;
   //    cout<<"\n\nColumn of Convolution kernal is: "<<conv_kernal_weight[0][0].size()<<endl;
 
