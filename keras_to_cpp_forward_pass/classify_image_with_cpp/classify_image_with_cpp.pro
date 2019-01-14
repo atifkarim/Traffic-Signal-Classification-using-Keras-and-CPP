@@ -16,8 +16,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp \
     get_data.cpp \
-    get_image.cpp
+    get_image.cpp \
+    get_class.cpp
 
 HEADERS += \
     get_data.h \
-    get_image.h
+    get_image.h \
+    get_class.h

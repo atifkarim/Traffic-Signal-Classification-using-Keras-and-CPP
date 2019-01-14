@@ -9,7 +9,6 @@ bool getFileContent(std::string fileName, std::vector<std::string> & vecOfStrs);
 typedef vector<double> Array;
 typedef vector<Array> Matrix;
 typedef vector<Matrix> Image;
-typedef vector<Image> Container;
 
 class Fetch_Data
 {

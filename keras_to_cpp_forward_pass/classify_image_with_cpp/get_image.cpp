@@ -1,6 +1,6 @@
+#include<iostream>
 #include "get_image.h"
 
-#include<iostream>
 #include<cstring>
 #include<string>
 #include <vector>
@@ -16,14 +16,6 @@
 #include "opencv2/imgproc/imgproc.hpp"
 
 
-
-
-//typedef vector<double> Array;
-//typedef vector<Array> Matrix;
-//typedef vector<Matrix> Image;
-//typedef vector<Image> Container;
-
-
 using namespace std;
 using namespace cv;
 
@@ -31,8 +23,8 @@ using namespace cv;
 const int kNewWidth =48;
 const int kNewHeight =48;
 
-int newheight;
-int newwidth;
+//int newheight;
+//int newwidth;
 
 
 Image Get_Image :: loadImage(const string &filename)

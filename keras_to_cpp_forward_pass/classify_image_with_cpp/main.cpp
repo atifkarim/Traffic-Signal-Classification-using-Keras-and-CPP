@@ -1,6 +1,7 @@
 #include<iostream>
 #include "get_data.h"
 #include "get_image.h"
+#include "get_class.h"
 
 #include<cstring>
 #include<string>
@@ -22,6 +23,8 @@
 //typedef vector<Matrix> Image;
 //typedef vector<Image> Container;
 
+
+
 using namespace std;
 using namespace cv;
 
@@ -32,6 +35,8 @@ int main()
 
   Fetch_Data obj2;
 
+  do_calculation obj3;
+
   cv::String path("/home/atif/image_classification_c++/multi_filter_cpp/test_image/*.ppm"); //select only jpg
       vector<cv::String> fn;
       vector<cv::Mat> data;
@@ -39,6 +44,12 @@ int main()
       cout<<"\n Loaded number of image: "<<fn.size()<<endl;
       for (size_t k=0; k<fn.size(); ++k)
       {
+        const int kNewWidth =48;
+        const int kNewHeight =48;
+
+        int newheight;
+        int newwidth;
+
        cv::Mat im = cv::imread(fn[k]);
   //     const string c=fn[k];
        if (im.empty()) continue; //only proceed if sucsessful
@@ -55,6 +66,13 @@ int main()
 
      Matrix dense_bias = obj2.dense_bias_value();
 
+     Image convImage = obj3.applyFilter(preprocessed_image, convolution_filter_1, conv_bias);
+
+     Matrix resized_conv_relu_image_value = obj3.resized_conv_relu_image(convImage);
+
+     Matrix matmul_dense_resized_relu = obj3.matmul_dense_resized_conv_relu(resized_conv_relu_image_value,dense_kernel,dense_bias);
+
+     Matrix softmax_calculation = obj3.softmax(matmul_dense_resized_relu);
 
 
 }
