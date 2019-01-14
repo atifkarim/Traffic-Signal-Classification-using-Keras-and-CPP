@@ -87,6 +87,4 @@ Image Get_Image :: loadImage(const string &filename)
 
 
   return image_1;
-
-
 }

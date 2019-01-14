@@ -1,15 +1,8 @@
 #include<iostream>
 #include "get_class.h"
-
 #include <cmath>
 
 using namespace std;
-
-
-//int newheight;
-//int newwidth;
-
-
 
 double relu( double & a)
 {
@@ -29,69 +22,53 @@ double relu( double & a)
 
 Image do_calculation :: applyFilter(Image &image, Image &filter, Matrix &conv_bias_weight)
 {
-  cout<<"\n----------Apply Filter Function has started to work to do the convolution---------"<<endl;
-
-
-  for(int row_c;row_c<conv_bias_weight.size();row_c++){
-    cout<<"myyyyyyyy conv bias:   ["<<row_c<<"][0]: "<<conv_bias_weight[row_c][0]<<endl;
+  for(int row_c;row_c<conv_bias_weight.size();row_c++)
+  {
+    //    cout<<"myyyyyyyy conv bias:   ["<<row_c<<"][0]: "<<conv_bias_weight[row_c][0]<<endl;
   }
 
   //assert(image.size()==1 && filter.size()!=0);
-  cout<<"\n\nBelow information stands for preprocessed image & filter"<<endl;
+  //  cout<<"\n\nBelow information stands for preprocessed image & filter"<<endl;
 
   int height = image[0].size();
-  cout<<"\npreprocessed image height: "<<height<<endl;
+  //  cout<<"\npreprocessed image height: "<<height<<endl;
   int width = image[0][0].size();
-  cout<<"\npreprocessed image width: "<<width<<endl;
+  //  cout<<"\npreprocessed image width: "<<width<<endl;
   int filterHeight = filter[0].size();
-  cout<<"\nApplied convolution filter height or ROW: "<<filterHeight<<endl;
+  //  cout<<"\nApplied convolution filter height or ROW: "<<filterHeight<<endl;
 
   int filterWidth = filter[0][0].size();
-  cout<<"\nApplied convolution filter width or COLUMN: "<<filterWidth<<endl;
+  //  cout<<"\nApplied convolution filter width or COLUMN: "<<filterWidth<<endl;
 
   int feature_map=filter.size();
-  cout<<"feat: "<<feature_map<<endl;
+  //  cout<<"feat: "<<feature_map<<endl;
 
-  cout<<"\nRow conv bias: "<<conv_bias_weight.size()<<endl;
-  cout<<"\nColumn conv bias: "<<conv_bias_weight[0].size()<<endl;
+  //  cout<<"\nRow conv bias: "<<conv_bias_weight.size()<<endl;
+  //  cout<<"\nColumn conv bias: "<<conv_bias_weight[0].size()<<endl;
 
 
-  cout<<"\nBelow we will see after applying convolution image height and width.\nHere we have not used padding to the input image"<<endl;
+  //  cout<<"\nBelow we will see after applying convolution image height and width.\nHere we have not used padding to the input image"<<endl;
 
   int newImageHeight = height-filterHeight+1;
   newheight= newImageHeight;
-  cout<<"\nAfter convolution image height: "<<newImageHeight<<endl;
+  //  cout<<"\nAfter convolution image height: "<<newImageHeight<<endl;
 
   int newImageWidth = width-filterWidth+1;
   newwidth= newImageWidth;
-  cout<<"\nAfter convolution image width: "<<newImageWidth<<endl;
+  //  cout<<"\nAfter convolution image width: "<<newImageWidth<<endl;
 
   int i,j,k,h,w,relu_applied,p;
   double d;
   Image newImage(Image(feature_map,Matrix(newheight,Array(newwidth))));
-  cout<<"OK";
+  //  cout<<"OK";
 
-  //cout<<"RROW: "<<newImage.size()<<"COLL: "<<newImage[0].size()<<endl;
-  //Matrix newImage;
+  //  cout<<"RROW: "<<newImage.size()<<"COLL: "<<newImage[0].size()<<endl;
+  //  Matrix newImage;
   for(int row_c; row_c<conv_bias_weight.size(); row_c++){
 
-    cout<<"\n\n !!!!myyyyyyyy conv bias:   ["<<row_c<<"][0]: "<<conv_bias_weight[row_c][0]<<endl;
+    //    cout<<"\n\n !!!!myyyyyyyy conv bias:   ["<<row_c<<"][0]: "<<conv_bias_weight[row_c][0]<<endl;
     for(k=0;k<feature_map;k++)
     {
-      //        switch(k){
-      //
-      //        case 0:
-      //        d=2.01443624;
-      //        break;
-      //
-      //
-      //        case 1:
-      //        d=1.3674825;
-      //        break;
-      //
-      //        default:
-      //        break;
-      //        }
       for (i=0 ; i<newImageHeight ; i++)
       {
         for (j=0 ; j<newImageWidth ; j++)
@@ -100,72 +77,50 @@ Image do_calculation :: applyFilter(Image &image, Image &filter, Matrix &conv_bi
           {
             for (w=j ; w<j+filterWidth ; w++)
             {
-
-
-
-
-
               newImage[k][i][j] += (filter[k][h-i][w-j])*(image[0][h][w])+conv_bias_weight[row_c][0];
-              //                        cout<<"here conv bias in appy func: "<<conv_bias_weight[row_c][0]<<endl;
-
-
-
-
-              //                        newImage[k][i][j] += (filter[k][h-i][w-j])*(image[0][h][w]); //here zero for grayscale. If RGB then depth will come. Convolution algo will change
-              //  cout<<newImage[i][j];
+              //            cout<<"here conv bias in appy func: "<<conv_bias_weight[row_c][0]<<endl;
+              //            newImage[k][i][j] += (filter[k][h-i][w-j])*(image[0][h][w]); //here zero for grayscale. If RGB then depth will come. Convolution algo will change
+              //              cout<<newImage[i][j];
             }
             p =newImage[k][i][j];
-            //                    cout<<"d: "<<d<<endl;
-            //                    d=d+(0.121489);
             double rel= p; //here this value is conv_kernel_bias
             relu_applied=relu(rel);
             newImage[k][i][j]= relu_applied;
-            //(-2.121489);
-
-            // newImage[i][j]= d;
 
           }
           //cout<<"new_image\n\n"<<newImage[i][j];
-
-
         }
 
       }
+    }
+  }
 
+  //  cout<<"\n !!!--------------Convolution Finished-------------------- !!!\n";
+  //  cout<<"\nConvolved image Depth: "<<newImage.size()<<endl;
+  //  cout<<"\nConvolved image Row: "<<newImage[0].size()<<endl;
+  //  cout<<"\nConvolved image Column: "<<newImage[0][0].size()<<endl;
 
-
-    }}
-
-  cout<<"\n !!!--------------Convolution Finished-------------------- !!!\n";
-  cout<<"\nConvolved image Depth: "<<newImage.size()<<endl;
-  cout<<"\nConvolved image Row: "<<newImage[0].size()<<endl;
-  cout<<"\nConvolved image Column: "<<newImage[0][0].size()<<endl;
-
-  //        cout<<"\nDisplaying Convolved image's matrix"<<endl;
-  for(int k=0;k<newImage.size();k++){
+  //    cout<<"\nDisplaying Convolved image's matrix"<<endl;
+  for(int k=0;k<newImage.size();k++)
+  {
     for(int x=0;x<newImage[0].size();x++)
     {   for(int y=0;y<newImage[0][0].size();y++)
 
       {
-        cout<<newImage[k][x][y]<<" ";
-
+        //        cout<<newImage[k][x][y]<<" ";
       }
-      cout<<endl;
+      //      cout<<endl;
+    }
+  }
 
-
-    }}
-
-  cout<<newImage.size();
-  cout<<endl;
+  //  cout<<newImage.size();
+  //  cout<<endl;
   return newImage;
-
 }
 
 Matrix do_calculation :: resized_conv_relu_image(Image &new_im)
 
 {
-
-  cout<<"\n---------Resizing of Convolved_Relued Image has started-------"<<endl;
 
   Matrix sized_image(Matrix(1,Array(new_im.size()*new_im[0].size()*new_im[0][0].size())));
   //sized_image=new_im;
@@ -184,24 +139,20 @@ Matrix do_calculation :: resized_conv_relu_image(Image &new_im)
   for(int m=0;m<new_im.size();m++)
   {
     for (int k=0 ; k<new_im[0].size() ; k++)
-
     {
       for(int l=0; l<new_im[0][0].size();l++)
       {
-
         int value = new_im[m][k][l];
         sized_image[i][j]=value;
         j++;
 
-        //cout<<"hii"<<sized_image[i][j]<<endl;
-
+        //cout<<"sized_image: "<<sized_image[i][j]<<endl;
       }
     }
 
   }
 
   for (int i=0 ; i<sized_image.size() ; i++)
-
   {
     for(int j=0; j<sized_image[0].size();j++)
     {
@@ -209,25 +160,20 @@ Matrix do_calculation :: resized_conv_relu_image(Image &new_im)
 
     }
     //cout<<"I ran only once:"<<endl;
-    cout<<"\n\nrow of resized_conv_relu image: "<<sized_image.size();
-    cout<<"\n\ncolumn of resized_conv_relu image: "<<sized_image[0].size();
+    //    cout<<"\n\nrow of resized_conv_relu image: "<<sized_image.size();
+    //    cout<<"\n\ncolumn of resized_conv_relu image: "<<sized_image[0].size();
 
-    cout<<"\n\nHere you can see that COLUMN of resized_conv_relu Matrix and ROW of dense_kernel Matrix is same\nSo, we can do here Matrix Multiplication.";
-    cout<<"\nMatrix multiplication will be held in this way >>> \nresized_conv_relu X dense kernel\nHere, 'X' sign used for indicating multiplication.";
+    //    cout<<"\n\nHere you can see that COLUMN of resized_conv_relu Matrix and ROW of dense_kernel Matrix is same\nSo, we can do here Matrix Multiplication.";
+    //    cout<<"\nMatrix multiplication will be held in this way >>> \nresized_conv_relu X dense kernel\nHere, 'X' sign used for indicating multiplication.";
 
-    //cout<<endl;
+    //    cout<<endl;
   }
 
   return sized_image;
-
-
 }
 
 Matrix do_calculation :: matmul_dense_resized_conv_relu(Matrix &resized_relu, Matrix &dense_kernel_weight, Matrix &dense_bias_weight)
 {
-
-  cout<<"\n\n---------------Matrix Multiplication between resized conv_relued & Dense kernal function has started to work-------------"<<endl;
-
   Matrix multiply_dense_relu;
   multiply_dense_relu.resize(1); //resized for 1 ROW
   //multiply_dense_relu[0].resize(5); //resized for 5 COLUMN
@@ -259,16 +205,14 @@ Matrix do_calculation :: matmul_dense_resized_conv_relu(Matrix &resized_relu, Ma
     }
   }
 
-
-
   int a,b;
 
-  cout << "\n\nOutput Matrix:" << endl;
+  //  cout << "\n\nOutput Matrix:" << endl;
   for(a = 0; a < resized_relu.size(); ++a)
   {
     for(b = 0; b < dense_kernel_weight[0].size(); ++b)
     {
-      cout << multiply_dense_relu[a][b] << " ";
+      //      cout << multiply_dense_relu[a][b] << " ";
       if(b == dense_kernel_weight[0].size() - 1)
         cout << endl << endl;
       //				cout<<"hey man"<<endl;
