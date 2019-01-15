@@ -306,7 +306,7 @@ Matrix do_calculation :: softmax(Matrix &softmax_value)
     for(int b=0;b<softmax_output[0].size();b++)
     {
       softmax_output[a][b]= (softmax_output[a][b])/exp_value_sum;
-      //      cout<<softmax_output[a][b]<<" ";
+//            cout<<softmax_output[a][b]<<" ";
       //        x+=softmax_output[a][b];
 
     }

@@ -20,7 +20,7 @@ int main()
   do_calculation obj3;
   double total_time=0.000000;
   double time_t;
-//  float average_time;
+  //  float average_time;
 
 
   Image convolution_filter_1 = obj2.convolution_kernal();
@@ -41,8 +41,8 @@ int main()
   for (size_t k=0; k<fn.size(); ++k)
   {
 
-//    int newheight;
-//    int newwidth;
+    //    int newheight;
+    //    int newwidth;
 
     cv::Mat im = cv::imread(fn[k]);
     if (im.empty()) continue; //only proceed if sucsessful
@@ -69,10 +69,10 @@ int main()
 
     cout <<"\nTime taken for classification: "<< duration.count() <<" microseconds and total time is: "<<total_time<<endl;
 
-
+    cout<<"\n-------------------------------------------------------------"<<endl;
 
   }
   double average_time = (total_time/fn.size());
-  cout<<"average time to classify per image is: "<<average_time<<" microseconds"<<endl;
+  cout<<"\nAverage time to classify per image is: "<<average_time<<" microseconds"<<endl;
   return 0;
 }

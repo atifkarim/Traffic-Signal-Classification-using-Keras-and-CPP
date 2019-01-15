@@ -74,7 +74,7 @@ for layer in model.layers:
         
 conv_kernel=layer_list[0][0]
 conv_kernel=conv_kernel.transpose()
-#print("conv_kernel: \n",conv_kernel,"\n\n")
+print("conv_kernel: \n",conv_kernel,"\n\n")
 #print("conv_kernel shape:\t",conv_kernel.shape,"\n\n")
 #print("conv kernel dimension:\t",conv_kernel.ndim,"\n\n")
 #print("type_conv_kernel:",type(conv_kernel),"\n")
@@ -147,7 +147,7 @@ for i in conv_bias:
 conv_bias_array=[]
 conv_bias_array=np.array(conv_bias_list)
 #print(conv_bias_array)
-np.savetxt('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/conv_bias.txt', conv_bias_array, fmt='%1.8e',delimiter=' ')
+#np.savetxt('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/conv_bias.txt', conv_bias_array, fmt='%1.8e',delimiter=' ')
 
 #for x in conv_bias_array:
     #print(x)
@@ -170,7 +170,7 @@ for i in dense_kernel:
 i_list_array=[] #declared an array
 i_list_array=np.array(i_list) # store the value of list in the array
 #print(i_list_array)
-np.savetxt('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/dense_kernel.txt', i_list_array, fmt='%1.8e',delimiter=' ') #writing on a text file from array
+#np.savetxt('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/dense_kernel.txt', i_list_array, fmt='%1.8e',delimiter=' ') #writing on a text file from array
 
 # %.8f #you can use it to get float value
 # fmt='%1.8e' #add this above line after i_list_aray
@@ -187,7 +187,7 @@ for i in dense_bias:
 dense_bias_array=[]
 dense_bias_array=np.array(dense_bias_list)
 #print(dense_bias_array)
-np.savetxt('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/dense_bias.txt', dense_bias_array, fmt='%1.8e',delimiter=' ')
+#np.savetxt('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/dense_bias.txt', dense_bias_array, fmt='%1.8e',delimiter=' ')
 
 
 # =============================================================================

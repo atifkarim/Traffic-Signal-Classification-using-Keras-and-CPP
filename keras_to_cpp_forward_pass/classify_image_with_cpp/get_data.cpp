@@ -49,7 +49,7 @@ Image Fetch_Data :: convolution_kernal()
   std::vector<std::string> vecOfStr;
   string temp;
 
-  bool result = getFileContent("/home/atif/image_classification_c++/multi_filter_cpp/conv_kernel_traffic_2_filter_no_pad_gray_ep_100_for_cpp.txt", vecOfStr);
+  bool result = getFileContent("/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/conv_kernel.txt", vecOfStr);
 
   int num_ber=0;
   long double found;
@@ -97,12 +97,12 @@ Image Fetch_Data :: convolution_kernal()
       if(num_ber==filter_length && 1<filter_number)
       {
 
-        //        cout<<"EXECUTED & getting new filter value"<<endl;
+//                cout<<"EXECUTED & getting new filter value"<<endl;
 
         num_ber=0;
         filter_number=filter_number-1;
         v++;
-        //        cout<<"\nRemaining filter number is: "<<filter_number<<endl;
+//                cout<<"\nRemaining filter number is: "<<filter_number<<endl;
       }
     }
   }
@@ -117,15 +117,15 @@ Image Fetch_Data :: convolution_kernal()
       for(int c= 0; c<conv_kernal_weight[0][0].size();c++)
       {
 
-        //                cout<<conv_kernal_weight[a][b][c]<<" "; //uncomment it if you want to see the vector output where the convolution kernel weights are stored
+//                        cout<<conv_kernal_weight[a][b][c]<<" "; //uncomment it if you want to see the vector output where the convolution kernel weights are stored
 
       }
-      //            cout<<endl; //uncomment it if uncomment previous line
+//                  cout<<endl; //uncomment it if uncomment previous line
     }
   }
   //  cout<<endl;
-  //    cout<<endl<<"\n\nNumber of filter in Convolution kernal is: "<<conv_kernal_weight.size()<<"\n\nRow of convolution kernal is: "<<conv_kernal_weight[0].size()<<endl;
-  //    cout<<"\n\nColumn of Convolution kernal is: "<<conv_kernal_weight[0][0].size()<<endl;
+//      cout<<endl<<"\n\nNumber of filter in Convolution kernal is: "<<conv_kernal_weight.size()<<"\n\nRow of convolution kernal is: "<<conv_kernal_weight[0].size()<<endl;
+//      cout<<"\n\nColumn of Convolution kernal is: "<<conv_kernal_weight[0][0].size()<<endl;
 
   return conv_kernal_weight;
 }
@@ -138,7 +138,7 @@ Matrix Fetch_Data :: conv_bias_value()
   string temp;
   long double found;
 
-  bool result = getFileContent("/home/atif/image_classification_c++/multi_filter_cpp/conv_bias_update.txt", vecOfStr);
+  bool result = getFileContent("/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/conv_bias.txt", vecOfStr);
 
 
   Matrix conv_bias_val(Matrix(vecOfStr.size(),Array()));
@@ -191,7 +191,7 @@ Matrix Fetch_Data :: dense_value()
   string temp;
   long double found;
 
-  bool result = getFileContent("/home/atif/image_classification_c++/multi_filter_cpp/dense_kernel_traffic_2_filter_no_pad_gray_ep_100_for_cpp.txt", vecOfStr);
+  bool result = getFileContent("/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/dense_kernel.txt", vecOfStr);
 
 
   Matrix dense_kernel_weight(Matrix(vecOfStr.size(),Array()));
@@ -244,7 +244,7 @@ Matrix Fetch_Data :: dense_bias_value()
   string temp;
   long double found;
 
-  bool result = getFileContent("/home/atif/image_classification_c++/multi_filter_cpp/dense_bias_update.txt", vecOfStr);
+  bool result = getFileContent("/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/dense_bias.txt", vecOfStr);
 
 
   Matrix dense_bias_value(Matrix(vecOfStr.size(),Array()));
