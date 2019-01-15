@@ -81,7 +81,7 @@ def get_class(img_path):
     
 imgs = []
 labels = []
-root_dir = '/home/atif/training_by_several_learning_process/GTSRB/test_for_VHDL_with_minimum_layer/train_image_minimized/'
+root_dir = '/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/train_image/'
 #path='/home/atif/training_by_several_learning_process/flower_photos/00000/'
 
 #all_img_paths = glob.glob(path+ '5547758_eea9edfd54_n_000.jpg')
