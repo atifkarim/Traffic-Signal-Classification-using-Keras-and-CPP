@@ -43,6 +43,7 @@ from matplotlib import pyplot as plt
 
 NUM_CLASSES = 9
 IMG_SIZE = 48
+number_filter=5
 
 
 ###################################
@@ -138,7 +139,7 @@ def cnn_model():
 #      padding='same'
     model = Sequential()
 
-    model.add(Conv2D(10, (3, 3),
+    model.add(Conv2D(number_filter, (3, 3),
                      input_shape=(1,IMG_SIZE, IMG_SIZE),
                      activation='relu'))
     model.add(Flatten())
@@ -176,4 +177,4 @@ model.fit(X, Y,
           epochs=epochs,
           validation_split=0.2,
           #np.resize(img, (-1, <image shape>)
-          callbacks=[LearningRateScheduler(lr_schedule),ModelCheckpoint('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/traffic_model_15_dec_10_filter_100_ep.h5', save_best_only=True)])
+          callbacks=[LearningRateScheduler(lr_schedule),ModelCheckpoint('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/traffic_model_15_dec_5_filter_100_ep.h5', save_best_only=True)])

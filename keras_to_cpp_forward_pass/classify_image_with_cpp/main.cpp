@@ -18,6 +18,9 @@ int main()
   Get_Image obj1;
   Fetch_Data obj2;
   do_calculation obj3;
+  double total_time=0.000000;
+  double time_t;
+//  float average_time;
 
 
   Image convolution_filter_1 = obj2.convolution_kernal();
@@ -60,9 +63,16 @@ int main()
 
     auto duration = duration_cast<microseconds>(stop - start);
 
-    cout <<"\nTime taken for classification: "<< duration.count() <<" microseconds"<< endl<<endl;
+    time_t = duration.count();
+
+    total_time =total_time+ time_t;
+
+    cout <<"\nTime taken for classification: "<< duration.count() <<" microseconds and total time is: "<<total_time<<endl;
+
 
 
   }
+  double average_time = (total_time/fn.size());
+  cout<<"average time to classify per image is: "<<average_time<<" microseconds"<<endl;
   return 0;
 }

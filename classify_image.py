@@ -25,6 +25,7 @@ from matplotlib import pyplot as plt
 
 NUM_CLASSES = 9 #Used class for the training
 IMG_SIZE = 48 #required size. This size has also maintained during training. User defined value
+number_filter=5
 
 # =============================================================================
 # Extracting weight from the trained model file
@@ -33,7 +34,7 @@ IMG_SIZE = 48 #required size. This size has also maintained during training. Use
 import pandas as pd
 from keras.models import load_model
 
-model = load_model('/home/atif/image_classification_c++/multi_filter_cpp/traffic_2_filter_no_pad_gray_ep_100_for_cpp.h5')
+model = load_model('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/traffic_model_15_dec_10_filter_100_ep.h5')
 #model = load_model('/home/atif/traffic_model_11_dec_1_filter.h5')
 layer_list =[]
 # f = open('/home/atif/path_for_storing_all_layer_info.txt', 'w') #uncomment it if you want to store all layer info at a time.
@@ -196,13 +197,13 @@ dense_bias_array=np.array(dense_bias_list)
 #print("conv_kernel_shape:",conv_kernel.shape,"\tconv_kernel ndim:",conv_kernel.ndim,"\n")
 #print("length of conv_kernel:",len(conv_kernel),"\n")
 
-conv_kernel_reshape=conv_kernel.reshape(2,3,3) # 2 for 2 filter. change it according to your filter number
+conv_kernel_reshape=conv_kernel.reshape(10,3,3) # 2 for 2 filter. change it according to your filter number
 #print("conv_kernel_reshape:\n",conv_kernel_reshape,"\n")
 #print("conv_kernel_reshape shape:",conv_kernel_reshape.shape,"\tconv_kernel_reshape ndim:",conv_kernel_reshape.ndim,"\n")
 #print("length of conv_kernel_reshape:",len(conv_kernel_reshape[0]),"\n")
 
 convolution_kernel_filter=[]
-convolution_kernel_filter=np.zeros((2,3,3)) # 2 for 2 filter. change it according to your filter number
+convolution_kernel_filter=np.zeros((10,3,3)) # 2 for 2 filter. change it according to your filter number
 convolution_kernel_filter[:,:,:]=np.array(conv_kernel_reshape)
 #print("convolution_kernel_filter: \n",convolution_kernel_filter,"\n")
 #print("convolution_kernel_filter shape:",convolution_kernel_filter.shape,"\tconvolution_kernel_filter ndim:",convolution_kernel_filter.ndim,"\n")
@@ -327,7 +328,7 @@ def relu(feature_map):
 
 
 
-path = r'/home/atif/image_classification_c++/multi_filter_cpp/test_image/'
+path = r'/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/test_image/'
 
 img_path = glob.glob(path+ '/*.ppm')
 for image in img_path:
@@ -365,7 +366,7 @@ for image in img_path:
 #      matrix multiplication with dense kernel and relu o/p
 # =============================================================================
 
-    flatten_relu_out_transpose=relu_out_transpose.reshape(1,2*46*46)  #if you don't do padd on input image please make it 46*46. how 46 came? 
+    flatten_relu_out_transpose=relu_out_transpose.reshape(1,10*46*46)  #if you don't do padd on input image please make it 46*46. how 46 came? 
                                                                                     #the formula of output size. and 2 for 2 filter
 #    print("\nflatten_relu_out_transpose shape: \n",flatten_relu_out_transpose.shape)
 
