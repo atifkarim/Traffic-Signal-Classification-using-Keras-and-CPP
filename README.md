@@ -14,3 +14,8 @@ Check for testing -- classify_image.py
 Update 12 January, 2019
 
 Work for converting "classify_image.py" to cpp has started. FIle name --- image_classification_with_cpp.cpp
+
+
+Update 15 January, 2019
+
+Work to make a complete C++ project for the classification. Name -- keras_to_cpp_forward_pass/classify_image_with_cpp
