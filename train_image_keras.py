@@ -138,7 +138,7 @@ def cnn_model():
 #      padding='same'
     model = Sequential()
 
-    model.add(Conv2D(1, (3, 3),
+    model.add(Conv2D(10, (3, 3),
                      input_shape=(1,IMG_SIZE, IMG_SIZE),
                      activation='relu'))
     model.add(Flatten())
@@ -170,10 +170,10 @@ def lr_schedule(epoch):
     return lr * (0.1 ** int(epoch / 10))
 
 batch_size = 32
-epochs = 5
+epochs = 100
 model.fit(X, Y,
           batch_size=batch_size,
           epochs=epochs,
           validation_split=0.2,
           #np.resize(img, (-1, <image shape>)
-          callbacks=[LearningRateScheduler(lr_schedule),ModelCheckpoint('/home/atif/traffic_model_11_dec_1_filter.h5', save_best_only=True)])
+          callbacks=[LearningRateScheduler(lr_schedule),ModelCheckpoint('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/traffic_model_15_dec_10_filter_100_ep.h5', save_best_only=True)])
