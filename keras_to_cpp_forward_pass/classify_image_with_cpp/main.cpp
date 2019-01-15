@@ -19,11 +19,22 @@ int main()
   Fetch_Data obj2;
   do_calculation obj3;
 
+
+  Image convolution_filter_1 = obj2.convolution_kernal();
+
+  Matrix conv_bias= obj2.conv_bias_value();
+
+  Matrix dense_kernel = obj2.dense_value();
+
+  Matrix dense_bias = obj2.dense_bias_value();
+
   cv::String path("/home/atif/image_classification_c++/multi_filter_cpp/test_image/*.ppm"); //select only ppm
   vector<cv::String> fn;
   vector<cv::Mat> data;
   cv::glob(path,fn,true); // recurse
   cout<<"\nNumber of image in the directory is: "<<fn.size()<<endl;
+
+
   for (size_t k=0; k<fn.size(); ++k)
   {
 
@@ -34,14 +45,6 @@ int main()
     if (im.empty()) continue; //only proceed if sucsessful
 
     Image preprocessed_image = obj1.loadImage(fn[k]);
-
-    Image convolution_filter_1 = obj2.convolution_kernal();
-
-    Matrix conv_bias= obj2.conv_bias_value();
-
-    Matrix dense_kernel = obj2.dense_value();
-
-    Matrix dense_bias = obj2.dense_bias_value();
 
     auto start = high_resolution_clock::now();
 
