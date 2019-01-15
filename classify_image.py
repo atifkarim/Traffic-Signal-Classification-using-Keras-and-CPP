@@ -26,6 +26,7 @@ from matplotlib import pyplot as plt
 NUM_CLASSES = 9 #Used class for the training
 IMG_SIZE = 48 #required size. This size has also maintained during training. User defined value
 number_filter=5
+total_time=0
 
 # =============================================================================
 # Extracting weight from the trained model file
@@ -129,10 +130,10 @@ for p in i_list_array:
     ww=str(p)
     ww=ww.replace('[','')
     ww=ww.replace(']','')
-    #f=open('/home/atif/conv_k_spy.txt','a') #uncomment from here till f.close() if you want to save text file
-    #f.write(ww)
-    #f.write("\n")
-#f.close()
+    f=open('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/conv_kernel.txt','a') #uncomment from here till f.close() if you want to save text file
+    f.write(ww)
+    f.write("\n")
+f.close()
 
 # =============================================================================
 # Storing convolution bias, needed for cpp testing
@@ -146,7 +147,7 @@ for i in conv_bias:
 conv_bias_array=[]
 conv_bias_array=np.array(conv_bias_list)
 #print(conv_bias_array)
-#np.savetxt('/home/atif/conv_b_spy.txt', conv_bias_array, fmt='%1.8e',delimiter=' ')
+np.savetxt('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/conv_bias.txt', conv_bias_array, fmt='%1.8e',delimiter=' ')
 
 #for x in conv_bias_array:
     #print(x)
@@ -169,7 +170,7 @@ for i in dense_kernel:
 i_list_array=[] #declared an array
 i_list_array=np.array(i_list) # store the value of list in the array
 #print(i_list_array)
-#np.savetxt('/home/atif/dense_k_spy.txt', i_list_array, fmt='%1.8e',delimiter=' ') #writing on a text file from array
+np.savetxt('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/dense_kernel.txt', i_list_array, fmt='%1.8e',delimiter=' ') #writing on a text file from array
 
 # %.8f #you can use it to get float value
 # fmt='%1.8e' #add this above line after i_list_aray
@@ -186,7 +187,7 @@ for i in dense_bias:
 dense_bias_array=[]
 dense_bias_array=np.array(dense_bias_list)
 #print(dense_bias_array)
-#np.savetxt('/home/atif/dense_b_spy.txt', dense_bias_array, fmt='%1.8e',delimiter=' ')
+np.savetxt('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/dense_bias.txt', dense_bias_array, fmt='%1.8e',delimiter=' ')
 
 
 # =============================================================================
@@ -296,7 +297,7 @@ def conv(img, conv_filter):
     
     for filter_num in range(conv_filter.shape[0]):
 #         print("filter num: ",filter_num)
-        print("Filter ", filter_num + 1)
+#        print("Filter ", filter_num + 1)
         curr_filter = conv_filter[filter_num, :] # getting a filter from the bank.
 #         print(curr_filter)
 #        print("curr_fiter_shape: ",curr_filter.shape)
@@ -331,7 +332,9 @@ def relu(feature_map):
 path = r'/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/test_image/'
 
 img_path = glob.glob(path+ '/*.ppm')
-for image in img_path:
+#for image in img_path:
+for image_number,image in enumerate(img_path):
+#    print("\nnum of image is: ",image_number) #It will return current image number. But careful it's cunting starts from zero so don't forget to add 1
     print("\nName of loaded image: ",image)
     X_test=[]
     X_test.append(preprocess_img(io.imread(image)))
@@ -415,6 +418,12 @@ for image in img_path:
                 pass
     print('class:',k)
     end = time.time()
+    elapsed_time=round((end-start)*1000000)
+    total_time+=elapsed_time
     #normally gives time in second. multiply or divide to change unit of time
-    print("\nElapsed Time: ",(end - start)*1000000," microseconds")
+    print("\nElapsed Time: ",elapsed_time," microseconds and total time is: ",total_time)
+print("\nTotal image number is: ",image_number+1)
+print("\nTotal time for all classification: ",total_time," microseconds")
+total_image=image_number+1
+print("\nAverage time taken for per image classification: ",round(total_time/total_image)," microseconds")
 
