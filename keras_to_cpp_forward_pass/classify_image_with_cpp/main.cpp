@@ -38,8 +38,8 @@ int main()
   for (size_t k=0; k<fn.size(); ++k)
   {
 
-    int newheight;
-    int newwidth;
+//    int newheight;
+//    int newwidth;
 
     cv::Mat im = cv::imread(fn[k]);
     if (im.empty()) continue; //only proceed if sucsessful
