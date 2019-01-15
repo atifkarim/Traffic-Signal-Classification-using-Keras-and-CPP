@@ -408,12 +408,12 @@ for image in img_path:
             #print(o)
             if o>m:
                 m=o
-                print(m)
+                #print(m)
                 k=index
             else:
                 pass
     print('class:',k)
     end = time.time()
     #normally gives time in second. multiply or divide to change unit of time
-    print("\nElapsed Time: ",(end - start)*1000000)
+    print("\nElapsed Time: ",(end - start)*1000000," microseconds")
 

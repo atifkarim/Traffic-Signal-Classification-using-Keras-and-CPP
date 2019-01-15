@@ -328,7 +328,7 @@ Matrix do_calculation :: softmax(Matrix &softmax_value)
       x=softmax_output[s][t];
       if(x>z)
       {
-        cout<<"\npresent val: "<<x;
+//        cout<<"\npresent val: "<<x;
         z=x;
         y=t;
       }
