@@ -63,11 +63,12 @@ int main()
 
     auto duration = duration_cast<microseconds>(stop - start);
 
-    time_t = duration.count();
+    time_t = duration.count()/1000.000;
 
     total_time =total_time+ time_t;
 
-    cout <<"\nTime taken for classification: "<< duration.count() <<" microseconds and total time is: "<<total_time<<endl;
+    // below instead of time_t you can write duration.count() if you want to see the direct output from chrono
+    cout <<"\nTime taken for classification: "<< time_t <<" microseconds and total time is: "<<total_time<<endl;
 
     cout<<"\n-------------------------------------------------------------"<<endl;
 

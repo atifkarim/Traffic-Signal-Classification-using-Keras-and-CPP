@@ -31,9 +31,9 @@ Image do_calculation :: applyFilter(Image &image, Image &filter, Matrix &conv_bi
   //  cout<<"\n\nBelow information stands for preprocessed image & filter"<<endl;
 
   int height = image[0].size();
-  //  cout<<"\npreprocessed image height: "<<height<<endl;
+//    cout<<"\npreprocessed image height: "<<height<<endl;
   int width = image[0][0].size();
-  //  cout<<"\npreprocessed image width: "<<width<<endl;
+//    cout<<"\npreprocessed image width: "<<width<<endl;
   int filterHeight = filter[0].size();
   //  cout<<"\nApplied convolution filter height or ROW: "<<filterHeight<<endl;
 
@@ -80,7 +80,7 @@ Image do_calculation :: applyFilter(Image &image, Image &filter, Matrix &conv_bi
               newImage[k][i][j] += (filter[k][h-i][w-j])*(image[0][h][w])+conv_bias_weight[row_c][0];
               //            cout<<"here conv bias in appy func: "<<conv_bias_weight[row_c][0]<<endl;
               //            newImage[k][i][j] += (filter[k][h-i][w-j])*(image[0][h][w]); //here zero for grayscale. If RGB then depth will come. Convolution algo will change
-              //              cout<<newImage[i][j];
+//                            cout<<newImage[k][i][j]<<" ";
             }
             p =newImage[k][i][j];
             double rel= p; //here this value is conv_kernel_bias
@@ -96,9 +96,9 @@ Image do_calculation :: applyFilter(Image &image, Image &filter, Matrix &conv_bi
   }
 
   //  cout<<"\n !!!--------------Convolution Finished-------------------- !!!\n";
-  //  cout<<"\nConvolved image Depth: "<<newImage.size()<<endl;
-  //  cout<<"\nConvolved image Row: "<<newImage[0].size()<<endl;
-  //  cout<<"\nConvolved image Column: "<<newImage[0][0].size()<<endl;
+//    cout<<"\nConvolved image Depth: "<<newImage.size()<<endl;
+//    cout<<"\nConvolved image Row: "<<newImage[0].size()<<endl;
+//    cout<<"\nConvolved image Column: "<<newImage[0][0].size()<<endl;
 
   //    cout<<"\nDisplaying Convolved image's matrix"<<endl;
   for(int k=0;k<newImage.size();k++)
