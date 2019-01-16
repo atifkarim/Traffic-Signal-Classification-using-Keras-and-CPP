@@ -19,6 +19,7 @@ import os
 import glob
 import h5py
 import time
+import cv2
 
 from matplotlib import pyplot as plt
 #%matplotlib inline
@@ -26,7 +27,7 @@ from matplotlib import pyplot as plt
 NUM_CLASSES = 9 #Used class for the training
 IMG_SIZE = 48 #required size. This size has also maintained during training. User defined value
 number_filter=5
-total_time=0
+total_time=0.000
 
 # =============================================================================
 # Extracting weight from the trained model file
@@ -74,7 +75,7 @@ for layer in model.layers:
         
 conv_kernel=layer_list[0][0]
 conv_kernel=conv_kernel.transpose()
-print("conv_kernel: \n",conv_kernel,"\n\n")
+#print("conv_kernel: \n",conv_kernel,"\n\n")
 #print("conv_kernel shape:\t",conv_kernel.shape,"\n\n")
 #print("conv kernel dimension:\t",conv_kernel.ndim,"\n\n")
 #print("type_conv_kernel:",type(conv_kernel),"\n")
@@ -130,10 +131,12 @@ for p in i_list_array:
     ww=str(p)
     ww=ww.replace('[','')
     ww=ww.replace(']','')
-    f=open('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/conv_kernel.txt','a') #uncomment from here till f.close() if you want to save text file
-    f.write(ww)
-    f.write("\n")
-f.close()
+# =============================================================================
+#     f=open('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/conv_kernel.txt','a') #uncomment from here till f.close() if you want to save text file
+#     f.write(ww)
+#     f.write("\n")
+# f.close()
+# =============================================================================
 
 # =============================================================================
 # Storing convolution bias, needed for cpp testing
@@ -216,28 +219,30 @@ convolution_kernel_filter[:,:,:]=np.array(conv_kernel_reshape)
 # Code for different steps for classification
 # =============================================================================
 
-def preprocess_img(img):
-#     uncomment following 5 lines for rgb testing and comment out the rgb2gray line
-#     Histogram normalization in y
-#     hsv = color.rgb2hsv(img)
-#     hsv[:,:,2] = exposure.equalize_hist(hsv[:,:,2])
-#     img = color.hsv2rgb(hsv)
-
-    # central scrop
-    min_side = min(img.shape[:-1])
-    centre = img.shape[0]//2, img.shape[1]//2
-    img = img[centre[0]-min_side//2:centre[0]+min_side//2,
-              centre[1]-min_side//2:centre[1]+min_side//2,
-              :]
-    img = rgb2gray(img) #rgb to gray conversion
-
-    # rescale to standard size
-    img = transform.resize(img, (IMG_SIZE, IMG_SIZE))
-
-    # roll color axis to axis 0
-    img = np.rollaxis(img,-1)
-
-    return img
+# =============================================================================
+# def preprocess_img(img):
+# #     uncomment following 5 lines for rgb testing and comment out the rgb2gray line
+# #     Histogram normalization in y
+# #     hsv = color.rgb2hsv(img)
+# #     hsv[:,:,2] = exposure.equalize_hist(hsv[:,:,2])
+# #     img = color.hsv2rgb(hsv)
+# 
+#     # central scrop
+#     min_side = min(img.shape[:-1])
+#     centre = img.shape[0]//2, img.shape[1]//2
+#     img = img[centre[0]-min_side//2:centre[0]+min_side//2,
+#               centre[1]-min_side//2:centre[1]+min_side//2,
+#               :]
+#     img = rgb2gray(img) #rgb to gray conversion
+# 
+#     # rescale to standard size
+#     img = transform.resize(img, (IMG_SIZE, IMG_SIZE))
+# 
+#     # roll color axis to axis 0
+#     img = np.rollaxis(img,-1)
+# 
+#     return img
+# =============================================================================
 
 def conv_(img, conv_filter):
 #    print("\nconv_ function start to work\n")
@@ -336,11 +341,27 @@ img_path = glob.glob(path+ '/*.ppm')
 for image_number,image in enumerate(img_path):
 #    print("\nnum of image is: ",image_number) #It will return current image number. But careful it's cunting starts from zero so don't forget to add 1
     print("\nName of loaded image: ",image)
-    X_test=[]
-    X_test.append(preprocess_img(io.imread(image)))
-    X_test = np.array(X_test)
+# =============================================================================
+#     X_test=[]
+#     X_test.append(preprocess_img(io.imread(image)))
+#     X_test = np.array(X_test)
+#     print("\nshape: ",X_test.shape)
+#     X_test = X_test.reshape(IMG_SIZE,IMG_SIZE)
 #     plt.imshow(X_test)
-    X_test = X_test.reshape(IMG_SIZE,IMG_SIZE)
+# =============================================================================
+    
+    X_test=[]
+#    cv_img = []
+    n= cv2.imread(image)
+    n = cv2.resize(n,(IMG_SIZE,IMG_SIZE))
+    n = cv2.cvtColor(n, cv2.COLOR_RGB2GRAY)
+#    n = cv2.normalize(n, n, 0, 255, cv2.NORM_MINMAX)
+    n = cv2.normalize(n, None, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_64F)
+
+    X_test.append(n)
+    X_test = np.array(X_test)
+    X_test=X_test.reshape(IMG_SIZE,IMG_SIZE)
+    X_test = np.rollaxis(X_test,-1)
     
     start = time.time()
     
@@ -412,18 +433,20 @@ for image_number,image in enumerate(img_path):
             #print(o)
             if o>m:
                 m=o
-                #print(m)
+#                print(m)
                 k=index
             else:
                 pass
     print('class:',k)
     end = time.time()
-    elapsed_time=round((end-start)*1000000)
+    elapsed_time=round((end-start)*1000,3)
     total_time+=elapsed_time
     #normally gives time in second. multiply or divide to change unit of time
-    print("\nElapsed Time: ",elapsed_time," microseconds and total time is: ",total_time)
+    print("\nElapsed Time: ",elapsed_time," milliseconds and total time is: ",total_time," milliseconds")
+    print("\n-------------------------------------------------------------------------------------------------")
+    
 print("\nTotal image number is: ",image_number+1)
-print("\nTotal time for all classification: ",total_time," microseconds")
+print("\nTotal time for all classification: ",total_time," milliseconds")
 total_image=image_number+1
-print("\nAverage time taken for per image classification: ",round(total_time/total_image)," microseconds")
+print("\nAverage time taken for per image classification: ",round((total_time/total_image),3)," milliseconds")
 
