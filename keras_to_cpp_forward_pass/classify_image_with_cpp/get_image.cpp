@@ -32,6 +32,7 @@ Image Get_Image :: loadImage(const string &filename)
 
   Mat E;
   cv::cvtColor(I, E, CV_RGB2GRAY);
+//  cv::cvtColor(I, E, CV_BGR2GRAY);
   //  cout<<"\nGrayscaled Image Size: "<<E.size()<<endl;
   //      Mat Norm_img;
   E.convertTo(E, CV_64F, 1.0 / 255, 0);
