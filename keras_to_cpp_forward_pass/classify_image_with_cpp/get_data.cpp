@@ -277,12 +277,12 @@ Matrix Fetch_Data :: dense_bias_value()
     for(int j= 0; j<dense_bias_value[0].size();j++)
     {
 
-      //            cout<<dense_bias_value[i][j]<<" "; //uncomment it if you want to see the vector output where the dense kernel weights are stored
+//                  cout<<dense_bias_value[i][j]<<" "; //uncomment it if you want to see the vector output where the dense kernel weights are stored
 
     }
-    //        cout<<endl; //uncomment it if uncomment previous line
+//            cout<<endl; //uncomment it if uncomment previous line
   }
-  //    cout<<endl<<"\n\nRow of dense bias value: "<<dense_bias_value.size()<<"\n\nColumn of dense bias value:"<<dense_bias_value[0].size()<<endl<<endl;
+//      cout<<endl<<"\n\nRow of dense bias value: "<<dense_bias_value.size()<<"\n\nColumn of dense bias value:"<<dense_bias_value[0].size()<<endl<<endl;
 
   return dense_bias_value;
 }
