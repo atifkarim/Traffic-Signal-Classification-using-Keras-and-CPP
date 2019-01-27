@@ -49,13 +49,13 @@ int main()
 
     Image preprocessed_image = obj1.loadImage(fn[k]);
 
-    auto start = high_resolution_clock::now();
+    auto start = high_resolution_clock::now(); //this line for starting the time calculation for whole classification process
 
-    auto start_convolution = high_resolution_clock::now();
+    auto start_convolution = high_resolution_clock::now(); //time calculation start for convolution
     Image convImage = obj3.applyFilter(preprocessed_image, convolution_filter_1, conv_bias);
-    auto stop_convolution = high_resolution_clock::now();
-    auto duration_convolution = duration_cast<microseconds>(stop_convolution - start_convolution);
-    cout<<"\nTime taken for convolution is: "<<duration_convolution.count()/1000<<" millisecond"<<endl;
+    auto stop_convolution = high_resolution_clock::now(); //time calculation stop for convolution
+    auto duration_convolution = duration_cast<microseconds>(stop_convolution - start_convolution); //time calculated for convolution
+    cout<<"\nTime taken for convolution is: "<<duration_convolution.count()/1000<<" millisecond"<<endl;//print out the time
 
 
     auto start_resizing = high_resolution_clock::now();
@@ -78,7 +78,7 @@ int main()
 
 
 
-    auto stop = high_resolution_clock::now();
+    auto stop = high_resolution_clock::now(); //Here time calculation for whole classification process stop
 
     auto duration = duration_cast<microseconds>(stop - start);
 
