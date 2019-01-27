@@ -11,17 +11,17 @@ Created on Fri Jan 11 21:50:57 2019
 
 import numpy as np
 import sys
-from skimage import io, color, exposure, transform
-from skimage.color import rgb2gray
+#from skimage import io, color, exposure, transform
+#from skimage.color import rgb2gray
 #from sklearn.cross_validation import train_test_split
-from sklearn.model_selection import train_test_split  #it came from update scikit learn. https://stackoverflow.com/questions/40704484/importerror-no-module-named-model-selection
+#from sklearn.model_selection import train_test_split  #it came from update scikit learn. https://stackoverflow.com/questions/40704484/importerror-no-module-named-model-selection
 import os
 import glob
 import h5py
 import time
 import cv2
 
-from matplotlib import pyplot as plt
+#from matplotlib import pyplot as plt
 #%matplotlib inline
 
 NUM_CLASSES = 9 #Used class for the training
@@ -33,7 +33,7 @@ total_time=0.000
 # Extracting weight from the trained model file
 # =============================================================================
 
-import pandas as pd
+#import pandas as pd
 from keras.models import load_model
 
 model = load_model('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/traffic_model_15_dec_5_filter_100_ep.h5')
