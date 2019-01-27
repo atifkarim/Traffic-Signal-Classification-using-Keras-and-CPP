@@ -338,7 +338,7 @@ Matrix do_calculation :: softmax(Matrix &softmax_value)
     }
     cout<<"\nClass is: "<<y;
   }
-  cout<<endl;
+//  cout<<endl;
 
   return softmax_output;
 
