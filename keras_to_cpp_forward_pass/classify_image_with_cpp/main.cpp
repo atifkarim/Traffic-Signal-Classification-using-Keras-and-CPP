@@ -49,13 +49,13 @@ int main()
 
     Image preprocessed_image = obj1.loadImage(fn[k]);
 
+    auto start = high_resolution_clock::now();
+
     auto start_convolution = high_resolution_clock::now();
-
     Image convImage = obj3.applyFilter(preprocessed_image, convolution_filter_1, conv_bias);
-
     auto stop_convolution = high_resolution_clock::now();
-    auto duration = duration_cast<microseconds>(stop_convolution - start_convolution);
-    cout<<"\nTime taken for convolution is: "<<duration.count()/1000<<" millisecond"<<endl;
+    auto duration_convolution = duration_cast<microseconds>(stop_convolution - start_convolution);
+    cout<<"\nTime taken for convolution is: "<<duration_convolution.count()/1000<<" millisecond"<<endl;
 
 
     auto start_resizing = high_resolution_clock::now();
@@ -68,26 +68,31 @@ int main()
     Matrix matmul_dense_resized_relu = obj3.matmul_dense_resized_conv_relu(resized_conv_relu_image_value,dense_kernel,dense_bias);
     auto stop_matmul = high_resolution_clock::now();
     auto duration_matmul = duration_cast<microseconds>(stop_matmul - start_matmul);
-    cout<<"\nTime taken for matrix_multiplication is: "<<duration_matmul.count()/1000<<" millisecond"<<endl;
+    cout<<"Time taken for matrix_multiplication is: "<<duration_matmul.count()/1000<<" millisecond"<<endl;
 
-
+    auto start_softmax = high_resolution_clock::now();
     Matrix softmax_calculation = obj3.softmax(matmul_dense_resized_relu);
+    auto stop_softmax = high_resolution_clock::now();
+    auto duration_softmax = duration_cast<microseconds>(stop_softmax - start_softmax);
+    cout<<"\nTime taken for softmax is: "<<duration_softmax.count()/1000<<" millisecond"<<endl;
 
-//    auto stop = high_resolution_clock::now();
 
-//    auto duration = duration_cast<microseconds>(stop - start);
 
-//    time_t = duration.count()/1000.000;
+    auto stop = high_resolution_clock::now();
 
-//    total_time =total_time+ time_t;
+    auto duration = duration_cast<microseconds>(stop - start);
 
-//    // below instead of time_t you can write duration.count() if you want to see the direct output from chrono
-//    cout <<"\nTime taken for classification: "<< time_t <<" microseconds and total time is: "<<total_time<<endl;
+    time_t = duration.count()/1000.000;
 
-//    cout<<"\n-------------------------------------------------------------"<<endl;
+    total_time =total_time+ time_t;
+
+    // below instead of time_t you can write duration.count() if you want to see the direct output from chrono
+    cout <<"\nTime taken for classification: "<< time_t <<" microseconds and total time is: "<<total_time<<endl;
+
+    cout<<"\n-------------------------------------------------------------"<<endl;
 
   }
-//  double average_time = (total_time/fn.size());
-//  cout<<"\nAverage time to classify per image is: "<<average_time<<" microseconds"<<endl;
+  double average_time = (total_time/fn.size());
+  cout<<"\nAverage time to classify per image is: "<<average_time<<" microseconds"<<endl;
   return 0;
 }
