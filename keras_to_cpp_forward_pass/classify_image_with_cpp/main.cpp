@@ -87,12 +87,12 @@ int main()
     total_time =total_time+ time_t;
 
     // below instead of time_t you can write duration.count() if you want to see the direct output from chrono
-    cout <<"\nTime taken for classification: "<< time_t <<" microseconds and total time is: "<<total_time<<endl;
+    cout <<"\nTime taken for classification: "<< time_t <<" milliseconds and total time is: "<<total_time<<endl;
 
     cout<<"\n-------------------------------------------------------------"<<endl;
 
   }
   double average_time = (total_time/fn.size());
-  cout<<"\nAverage time to classify per image is: "<<average_time<<" microseconds"<<endl;
+  cout<<"\nAverage time to classify per image is: "<<average_time<<" milliseconds"<<endl;
   return 0;
 }
