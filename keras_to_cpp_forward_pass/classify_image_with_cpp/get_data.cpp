@@ -9,6 +9,7 @@
 #include<sstream>
 #include <fstream>
 #include <stdlib.h>
+#include<math.h>
 
 using namespace std;
 
@@ -87,7 +88,10 @@ Image Fetch_Data :: convolution_kernal()
           {
             long double f;
             f=found;
-            conv_kernal_weight[v][num_ber].push_back(f);
+            f=f*1000; //uncomment this line if you want float value
+            int int_val = (int)floor(f);
+//            conv_kernal_weight[v][num_ber].push_back(f);
+            conv_kernal_weight[v][num_ber].push_back(int_val);
           }
         }
 
@@ -160,7 +164,11 @@ Matrix Fetch_Data :: conv_bias_value()
         {
           long double f;
           f=found;
-          conv_bias_val[i].push_back(f);
+          f=f*1000; //uncomment this line if you want float value
+          int int_val = (int)floor(f);
+//          cout<<"value of f is: "<<f<<endl;
+//          conv_bias_val[i].push_back(f);
+          conv_bias_val[i].push_back(int_val);
         }
       }
     }
@@ -172,10 +180,10 @@ Matrix Fetch_Data :: conv_bias_value()
     for(int j= 0; j<conv_bias_val[0].size();j++)
     {
 
-      //            cout<<"\conv_bias_value: "<<conv_bias_val[i][j]<<" "; //uncomment it if you want to see the vector output where the dense kernel weights are stored
+//                  cout<<"\nconv_bias_value: "<<conv_bias_val[i][j]<<" "; //uncomment it if you want to see the vector output where the dense kernel weights are stored
 
     }
-    //        cout<<endl; //uncomment it if uncomment previous line
+//            cout<<endl; //uncomment it if uncomment previous line
   }
   //    cout<<endl<<"\n\nRow of conv bias value: "<<conv_bias_val.size()<<"\n\nColumn of conv bias value:"<<conv_bias_val[0].size()<<endl<<endl;
 
@@ -213,7 +221,11 @@ Matrix Fetch_Data :: dense_value()
         {
           long double f;
           f=found;
-          dense_kernel_weight[i].push_back(f);
+          f=f*1000; //uncomment this line if you want float value
+          int int_val = (int)floor(f);
+//          cout<<"value of f is: "<<f<<endl;
+//          dense_kernel_weight[i].push_back(f);
+          dense_kernel_weight[i].push_back(int_val);
           //std::cout<<f<<std::endl;
         }
       }
@@ -226,10 +238,10 @@ Matrix Fetch_Data :: dense_value()
     for(int j= 0; j<dense_kernel_weight[0].size();j++)
     {
 
-      //            cout<<dense_kernel_weight[i][j]<<" "; //uncomment it if you want to see the vector output where the dense kernel weights are stored
+//                  cout<<dense_kernel_weight[i][j]<<" "; //uncomment it if you want to see the vector output where the dense kernel weights are stored
 
     }
-    //        cout<<endl; //uncomment it if uncomment previous line
+//            cout<<endl; //uncomment it if uncomment previous line
   }
   //    cout<<endl<<"\n\nRow of dense kernel: "<<dense_kernel_weight.size()<<"\n\nColumn of dense kernel:"<<dense_kernel_weight[0].size()<<endl<<endl;
 
@@ -265,7 +277,11 @@ Matrix Fetch_Data :: dense_bias_value()
         {
           long double f;
           f=found;
-          dense_bias_value[i].push_back(f);
+          f=f*1000; //uncomment this line if you want float value
+          int int_val = (int)floor(f);
+//          cout<<"value of f is: "<<int_val<<endl;
+//          dense_bias_value[i].push_back(f);
+          dense_bias_value[i].push_back(int_val);
         }
       }
     }
