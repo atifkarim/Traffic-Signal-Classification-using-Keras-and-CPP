@@ -36,7 +36,7 @@ total_time=0.000
 #import pandas as pd
 from keras.models import load_model
 
-model = load_model('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/traffic_model_15_dec_5_filter_100_ep.h5')
+model = load_model('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/integer_value_for_trained_model/traffic_model_5_feb_ep_100_int_val.h5')
 #model = load_model('/home/atif/traffic_model_11_dec_1_filter.h5')
 layer_list =[]
 # f = open('/home/atif/path_for_storing_all_layer_info.txt', 'w') #uncomment it if you want to store all layer info at a time.
