@@ -88,10 +88,10 @@ Image Fetch_Data :: convolution_kernal()
           {
             long double f;
             f=found;
-            f=f*1000; //uncomment this line if you want float value
-            int int_val = (int)floor(f);
-//            conv_kernal_weight[v][num_ber].push_back(f);
-            conv_kernal_weight[v][num_ber].push_back(int_val);
+//            f=f*1000; //use this line if you want to use integer value
+//            int int_val = (int)floor(f); //use this line if you want to use integer value
+            conv_kernal_weight[v][num_ber].push_back(f); //use this line if you want to use float value
+//            conv_kernal_weight[v][num_ber].push_back(int_val); //use this line if you want to use integer value
           }
         }
 
@@ -164,11 +164,11 @@ Matrix Fetch_Data :: conv_bias_value()
         {
           long double f;
           f=found;
-          f=f*1000; //uncomment this line if you want float value
-          int int_val = (int)floor(f);
+//          f=f*1000; //use this line if you want to use integer value
+//          int int_val = (int)floor(f); //use this line if you want to use integer value
 //          cout<<"value of f is: "<<f<<endl;
-//          conv_bias_val[i].push_back(f);
-          conv_bias_val[i].push_back(int_val);
+          conv_bias_val[i].push_back(f); //use this line if you want to use float value
+//          conv_bias_val[i].push_back(int_val); //use this line if you want to use integer value
         }
       }
     }
@@ -221,11 +221,11 @@ Matrix Fetch_Data :: dense_value()
         {
           long double f;
           f=found;
-          f=f*1000; //uncomment this line if you want float value
-          int int_val = (int)floor(f);
+//          f=f*1000; //use this line if you want to use integer value
+//          int int_val = (int)floor(f); //use this line if you want to use integer value
 //          cout<<"value of f is: "<<f<<endl;
-//          dense_kernel_weight[i].push_back(f);
-          dense_kernel_weight[i].push_back(int_val);
+          dense_kernel_weight[i].push_back(f); //use this line if you want to use float value
+//          dense_kernel_weight[i].push_back(int_val); //use this line if you want to use integer value
           //std::cout<<f<<std::endl;
         }
       }
@@ -277,11 +277,11 @@ Matrix Fetch_Data :: dense_bias_value()
         {
           long double f;
           f=found;
-          f=f*1000; //uncomment this line if you want float value
-          int int_val = (int)floor(f);
+//          f=f*1000; //use this line if you want to use integer value
+//          int int_val = (int)floor(f); //use this line if you want to use integer value
 //          cout<<"value of f is: "<<int_val<<endl;
-//          dense_bias_value[i].push_back(f);
-          dense_bias_value[i].push_back(int_val);
+          dense_bias_value[i].push_back(f); //use this line if you want to use float value
+//          dense_bias_value[i].push_back(int_val); //use this line if you want to use integer value
         }
       }
     }
