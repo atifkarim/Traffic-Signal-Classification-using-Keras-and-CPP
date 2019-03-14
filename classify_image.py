@@ -25,7 +25,7 @@ import cv2
 #%matplotlib inline
 
 NUM_CLASSES = 9 #Used class for the training
-IMG_SIZE = 48 #required size. This size has also maintained during training. User defined value
+IMG_SIZE = 8 #required size. This size has also maintained during training. User defined value
 number_filter=5
 total_time=0.000
 
@@ -36,7 +36,7 @@ total_time=0.000
 #import pandas as pd
 from keras.models import load_model
 
-model = load_model('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/integer_value_for_trained_model/traffic_model_5_feb_ep_100_int_val.h5')
+model = load_model('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/image_size_8_data_type_float_trained_model/traffic_model_14_march_ep_100_int_val.h5')
 #model = load_model('/home/atif/traffic_model_11_dec_1_filter.h5')
 layer_list =[]
 # f = open('/home/atif/path_for_storing_all_layer_info.txt', 'w') #uncomment it if you want to store all layer info at a time.
@@ -132,7 +132,7 @@ for p in i_list_array:
     ww=ww.replace('[','')
     ww=ww.replace(']','')
 # =============================================================================
-#     f=open('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/conv_kernel.txt','a') #uncomment from here till f.close() if you want to save text file
+#     f=open('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/image_size_8_data_type_float_trained_model/conv_kernel.txt','a') #uncomment from here till f.close() if you want to save text file
 #     f.write(ww)
 #     f.write("\n")
 # f.close()
@@ -150,7 +150,7 @@ for i in conv_bias:
 conv_bias_array=[]
 conv_bias_array=np.array(conv_bias_list)
 #print(conv_bias_array)
-#np.savetxt('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/conv_bias.txt', conv_bias_array, fmt='%1.8e',delimiter=' ')
+#np.savetxt('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/image_size_8_data_type_float_trained_model/conv_bias.txt', conv_bias_array, fmt='%1.8e',delimiter=' ')
 
 #for x in conv_bias_array:
     #print(x)
@@ -173,7 +173,7 @@ for i in dense_kernel:
 i_list_array=[] #declared an array
 i_list_array=np.array(i_list) # store the value of list in the array
 #print(i_list_array)
-#np.savetxt('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/dense_kernel.txt', i_list_array, fmt='%1.8e',delimiter=' ') #writing on a text file from array
+#np.savetxt('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/image_size_8_data_type_float_trained_model/dense_kernel.txt', i_list_array, fmt='%1.8e',delimiter=' ') #writing on a text file from array
 
 # %.8f #you can use it to get float value
 # fmt='%1.8e' #add this above line after i_list_aray
@@ -190,7 +190,7 @@ for i in dense_bias:
 dense_bias_array=[]
 dense_bias_array=np.array(dense_bias_list)
 #print(dense_bias_array)
-#np.savetxt('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/dense_bias.txt', dense_bias_array, fmt='%1.8e',delimiter=' ')
+#np.savetxt('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/image_size_8_data_type_float_trained_model/dense_bias.txt', dense_bias_array, fmt='%1.8e',delimiter=' ')
 
 
 # =============================================================================
@@ -390,7 +390,7 @@ for image_number,image in enumerate(img_path):
 #      matrix multiplication with dense kernel and relu o/p
 # =============================================================================
 
-    flatten_relu_out_transpose=relu_out_transpose.reshape(1,number_filter*46*46)  #if you don't do padd on input image please make it 46*46. how 46 came? 
+    flatten_relu_out_transpose=relu_out_transpose.reshape(1,number_filter*6*6)  #if you don't do padd on input image please make it 46*46. how 46 came? 
                                                                                     #the formula of output size. and 2 for 2 filter
 #    print("\nflatten_relu_out_transpose shape: \n",flatten_relu_out_transpose.shape)
 
