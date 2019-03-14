@@ -50,7 +50,7 @@ Image Fetch_Data :: convolution_kernal()
   std::vector<std::string> vecOfStr;
   string temp;
 
-  bool result = getFileContent("/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/conv_kernel.txt", vecOfStr);
+  bool result = getFileContent("/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/image_size_8_data_type_float_trained_model/conv_kernel.txt", vecOfStr);
 
   int num_ber=0;
   long double found;
@@ -142,7 +142,7 @@ Matrix Fetch_Data :: conv_bias_value()
   string temp;
   long double found;
 
-  bool result = getFileContent("/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/conv_bias.txt", vecOfStr);
+  bool result = getFileContent("/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/image_size_8_data_type_float_trained_model/conv_bias.txt", vecOfStr);
 
 
   Matrix conv_bias_val(Matrix(vecOfStr.size(),Array()));
@@ -199,7 +199,7 @@ Matrix Fetch_Data :: dense_value()
   string temp;
   long double found;
 
-  bool result = getFileContent("/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/dense_kernel.txt", vecOfStr);
+  bool result = getFileContent("/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/image_size_8_data_type_float_trained_model/dense_kernel.txt", vecOfStr);
 
 
   Matrix dense_kernel_weight(Matrix(vecOfStr.size(),Array()));
@@ -256,7 +256,7 @@ Matrix Fetch_Data :: dense_bias_value()
   string temp;
   long double found;
 
-  bool result = getFileContent("/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/dense_bias.txt", vecOfStr);
+  bool result = getFileContent("/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/image_size_8_data_type_float_trained_model/dense_bias.txt", vecOfStr);
 
 
   Matrix dense_bias_value(Matrix(vecOfStr.size(),Array()));
