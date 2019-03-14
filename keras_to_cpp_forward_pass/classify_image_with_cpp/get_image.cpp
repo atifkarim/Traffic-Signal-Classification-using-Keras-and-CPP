@@ -17,8 +17,8 @@ using namespace std;
 using namespace cv;
 
 
-const int kNewWidth =48;
-const int kNewHeight =48;
+const int kNewWidth =8;
+const int kNewHeight =8;
 
 
 Image Get_Image :: loadImage(const string &filename)
@@ -28,7 +28,7 @@ Image Get_Image :: loadImage(const string &filename)
   //  cin>>image_depth;
   Mat I = imread(filename, 1);
   cout<<"\nImage name: "<<filename;
-  //  cout<<"\nLoaded Image Size: "<<I.size()<<endl;
+    cout<<"\nLoaded Image Size: "<<I.size()<<endl;
 
   Mat E;
   cv::cvtColor(I, E, CV_RGB2GRAY);
@@ -78,12 +78,12 @@ Image Get_Image :: loadImage(const string &filename)
       }
       //cout<<"first row";
     }
-    //    cout<<image_1[k][0].size()<<endl;
+        cout<<image_1[k][0].size()<<endl;
   }
-  //  cout<<"\nNow the image is ready to be CONVOLVED!!!!!"<<endl;
-  //  cout<<"\nProcessed Image Depth: "<<image_1.size()<<endl;
-  //  cout<<"\nProcessed Image Row: "<<image_1[0].size()<<endl;
-  //  cout<<"\nProcessed Image Column: "<<image_1[0][0].size()<<endl;
+    cout<<"\nNow the image is ready to be CONVOLVED!!!!!"<<endl;
+    cout<<"\nProcessed Image Depth: "<<image_1.size()<<endl;
+    cout<<"\nProcessed Image Row: "<<image_1[0].size()<<endl;
+    cout<<"\nProcessed Image Column: "<<image_1[0][0].size()<<endl;
 
   //  cout<<endl;
 
