@@ -78,12 +78,12 @@ Image Get_Image :: loadImage(const string &filename)
       }
       //cout<<"first row";
     }
-        cout<<image_1[k][0].size()<<endl;
+//        cout<<image_1[k][0].size()<<endl;
   }
-    cout<<"\nNow the image is ready to be CONVOLVED!!!!!"<<endl;
-    cout<<"\nProcessed Image Depth: "<<image_1.size()<<endl;
-    cout<<"\nProcessed Image Row: "<<image_1[0].size()<<endl;
-    cout<<"\nProcessed Image Column: "<<image_1[0][0].size()<<endl;
+//    cout<<"\nNow the image is ready to be CONVOLVED!!!!!"<<endl;
+//    cout<<"\nProcessed Image Depth: "<<image_1.size()<<endl;
+//    cout<<"\nProcessed Image Row: "<<image_1[0].size()<<endl;
+//    cout<<"\nProcessed Image Column: "<<image_1[0][0].size()<<endl;
 
   //  cout<<endl;
 
