@@ -40,7 +40,6 @@ int main()
 
   for (size_t k=0; k<fn.size(); ++k)
   {
-
     //    int newheight;
     //    int newwidth;
 
@@ -54,8 +53,8 @@ int main()
     auto start_convolution = high_resolution_clock::now(); //time calculation start for convolution
     Image convImage = obj3.applyFilter(preprocessed_image, convolution_filter_1, conv_bias);
     auto stop_convolution = high_resolution_clock::now(); //time calculation stop for convolution
-    auto duration_convolution = duration_cast<microseconds>(stop_convolution - start_convolution); //time calculated for convolution
-    cout<<"\nTime taken for convolution is: "<<duration_convolution.count()/1000<<" millisecond"<<endl;//print out the time
+    auto duration_convolution = duration_cast<nanoseconds>(stop_convolution - start_convolution); //time calculated for convolution
+    cout<<"\nTime taken for convolution is: "<<duration_convolution.count()/1000000.000000<<" millisecond"<<endl;//print out the time
 
 
     auto start_resizing = high_resolution_clock::now();
