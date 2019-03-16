@@ -26,7 +26,7 @@ import cv2
 
 NUM_CLASSES = 9 #Used class for the training
 IMG_SIZE = 8 #required size. This size has also maintained during training. User defined value
-number_filter=5
+number_filter=1
 total_time=0.000
 
 # =============================================================================
@@ -36,7 +36,7 @@ total_time=0.000
 #import pandas as pd
 from keras.models import load_model
 
-model = load_model('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/image_size_8_data_type_float_trained_model/traffic_model_14_march_ep_100_int_val.h5')
+model = load_model('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/image_size_8_data_type_float_1_filter_trained_model/traffic_model_16_march_ep_100_1_filter.h5')
 #model = load_model('/home/atif/traffic_model_11_dec_1_filter.h5')
 layer_list =[]
 # f = open('/home/atif/path_for_storing_all_layer_info.txt', 'w') #uncomment it if you want to store all layer info at a time.
@@ -131,12 +131,10 @@ for p in i_list_array:
     ww=str(p)
     ww=ww.replace('[','')
     ww=ww.replace(']','')
-# =============================================================================
-#     f=open('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/image_size_8_data_type_float_trained_model/conv_kernel.txt','a') #uncomment from here till f.close() if you want to save text file
-#     f.write(ww)
-#     f.write("\n")
-# f.close()
-# =============================================================================
+    f=open('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/image_size_8_data_type_float_1_filter_trained_model/conv_kernel.txt','a') #uncomment from here till f.close() if you want to save text file
+    f.write(ww)
+    f.write("\n")
+f.close()
 
 # =============================================================================
 # Storing convolution bias, needed for cpp testing
@@ -150,7 +148,7 @@ for i in conv_bias:
 conv_bias_array=[]
 conv_bias_array=np.array(conv_bias_list)
 #print(conv_bias_array)
-#np.savetxt('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/image_size_8_data_type_float_trained_model/conv_bias.txt', conv_bias_array, fmt='%1.8e',delimiter=' ')
+np.savetxt('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/image_size_8_data_type_float_1_filter_trained_model/conv_bias.txt', conv_bias_array, fmt='%1.8e',delimiter=' ')
 
 #for x in conv_bias_array:
     #print(x)
@@ -173,7 +171,7 @@ for i in dense_kernel:
 i_list_array=[] #declared an array
 i_list_array=np.array(i_list) # store the value of list in the array
 #print(i_list_array)
-#np.savetxt('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/image_size_8_data_type_float_trained_model/dense_kernel.txt', i_list_array, fmt='%1.8e',delimiter=' ') #writing on a text file from array
+np.savetxt('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/image_size_8_data_type_float_1_filter_trained_model/dense_kernel.txt', i_list_array, fmt='%1.8e',delimiter=' ') #writing on a text file from array
 
 # %.8f #you can use it to get float value
 # fmt='%1.8e' #add this above line after i_list_aray
@@ -190,7 +188,7 @@ for i in dense_bias:
 dense_bias_array=[]
 dense_bias_array=np.array(dense_bias_list)
 #print(dense_bias_array)
-#np.savetxt('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/image_size_8_data_type_float_trained_model/dense_bias.txt', dense_bias_array, fmt='%1.8e',delimiter=' ')
+np.savetxt('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/image_size_8_data_type_float_1_filter_trained_model/dense_bias.txt', dense_bias_array, fmt='%1.8e',delimiter=' ')
 
 
 # =============================================================================
