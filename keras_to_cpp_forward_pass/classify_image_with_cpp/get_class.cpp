@@ -74,8 +74,8 @@ Image do_calculation :: applyFilter(Image &image, Image &filter, Matrix &conv_bi
 
   //  cout<<"RROW: "<<newImage.size()<<"COLL: "<<newImage[0].size()<<endl;
   //  Matrix newImage;
-  for(int row_c=0; row_c<conv_bias_weight.size(); row_c++)
-  {
+//  for(int row_c=0; row_c<conv_bias_weight.size(); row_c++)
+//  {
 //        cout<<"\n\n !!!!myyyyyyyy conv bias:   ["<<row_c<<"][0]: "<<conv_bias_weight[row_c][0]<<endl;
 
     for(k=0;k<feature_map;k++)
@@ -105,25 +105,25 @@ Image do_calculation :: applyFilter(Image &image, Image &filter, Matrix &conv_bi
 
       }
     }
-  }
+//  }
 
 //    cout<<"\n !!!--------------Convolution Finished-------------------- !!!\n";
 //    cout<<"\nConvolved image Depth: "<<newImage.size()<<endl;
 //    cout<<"\nConvolved image Row: "<<newImage[0].size()<<endl;
 //    cout<<"\nConvolved image Column: "<<newImage[0][0].size()<<endl;
 
-  cout<<"\nDisplaying filter value"<<endl;
-  for(int k=0;k<filter.size();k++)
-  {
-    for(int x=0;x<filter[0].size();x++)
-    {   for(int y=0;y<filter[0][0].size();y++)
+//  cout<<"\nDisplaying filter value"<<endl;
+//  for(int k=0;k<filter.size();k++)
+//  {
+//    for(int x=0;x<filter[0].size();x++)
+//    {   for(int y=0;y<filter[0][0].size();y++)
 
-      {
-                cout<<filter[k][x][y]<<" ";
-      }
-//            cout<<endl;
-    }
-  }
+//      {
+//                cout<<filter[k][x][y]<<" ";
+//      }
+//           cout<<endl;
+//    }
+//  }
 
       cout<<"\nDisplaying Convolved image's matrix before adding convolutional bias value"<<endl;
   for(int k=0;k<newImage.size();k++)
@@ -132,15 +132,19 @@ Image do_calculation :: applyFilter(Image &image, Image &filter, Matrix &conv_bi
     {   for(int y=0;y<newImage[0][0].size();y++)
 
       {
-//                cout<<newImage[k][x][y]<<" ";
+                cout<<newImage[k][x][y]<<" ";
       }
-//            cout<<endl;
+            cout<<endl;
     }
   }
   cout<<"\nProcedure for adding convolutional bias"<<endl;
-  for(int row_c=0; row_c<conv_bias_weight.size(); row_c++)
-  for(int k=0;k<newImage.size();k++){
+//  for(int row_c=0; row_c<conv_bias_weight.size(); row_c++)
+//  {
+  int row_c=0;
+
+  for(int k=0;k<newImage.size() && row_c<conv_bias_weight.size();k++)
   {
+    cout<<"\nvalue of row_c now: "<<conv_bias_weight[row_c][0]<<endl;
     for(int x=0;x<newImage[0].size();x++)
     {   for(int y=0;y<newImage[0][0].size();y++)
 
@@ -149,7 +153,10 @@ Image do_calculation :: applyFilter(Image &image, Image &filter, Matrix &conv_bi
       }
 //            cout<<endl;
     }
-  }}
+    row_c++;
+//    cout<<"\nvalue of row_c later: "<<conv_bias_weight[row_c][0]<<endl;
+  }
+//}
 cout<<"\nDisplaying convolved image after adding convolutional bias value"<<endl;
   for(int k=0;k<newImage.size();k++)
   {
@@ -157,9 +164,9 @@ cout<<"\nDisplaying convolved image after adding convolutional bias value"<<endl
     {   for(int y=0;y<newImage[0][0].size();y++)
 
       {
-//                cout<<newImage[k][x][y]<<" ";
+                cout<<newImage[k][x][y]<<" ";
       }
-//            cout<<endl;
+            cout<<endl;
     }
   }
 
