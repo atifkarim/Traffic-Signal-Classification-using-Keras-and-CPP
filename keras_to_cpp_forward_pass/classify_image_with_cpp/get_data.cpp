@@ -116,7 +116,7 @@ Image Fetch_Data :: convolution_kernal()
 
   //  cout<<endl;
 
-
+//cout<<"\nConvolutional kernel value after getting from text file"<<endl;
   for(int a=0;a<conv_kernal_weight.size();a++)
   {
     for(int b= 0; b<conv_kernal_weight[0].size();b++)

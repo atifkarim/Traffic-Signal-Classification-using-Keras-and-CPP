@@ -58,7 +58,7 @@ Image Get_Image :: loadImage(const string &filename)
 
   //  cout<<endl;
   //  cout<<"\nResized normalized image's size: "<<new_image.size()<<endl;
-    cout<<"\nResized nomalized image's matrix: \n"<<new_image<<endl; //48*48
+//    cout<<"\nResized nomalized image's matrix: \n"<<new_image<<endl; //48*48
 
   Image image_1(Image(image_depth,Matrix(kNewHeight,Array())));
 
