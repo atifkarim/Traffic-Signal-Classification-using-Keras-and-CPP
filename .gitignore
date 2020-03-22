@@ -18,6 +18,11 @@ trained_model_text_file
 Masters_thesis_file
 python_pc.txt
 cpp_pc.txt
+image_classification_with_cpp.cpp
+preprocess_image_with_opencv.ipynb
+train_image_keras.ipynb
+
+
 
 ############## python ignore ##############
 
