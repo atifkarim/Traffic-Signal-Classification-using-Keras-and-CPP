@@ -1,3 +1,5 @@
+/* Reading image to preprocess
+*/
 #ifndef GET_IMAGE_H
 #define GET_IMAGE_H
 

@@ -91,7 +91,8 @@ Image do_calculation :: applyFilter(Image &image, Image &filter, Matrix &conv_bi
               newImage[k][i][j] += (filter[k][h-i][w-j])*(image[0][h][w]);//+conv_bias_weight[row_c][0];
 
 //                          cout<<"here conv bias applied: "<<conv_bias_weight[row_c][0]<<endl;
-              //            newImage[k][i][j] += (filter[k][h-i][w-j])*(image[0][h][w]); //here zero for grayscale. If RGB then depth will come. Convolution algorithm will change
+              //            newImage[k][i][j] += (filter[k][h-i][w-j])*(image[0][h][w]); //here zero for grayscale.
+                                                   //If RGB then depth will come. Convolution algorithm will change
 //                            cout<<newImage[k][i][j]<<" ";
             }
             p =newImage[k][i][j];

@@ -1,3 +1,5 @@
+/* Header file to fetch data from text file where trained weights are stored
+*/
 #ifndef GET_DATA_H
 #define GET_DATA_H
 

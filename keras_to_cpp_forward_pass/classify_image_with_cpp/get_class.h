@@ -1,3 +1,6 @@
+/* Header file to calculate all of the stuffs like convolution , dense kernel matrix multilication with the result,
+ * softmax function apply to get the class
+*/
 #ifndef GET_CLASS_H
 #define GET_CLASS_H
 
