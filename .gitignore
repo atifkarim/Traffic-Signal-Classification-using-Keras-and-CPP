@@ -20,6 +20,7 @@ python_pc.txt
 cpp_pc.txt
 *.h5
 **/.idea
+keras_learning_model
 ############## python ignore ##############
 
 
