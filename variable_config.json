@@ -1,15 +1,17 @@
 {
   "DEFAULT":
   {
-    "train_image_path": "/media/atif/BE0E05910E0543BD/University of Bremen MSc/item_project/Image-classification/train_image",
-    "test_image_path":"/media/atif/BE0E05910E0543BD/University of Bremen MSc/item_project/Image-classification/test_image",
-    "learning_model_path":"/media/atif/BE0E05910E0543BD/University of Bremen MSc/item_project/Image-classification/keras_learning_model",
+    "train_image_path": "/media/atif/BE0E05910E0543BD/University of Bremen MSc/item_project/Image-classification/train_image/",
+    "test_image_path":"/media/atif/BE0E05910E0543BD/University of Bremen MSc/item_project/Image-classification/test_image/",
+    "learning_model_path":"/media/atif/BE0E05910E0543BD/University of Bremen MSc/item_project/Image-classification/keras_learning_model/",
     "num_class":9,
     "img_size":48,
     "number_filter": 5,
+    "filter_size":3,
     "img_depth": 1,
     "img_type": ".ppm",
     "epochs": 5,
-    "batch_size": 32
+    "batch_size": 32,
+    "validation_split":0.2
   }
 }
