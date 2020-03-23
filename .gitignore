@@ -22,7 +22,7 @@ image_classification_with_cpp.cpp
 preprocess_image_with_opencv.ipynb
 train_image_keras.ipynb
 *.h5
-
+**/.idea
 
 ############## python ignore ##############
 
