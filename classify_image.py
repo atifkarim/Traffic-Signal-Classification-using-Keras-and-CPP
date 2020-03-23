@@ -15,18 +15,35 @@ import sys
 #from skimage.color import rgb2gray
 #from sklearn.cross_validation import train_test_split
 #from sklearn.model_selection import train_test_split  #it came from update scikit learn. https://stackoverflow.com/questions/40704484/importerror-no-module-named-model-selection
-import os
+import os, json
 import glob
 import h5py
 import time
 import cv2
 
+with open('variable_config.json', 'r') as f:
+    config = json.load(f)
+
+
+NUM_CLASSES = config['DEFAULT']['num_class']
+IMG_SIZE = config['DEFAULT']['img_size']
+number_filter = config['DEFAULT']['number_filter']
+filter_size = config['DEFAULT']['filter_size']
+img_depth = config['DEFAULT']['img_depth']
+img_type = config['DEFAULT']['img_type']
+epochs = config['DEFAULT']['epochs']
+batch_size = config['DEFAULT']['batch_size']
+train_image_path = config['DEFAULT']['train_image_path']
+test_image_path = config['DEFAULT']['test_image_path']
+learning_model_path = config['DEFAULT']['learning_model_path']
+validation_split = config['DEFAULT']['validation_split']
+
 #from matplotlib import pyplot as plt
 #%matplotlib inline
 
-NUM_CLASSES = 9 #Used class for the training
-IMG_SIZE = 8 #required size. This size has also maintained during training. User defined value
-number_filter=1
+# NUM_CLASSES = 9 #Used class for the training
+# IMG_SIZE = 8 #required size. This size has also maintained during training. User defined value
+# number_filter=1
 total_time=0.000
 
 # =============================================================================
@@ -36,36 +53,37 @@ total_time=0.000
 #import pandas as pd
 from keras.models import load_model
 
-model = load_model('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/image_size_8_data_type_float_1_filter_trained_model/traffic_model_16_march_ep_100_1_filter.h5')
+model = load_model(learning_model_path+'learning_model.h5')
 #model = load_model('/home/atif/traffic_model_11_dec_1_filter.h5')
 layer_list =[]
-# f = open('/home/atif/path_for_storing_all_layer_info.txt', 'w') #uncomment it if you want to store all layer info at a time.
+f = open('path_for_storing_all_layer_info.txt', 'w') #uncomment it if you want to store all layer info at a time.
+
 for layer in model.layers:
     g=layer.get_config()
     h=layer.get_weights()
     
     layer_list.append(h)
-#     print ("g== ",g,"\n") #for printing layer name and verbal info
+    print ("g== ",g,"\n") #for printing layer name and verbal info
 
-#     print ("h== ",h,"\n\n") # for printing layer numeric value, eg: weight, bias value
-#     print("type_of g == ",type(g),"\n")
-#     print("type_of h == ",type(h),"\n")
+    print ("h== ",h,"\n\n") # for printing layer numeric value, eg: weight, bias value
+    print("type_of g == ",type(g),"\n")
+    print("type_of h == ",type(h),"\n")
 
 # below lines till f.close() used for writing in text file. To do this you have to uncomment the above line started with f.open() also.
 
-#     g1=str(g) # declaring a string variable g1 to store the info of g
-#     h1=str(h) #declaring a string variable h1 to store the info of h
-#     g_type=str(type(g)) #declaring a string variable g1 to store the type of g
-#     h_type=str(type(h)) #declaring a string variable h1 to store the type of h
+    g1=str(g) # declaring a string variable g1 to store the info of g
+    h1=str(h) #declaring a string variable h1 to store the info of h
+    g_type=str(type(g)) #declaring a string variable g1 to store the type of g
+    h_type=str(type(h)) #declaring a string variable h1 to store the type of h
     
-#     f.write("layer_definition: "+g1+"\n\n")
-#     f.write("layer_type: "+g_type+"\n\n")
-#     #f.write("\n")
-#     f.write("layer_weight: "+h1+"\n\n")
-#     f.write("weight_type: "+h_type+"\n\n\n")
-#     f.write("\n")
+    f.write("layer_definition: "+g1+"\n\n")
+    f.write("layer_type: "+g_type+"\n\n")
+    #f.write("\n")
+    f.write("layer_weight: "+h1+"\n\n")
+    f.write("weight_type: "+h_type+"\n\n\n")
+    f.write("\n")
     
-# f.close()
+f.close()
 
 # layer_name=['conv_layer','flatten_layer','dense_layer']
 
