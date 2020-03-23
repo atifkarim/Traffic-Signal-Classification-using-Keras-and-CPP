@@ -1,3 +1,6 @@
+# This file is stand for testing image by using learning model created by KERAS
+# KERAS library will be used for classification
+
 import numpy as np
 from skimage import io, color, exposure, transform
 from skimage.color import rgb2gray
