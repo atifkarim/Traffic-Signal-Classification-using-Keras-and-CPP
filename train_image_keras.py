@@ -21,6 +21,7 @@ from sklearn.model_selection import train_test_split  #it came from update sciki
 import os
 import glob
 import h5py
+import json
 
 from keras.preprocessing.image import ImageDataGenerator
 from keras.models import Sequential, model_from_json
@@ -37,14 +38,31 @@ from keras import backend as K
 K.set_image_data_format('channels_first')
 
 from matplotlib import pyplot as plt
-#%matplotlib inline
 
-#import keras
+# import json file where all variable values are stored. please take a look to modify it.
 
+with open('variable_config.json', 'r') as f:
+    config = json.load(f)
+
+
+NUM_CLASSES = config['DEFAULT']['num_class']
+IMG_SIZE = config['DEFAULT']['img_size']
+number_filter = config['DEFAULT']['number_filter']
+filter_size = config['DEFAULT']['filter_size']
+img_depth = config['DEFAULT']['img_depth']
+img_type = config['DEFAULT']['img_type']
+epochs = config['DEFAULT']['epochs']
+batch_size = config['DEFAULT']['batch_size']
+train_image_path = config['DEFAULT']['train_image_path']
+test_image_path = config['DEFAULT']['test_image_path']
+learning_model_path = config['DEFAULT']['learning_model_path']
+validation_split = config['DEFAULT']['validation_split']
+
+'''
 NUM_CLASSES = 9
 IMG_SIZE = 48
 number_filter=5
-
+'''
 ###################################
 #function for Preprocessing Image##
 ###################################
@@ -81,12 +99,13 @@ def get_class(img_path):
     
 imgs = []
 labels = []
-root_dir = '/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/train_image/'
+root_dir = train_image_path
+#root_dir = '/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/train_image/'
 #path='/home/atif/training_by_several_learning_process/flower_photos/00000/'
 
 #all_img_paths = glob.glob(path+ '5547758_eea9edfd54_n_000.jpg')
 
-all_img_paths = glob.glob(os.path.join(root_dir, '*/*.ppm')) #I have done the training with .ppm format image. If another type of image will come 
+all_img_paths = glob.glob(os.path.join(root_dir, '*/*'+str(img_type))) #I have done the training with .ppm format image. If another type of image will come 
                                                                                     #them .ppm will be changed by that extension
 np.random.shuffle(all_img_paths)
 for img_path in all_img_paths:
@@ -138,8 +157,8 @@ def cnn_model():
 #      padding='same'
     model = Sequential()
 
-    model.add(Conv2D(number_filter, (3, 3),
-                     input_shape=(1,IMG_SIZE, IMG_SIZE),
+    model.add(Conv2D(number_filter, (filter_size, filter_size),
+                     input_shape=(img_depth,IMG_SIZE, IMG_SIZE),
                      activation='relu'))
     model.add(Flatten())
     model.add(Dense(NUM_CLASSES, activation='softmax'))
@@ -169,11 +188,11 @@ model.summary()
 def lr_schedule(epoch):
     return lr * (0.1 ** int(epoch / 10))
 
-batch_size = 32
-epochs = 5
+batch_size = batch_size
+epochs = epochs
 model.fit(X, Y,
           batch_size=batch_size,
           epochs=epochs,
-          validation_split=0.2,
+          validation_split=validation_split,
           #np.resize(img, (-1, <image shape>)
-          callbacks=[LearningRateScheduler(lr_schedule),ModelCheckpoint('learning_model.h5', save_best_only=True)])
+          callbacks=[LearningRateScheduler(lr_schedule),ModelCheckpoint(learning_model_path+'learning_model.h5', save_best_only=True)])
