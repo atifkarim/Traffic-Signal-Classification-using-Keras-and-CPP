@@ -45,7 +45,6 @@ NUM_CLASSES = 9
 IMG_SIZE = 48
 number_filter=5
 
-
 ###################################
 #function for Preprocessing Image##
 ###################################
@@ -171,10 +170,10 @@ def lr_schedule(epoch):
     return lr * (0.1 ** int(epoch / 10))
 
 batch_size = 32
-epochs = 100
+epochs = 5
 model.fit(X, Y,
           batch_size=batch_size,
           epochs=epochs,
           validation_split=0.2,
           #np.resize(img, (-1, <image shape>)
-          callbacks=[LearningRateScheduler(lr_schedule),ModelCheckpoint('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/traffic_model_15_dec_5_filter_100_ep.h5', save_best_only=True)])
+          callbacks=[LearningRateScheduler(lr_schedule),ModelCheckpoint('learning_model.h5', save_best_only=True)])
