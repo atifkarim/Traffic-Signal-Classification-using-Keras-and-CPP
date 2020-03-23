@@ -18,7 +18,8 @@ trained_model_text_file
 Masters_thesis_file
 python_pc.txt
 cpp_pc.txt
-
+*.h5
+**/.idea
 ############## python ignore ##############
 
 
