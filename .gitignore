@@ -21,6 +21,7 @@ cpp_pc.txt
 image_classification_with_cpp.cpp
 preprocess_image_with_opencv.ipynb
 train_image_keras.ipynb
+keras_learning_model
 *.h5
 **/.idea
 *.ppm
