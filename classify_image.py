@@ -105,7 +105,7 @@ f.close()
 layer_list
 conv_kernel=layer_list[0][0]
 conv_kernel=conv_kernel.transpose()
-# print("conv_kernel: \n",conv_kernel,"\n\n")
+print("conv_kernel: \n",conv_kernel,"\n\n")
 # print("conv_kernel shape:\t",conv_kernel.shape,"\n\n")
 # print("conv kernel dimension:\t",conv_kernel.ndim,"\n\n")
 # print("type_conv_kernel:",type(conv_kernel),"\n")
@@ -140,31 +140,37 @@ dense_bias=dense_bias.reshape(1,NUM_CLASSES) # here chenge 5 to the number of yo
 
 conv_kernel=layer_list[0][0]
 conv_kernel=conv_kernel.transpose() # This has made to print it like a Matrix form. 
-i_list=[]
+conv_kernel_list=[]
 for i in conv_kernel:
 #     print(i)
-    i_list.append(i)
+    conv_kernel_list.append(i)
 #     for k in i:
 #         print(k)
 #         i_list.append(k)
-print(i_list)
-i_list_array=[]
-i_list_array=np.array(i_list)
-print(i_list_array)
+print(conv_kernel_list)
+conv_kernel_list_array=[]
+conv_kernel_list_array=np.array(conv_kernel_list)
+print(conv_kernel_list_array)
 # i_list_array=i_list_array.reshape(2,3,3)
-# print(i_list_array.ndim)
+print(conv_kernel_list_array.ndim)
 
-for p in i_list_array:
-#     for a in p:
-#         print(a)
-#    print(p)
-    ww=str(p)
-    ww=ww.replace('[','')
-    ww=ww.replace(']','')
-    f=open(learning_model_path+'conv_kernel.txt','a') #uncomment from here till f.close() if you want to save text file
-    f.write(ww)
-    f.write("\n")
+
+# look conv_kernel_list_array[x][y][z][w] -- it is a 4 dim array. x is number of filter, y is full stack, z is number of row of each filter, w is each single element of every row
+for i in range(number_filter):
+    for j in range(filter_size):
+        for k in range(filter_size):
+            p = conv_kernel_list_array[i][0][j][k]
+            ww = str(p)
+            ww = ww.replace('[', '')
+            ww = ww.replace(']', '')
+            # ww = ww.strip()
+            f = open(learning_model_path + 'conv_kernel.txt','a')  # uncomment from here till f.close() if you want to save text file
+            f.write(ww)
+            if k<(filter_size-1):
+                f.write(" ")
+        f.write("\n")
 f.close()
+
 
 # =============================================================================
 # Storing convolution bias, needed for cpp testing
@@ -177,8 +183,8 @@ for i in conv_bias:
 
 conv_bias_array=[]
 conv_bias_array=np.array(conv_bias_list)
-#print(conv_bias_array)
-np.savetxt('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/image_size_8_data_type_float_1_filter_trained_model/conv_bias.txt', conv_bias_array, fmt='%1.8e',delimiter=' ')
+print(conv_bias_array)
+np.savetxt(learning_model_path+'conv_bias.txt', conv_bias_array, fmt='%1.8e',delimiter=' ')
 
 #for x in conv_bias_array:
     #print(x)
@@ -201,7 +207,7 @@ for i in dense_kernel:
 i_list_array=[] #declared an array
 i_list_array=np.array(i_list) # store the value of list in the array
 #print(i_list_array)
-np.savetxt('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/image_size_8_data_type_float_1_filter_trained_model/dense_kernel.txt', i_list_array, fmt='%1.8e',delimiter=' ') #writing on a text file from array
+np.savetxt(learning_model_path+'dense_kernel.txt', i_list_array, fmt='%1.8e',delimiter=' ') #writing on a text file from array
 
 # %.8f #you can use it to get float value
 # fmt='%1.8e' #add this above line after i_list_aray
@@ -218,28 +224,28 @@ for i in dense_bias:
 dense_bias_array=[]
 dense_bias_array=np.array(dense_bias_list)
 #print(dense_bias_array)
-np.savetxt('/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/trained_model_text_file/image_size_8_data_type_float_1_filter_trained_model/dense_bias.txt', dense_bias_array, fmt='%1.8e',delimiter=' ')
+np.savetxt(learning_model_path+'dense_bias.txt', dense_bias_array, fmt='%1.8e',delimiter=' ')
 
 
 # =============================================================================
 # Reshaping convolution kernel for further process
 # =============================================================================
 
-#print("conv_kernel:\n",conv_kernel,"\n")
-#print("conv_kernel_shape:",conv_kernel.shape,"\tconv_kernel ndim:",conv_kernel.ndim,"\n")
-#print("length of conv_kernel:",len(conv_kernel),"\n")
+# print("conv_kernel:\n",conv_kernel,"\n")
+# print("conv_kernel_shape:",conv_kernel.shape,"\tconv_kernel ndim:",conv_kernel.ndim,"\n")
+# print("length of conv_kernel:",len(conv_kernel),"\n")
 
 conv_kernel_reshape=conv_kernel.reshape(number_filter,3,3) # 2 for 2 filter. change it according to your filter number
-#print("conv_kernel_reshape:\n",conv_kernel_reshape,"\n")
-#print("conv_kernel_reshape shape:",conv_kernel_reshape.shape,"\tconv_kernel_reshape ndim:",conv_kernel_reshape.ndim,"\n")
-#print("length of conv_kernel_reshape:",len(conv_kernel_reshape[0]),"\n")
+# print("conv_kernel_reshape:\n",conv_kernel_reshape,"\n")
+# print("conv_kernel_reshape shape:",conv_kernel_reshape.shape,"\tconv_kernel_reshape ndim:",conv_kernel_reshape.ndim,"\n")
+# print("length of conv_kernel_reshape:",len(conv_kernel_reshape[0]),"\n")
 
 convolution_kernel_filter=[]
 convolution_kernel_filter=np.zeros((number_filter,3,3)) # 2 for 2 filter. change it according to your filter number
 convolution_kernel_filter[:,:,:]=np.array(conv_kernel_reshape)
-#print("convolution_kernel_filter: \n",convolution_kernel_filter,"\n")
-#print("convolution_kernel_filter shape:",convolution_kernel_filter.shape,"\tconvolution_kernel_filter ndim:",convolution_kernel_filter.ndim,"\n")
-#print("length of convolution_kernel_filter:",len(convolution_kernel_filter),"\n")
+print("convolution_kernel_filter: \n",convolution_kernel_filter,"\n")
+print("convolution_kernel_filter shape:",convolution_kernel_filter.shape,"\tconvolution_kernel_filter ndim:",convolution_kernel_filter.ndim,"\n")
+print("length of convolution_kernel_filter:",len(convolution_kernel_filter),"\n")
 
 
 
@@ -307,8 +313,6 @@ def conv_(img, conv_filter):
 #    print("\nconv_ function finish\n")
     return final_result
 
-
-
 def conv(img, conv_filter):
 #    print("\nconv function start to work")
     
@@ -361,117 +365,124 @@ def relu(feature_map):
     return relu_out
 
 
-
-path = r'/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/test_image/'
-
-img_path = glob.glob(path+ '/*.ppm')
+path = test_image_path
+# path = r'/home/atif/training_by_several_learning_process/number_classify/rgb_2_gray/Image-classification/test_image/'
 #for image in img_path:
-for image_number,image in enumerate(img_path):
-#    print("\nnum of image is: ",image_number) #It will return current image number. But careful it's cunting starts from zero so don't forget to add 1
-    print("\nName of loaded image: ",image)
-# =============================================================================
-#     X_test=[]
-#     X_test.append(preprocess_img(io.imread(image)))
-#     X_test = np.array(X_test)
-#     print("\nshape: ",X_test.shape)
-#     X_test = X_test.reshape(IMG_SIZE,IMG_SIZE)
-#     plt.imshow(X_test)
-# =============================================================================
-    
-    X_test=[]
-#    cv_img = []
-    n= cv2.imread(image)
-    n = cv2.resize(n,(IMG_SIZE,IMG_SIZE))
-    n = cv2.cvtColor(n, cv2.COLOR_RGB2GRAY)
-#    n = cv2.normalize(n, n, 0, 255, cv2.NORM_MINMAX)
-    n = cv2.normalize(n, None, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_64F)
+img_path = glob.glob(path+ '/*'+str(img_type))
 
-    X_test.append(n)
-    X_test = np.array(X_test)
-    X_test=X_test.reshape(IMG_SIZE,IMG_SIZE)
-    X_test = np.rollaxis(X_test,-1)
-    
-    start = time.time()
-    
-    feature=conv(img=X_test,conv_filter=convolution_kernel_filter) #conv function calling
-    relu_out=relu(feature) # relu function calling
-    
-    # output of feature map / conv function
+def do_math(img_path, convolution_kernel_filter, IMG_SIZE,number_filter, NUM_CLASSES, total_time,dense_kernel, dense_bias):
+    for image_number, image in enumerate(img_path):
+        #    print("\nnum of image is: ",image_number) #It will return current image number. But careful it's cunting starts from zero so don't forget to add 1
+        print("\nName of loaded image: ", image)
+        # =============================================================================
+        #     X_test=[]
+        #     X_test.append(preprocess_img(io.imread(image)))
+        #     X_test = np.array(X_test)
+        #     print("\nshape: ",X_test.shape)
+        #     X_test = X_test.reshape(IMG_SIZE,IMG_SIZE)
+        #     plt.imshow(X_test)
+        # =============================================================================
 
-#    print("\nfeature shape: \n",feature.shape)
+        X_test = []
+        #    cv_img = []
+        n = cv2.imread(image)
+        n = cv2.resize(n, (IMG_SIZE, IMG_SIZE))
+        n = cv2.cvtColor(n, cv2.COLOR_RGB2GRAY)
+        #    n = cv2.normalize(n, n, 0, 255, cv2.NORM_MINMAX)
+        n = cv2.normalize(n, None, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_64F)
 
-#     x_feature_map=np.flipud(feature[0])
-    transpose_feature_map=feature.transpose()
-#    print("\ntranspose_feature_map shape: ",transpose_feature_map.shape)
-#     plt.imshow(transpose_feature_map[0])
-#    print("\ntranspose_feature_map: \n",transpose_feature_map)
-    
-#    print("\nrelu_out shape: ",relu_out.shape)
-    relu_out_transpose=relu_out.transpose()
-#    print("\nrelu_out_transpose shape: ",relu_out_transpose.shape)
-#     plt.imshow(relu_out_transpose[0])
-#    print("\nrelu_out_transpose:\n",relu_out_transpose)
-    
-    
-    
-# =============================================================================
-#      matrix multiplication with dense kernel and relu o/p
-# =============================================================================
+        X_test.append(n)
+        X_test = np.array(X_test)
+        X_test = X_test.reshape(IMG_SIZE, IMG_SIZE)
+        X_test = np.rollaxis(X_test, -1)
+        print(len(X_test.shape))
 
-    flatten_relu_out_transpose=relu_out_transpose.reshape(1,number_filter*6*6)  #if you don't do padd on input image please make it 46*46. how 46 came? 
-                                                                                    #the formula of output size. and 2 for 2 filter
-#    print("\nflatten_relu_out_transpose shape: \n",flatten_relu_out_transpose.shape)
+        start = time.time()
 
-#    print("\ndense_kernel shape: \n",dense_kernel.shape,"\n")
+        feature = conv(img=X_test, conv_filter=convolution_kernel_filter)  # conv function calling
+        relu_out = relu(feature)  # relu function calling
 
-    matmul_flatt_rel_dense_kernel=np.matmul(flatten_relu_out_transpose,dense_kernel)
-#    print("\nmatmul_soft_dense_kernel shape: \n",matmul_flatt_rel_dense_kernel.shape,"\n")
-#    print("\nmatmul_soft_dense_kernel: \n",matmul_flatt_rel_dense_kernel,"\n")
+        # output of feature map / conv function
 
-    dense_bias_array=np.array(dense_bias)
-    dense_bias_array=dense_bias_array.reshape(1,NUM_CLASSES) # 9 for 9 class
-#    print("\ndense_bias_array: \n",dense_bias_array,"\n")
+        #    print("\nfeature shape: \n",feature.shape)
 
-    add_matmul_flatt_rel_dense_kernel_and_dense_bias_array=matmul_flatt_rel_dense_kernel+dense_bias_array
-#    print("\nvalue add_matmul_flatt_rel_dense_kernel_and_dense2_array: \n",add_matmul_flatt_rel_dense_kernel_and_dense_bias_array)
-    
-    def softmax_fn(input_array):
-        e_x=np.exp(input_array-np.max(input_array))
-        return e_x/e_x.sum(axis=len(e_x.shape)-1)
+        #     x_feature_map=np.flipud(feature[0])
 
-    op= softmax_fn(add_matmul_flatt_rel_dense_kernel_and_dense_bias_array)
-#    print("output of FC layer: ",op,"\n")
-    
-# =============================================================================
-#     Following code for finding class
-# =============================================================================
-    
-    m=0
-    k=0
-    # op=[[0.17095664, 0.24349895, 0.172376,   0.19243606, 0.62073235]]
-    # op=np.array(op)
-    # print(op.shape)
-    # print(type(op))
+        transpose_feature_map = feature.transpose()
 
-    for h in op:
-    
-        for index,j in enumerate(h):
-    
-            o=j
-            #print(o)
-            if o>m:
-                m=o
-#                print(m)
-                k=index
-            else:
-                pass
-    print('class:',k)
-    end = time.time()
-    elapsed_time=round((end-start)*1000,3)
-    total_time+=elapsed_time
-    #normally gives time in second. multiply or divide to change unit of time
-    print("\nElapsed Time: ",elapsed_time," milliseconds and total time is: ",total_time," milliseconds")
-    print("\n-------------------------------------------------------------------------------------------------")
+        #    print("\ntranspose_feature_map shape: ",transpose_feature_map.shape)
+        #     plt.imshow(transpose_feature_map[0])
+        #    print("\ntranspose_feature_map: \n",transpose_feature_map)
+
+        #    print("\nrelu_out shape: ",relu_out.shape)
+        relu_out_transpose = relu_out.transpose()
+        print("\nrelu_out_transpose shape: ",relu_out_transpose.shape)
+        #     plt.imshow(relu_out_transpose[0])
+        #    print("\nrelu_out_transpose:\n",relu_out_transpose)
+
+        # =============================================================================
+        #      matrix multiplication with dense kernel and relu o/p
+        # =============================================================================
+
+        flatten_relu_out_transpose = relu_out_transpose.reshape(1,number_filter * 46 * 46)  # if you don't do padd on input image please make it 46*46. how 46 came?
+        # the formula of output size. and 2 for 2 filter
+        #    print("\nflatten_relu_out_transpose shape: \n",flatten_relu_out_transpose.shape)
+
+        #    print("\ndense_kernel shape: \n",dense_kernel.shape,"\n")
+
+        matmul_flatt_rel_dense_kernel = np.matmul(flatten_relu_out_transpose, dense_kernel)
+        #    print("\nmatmul_soft_dense_kernel shape: \n",matmul_flatt_rel_dense_kernel.shape,"\n")
+        #    print("\nmatmul_soft_dense_kernel: \n",matmul_flatt_rel_dense_kernel,"\n")
+
+        dense_bias_array = np.array(dense_bias)
+        dense_bias_array = dense_bias_array.reshape(1, NUM_CLASSES)  # 9 for 9 class
+        #    print("\ndense_bias_array: \n",dense_bias_array,"\n")
+
+        add_matmul_flatt_rel_dense_kernel_and_dense_bias_array = matmul_flatt_rel_dense_kernel + dense_bias_array
+
+        #    print("\nvalue add_matmul_flatt_rel_dense_kernel_and_dense2_array: \n",add_matmul_flatt_rel_dense_kernel_and_dense_bias_array)
+
+        def softmax_fn(input_array):
+            e_x = np.exp(input_array - np.max(input_array))
+            return e_x / e_x.sum(axis=len(e_x.shape) - 1)
+
+        op = softmax_fn(add_matmul_flatt_rel_dense_kernel_and_dense_bias_array)
+        #    print("output of FC layer: ",op,"\n")
+
+        # =============================================================================
+        #     Following code for finding class
+        # =============================================================================
+
+        m = 0
+        k = 0
+        # op=[[0.17095664, 0.24349895, 0.172376,   0.19243606, 0.62073235]]
+        # op=np.array(op)
+        # print(op.shape)
+        # print(type(op))
+
+        for h in op:
+
+            for index, j in enumerate(h):
+
+                o = j
+                # print(o)
+                if o > m:
+                    m = o
+                    #                print(m)
+                    k = index
+                else:
+                    pass
+        print('class:', k)
+        end = time.time()
+        elapsed_time = round((end - start) * 1000, 3)
+        total_time += elapsed_time
+        # normally gives time in second. multiply or divide to change unit of time
+        print("\nElapsed Time: ", elapsed_time, " milliseconds and total time is: ", total_time, " milliseconds")
+        print("\n-------------------------------------------------------------------------------------------------")
+
+    return image_number, total_time
+
+image_number, total_time = do_math(img_path, convolution_kernel_filter, IMG_SIZE,number_filter, NUM_CLASSES, total_time,dense_kernel, dense_bias)
     
 print("\nTotal image number is: ",image_number+1)
 print("\nTotal time for all classification: ",total_time," milliseconds")
