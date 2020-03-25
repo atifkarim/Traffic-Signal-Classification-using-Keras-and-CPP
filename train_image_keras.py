@@ -153,16 +153,54 @@ print(Y.shape)
 #Conv2D(1, (3, 3) >> here 1 = number of filter. (3,3) = kernel height and width
 # you can just add padding just beside Conv2D. (model.add(Conv2D(1,(3,3)),padding='same',....))
 # I haven't added here for remove complexity in c++(I have tried to implement this whole model in testing phase in cpp)
+# def cnn_model():
+# #      padding='same'
+#     model = Sequential()
+#
+#     model.add(Conv2D(number_filter, (filter_size, filter_size),
+#                      input_shape=(img_depth,IMG_SIZE, IMG_SIZE),
+#                      activation='relu'))
+#     model.add(Flatten())
+#     model.add(Dense(NUM_CLASSES, activation='softmax'))
+#
+#     return model
+
+
 def cnn_model():
-#      padding='same'
     model = Sequential()
 
-    model.add(Conv2D(number_filter, (filter_size, filter_size),
-                     input_shape=(img_depth,IMG_SIZE, IMG_SIZE),
+    model.add(Conv2D(32, (3, 3), padding='same',
+                     input_shape=(img_depth, IMG_SIZE, IMG_SIZE),
                      activation='relu'))
+    model.add(Conv2D(64, (3, 3), activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Dropout(0.2))
+
+    model.add(Conv2D(128, (3, 3), padding='same',
+                     input_shape=(3, IMG_SIZE, IMG_SIZE),
+                     activation='relu'))
+    model.add(Conv2D(256, (3, 3), activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Dropout(0.2))
+
+    model.add(Conv2D(256, (3, 3), padding='same',
+                     activation='relu'))
+    model.add(Conv2D(256, (3, 3), activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Dropout(0.2))
+
+    model.add(Conv2D(512, (3, 3), padding='same',
+                     activation='relu'))
+    model.add(Conv2D(512, (3, 3), activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Dropout(0.2))
+
     model.add(Flatten())
+    model.add(Dense(4096, activation='relu'))
+    #    model.add(Dense(2048, activation='relu'))
+    #    model.add(Dense(1024, activation='relu'))
+    model.add(Dropout(0.2))
     model.add(Dense(NUM_CLASSES, activation='softmax'))
-    
     return model
 
 model = cnn_model()
