@@ -21,6 +21,7 @@ cpp_pc.txt
 *.h5
 **/.idea
 keras_learning_model
+*.ppm
 ############## python ignore ##############
 
 
