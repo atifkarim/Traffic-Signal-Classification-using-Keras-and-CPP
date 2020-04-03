@@ -25,6 +25,7 @@ keras_learning_model
 *.h5
 **/.idea
 *.ppm
+.vscode
 ############## python ignore ##############
 
 
