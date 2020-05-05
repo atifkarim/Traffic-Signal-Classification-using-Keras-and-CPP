@@ -26,6 +26,7 @@ keras_learning_model
 **/.idea
 *.ppm
 .vscode
+*.txt
 ############## python ignore ##############
 
 

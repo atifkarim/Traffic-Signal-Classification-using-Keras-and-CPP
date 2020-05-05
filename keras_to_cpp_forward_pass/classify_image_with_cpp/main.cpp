@@ -15,26 +15,28 @@ using namespace std::chrono;
 
 int main()
 {
-  Get_Image obj1;
-  Fetch_Data obj2;
-  do_calculation obj3;
+  // Creating object from different class
+  Get_Image GetImageObj;
+  Fetch_Data GetDataObj;
+  do_calculation DoCalculationObj;
+
   double total_time=0.000000;
   double time_t;
   //  float average_time;
 
 
-  Image convolution_filter_1 = obj2.convolution_kernal();
+  Image convolution_filter_1 = GetDataObj.convolution_kernal(); // calling convolution kernel weight fetching function
 
-  Matrix conv_bias= obj2.conv_bias_value();
+  Matrix conv_bias= GetDataObj.conv_bias_value(); // calling convolution bias weight fetching function
 
-  Matrix dense_kernel = obj2.dense_value();
+  Matrix dense_kernel = GetDataObj.dense_value(); // calling dense weight fetching function
 
-  Matrix dense_bias = obj2.dense_bias_value();
+  Matrix dense_bias = GetDataObj.dense_bias_value(); // calling dense bias weight fetching function
 
   cv::String path("/home/atif/image_classification_c++/multi_filter_cpp/test_image/*.ppm"); //select only ppm
   vector<cv::String> fn;
   vector<cv::Mat> data;
-  cv::glob(path,fn,true); // recurse
+  cv::glob(path,fn,true); // recursively take all image in the folder
   cout<<"\nNumber of image in the directory is: "<<fn.size()<<endl;
 
 
@@ -46,31 +48,31 @@ int main()
     cv::Mat im = cv::imread(fn[k]);
     if (im.empty()) continue; //only proceed if sucsessful
 
-    Image preprocessed_image = obj1.loadImage(fn[k]);
+    Image preprocessed_image = GetImageObj.loadImage(fn[k]);
 
     auto start = high_resolution_clock::now(); //this line for starting the time calculation for whole classification process
 
     auto start_convolution = high_resolution_clock::now(); //time calculation start for convolution
-    Image convImage = obj3.applyFilter(preprocessed_image, convolution_filter_1, conv_bias);
+    Image convImage = DoCalculationObj.applyFilter(preprocessed_image, convolution_filter_1, conv_bias);
     auto stop_convolution = high_resolution_clock::now(); //time calculation stop for convolution
     auto duration_convolution = duration_cast<microseconds>(stop_convolution - start_convolution); //time calculated for convolution
     cout<<"\nTime taken for convolution is: "<<duration_convolution.count()/1000.000000<<" millisecond"<<endl;//print out the time
 
 
     auto start_resizing = high_resolution_clock::now();
-    Matrix resized_conv_relu_image_value = obj3.resized_conv_relu_image(convImage);
+    Matrix resized_conv_relu_image_value = DoCalculationObj.resized_conv_relu_image(convImage);
     auto stop_resizing = high_resolution_clock::now();
     auto duration_resizing = duration_cast<microseconds>(stop_resizing - start_resizing);
     cout<<"\nTime taken for resizing is: "<<duration_resizing.count()/1000.000000<<" millisecond"<<endl;
 
     auto start_matmul = high_resolution_clock::now();
-    Matrix matmul_dense_resized_relu = obj3.matmul_dense_resized_conv_relu(resized_conv_relu_image_value,dense_kernel,dense_bias);
+    Matrix matmul_dense_resized_relu = DoCalculationObj.matmul_dense_resized_conv_relu(resized_conv_relu_image_value,dense_kernel,dense_bias);
     auto stop_matmul = high_resolution_clock::now();
     auto duration_matmul = duration_cast<microseconds>(stop_matmul - start_matmul);
     cout<<"Time taken for matrix_multiplication is: "<<duration_matmul.count()/1000.000000<<" millisecond"<<endl;
 
     auto start_softmax = high_resolution_clock::now();
-    Matrix softmax_calculation = obj3.softmax(matmul_dense_resized_relu);
+    Matrix softmax_calculation = DoCalculationObj.softmax(matmul_dense_resized_relu);
     auto stop_softmax = high_resolution_clock::now();
     auto duration_softmax = duration_cast<microseconds>(stop_softmax - start_softmax);
     cout<<"\nTime taken for softmax is: "<<duration_softmax.count()/1000.000000<<" millisecond"<<endl;
